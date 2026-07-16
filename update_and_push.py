@@ -222,9 +222,10 @@ REPO_NAME = "Weekly-Investment-Overview"
 BRANCH = "main"
 API_BASE = f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}"
 
+# (local_filename, repo_filename) — el dashboard se sube como index.html para GitHub Pages
 FILES_TO_PUSH = [
-    "investment-dashboard.html",
-    "update_and_push.py",
+    ("investment-dashboard.html", "index.html"),
+    ("update_and_push.py", "update_and_push.py"),
 ]
 
 
@@ -321,22 +322,24 @@ def push_to_github(commit_msg: str, dry_run: bool = False):
 
     if dry_run:
         print("  [DRY RUN] No se subieron archivos.")
-        for f in FILES_TO_PUSH:
-            path = os.path.join(SCRIPT_DIR, f)
+        for local_name, repo_name in FILES_TO_PUSH:
+            path = os.path.join(SCRIPT_DIR, local_name)
             status = f"✓ {os.path.getsize(path):,}b" if os.path.exists(path) else "✗ no encontrado"
-            print(f"    {f}: {status}")
+            label = f"{local_name} → {repo_name}" if local_name != repo_name else local_name
+            print(f"    {label}: {status}")
         return
 
     print(f"  Commit: {commit_msg}\n")
     success = 0
-    for filename in FILES_TO_PUSH:
-        local_path = os.path.join(SCRIPT_DIR, filename)
+    for local_name, repo_name in FILES_TO_PUSH:
+        local_path = os.path.join(SCRIPT_DIR, local_name)
         if not os.path.exists(local_path):
-            print(f"  ✗ {filename} — no encontrado")
+            print(f"  ✗ {local_name} — no encontrado")
             continue
         size = os.path.getsize(local_path)
-        print(f"  ↑ {filename} ({size:,}b)...", end=" ", flush=True)
-        if push_file(local_path, filename, token, commit_msg):
+        label = f"{local_name} → {repo_name}" if local_name != repo_name else local_name
+        print(f"  ↑ {label} ({size:,}b)...", end=" ", flush=True)
+        if push_file(local_path, repo_name, token, commit_msg):
             print("✓")
             success += 1
         else:
@@ -344,6 +347,7 @@ def push_to_github(commit_msg: str, dry_run: bool = False):
 
     print(f"\n  {success}/{len(FILES_TO_PUSH)} archivos subidos")
     print(f"  https://github.com/{REPO_OWNER}/{REPO_NAME}")
+    print(f"  https://{REPO_OWNER.lower()}.github.io/{REPO_NAME}/")
 
 
 # ═══════════════════════════════════════════════════════════════════════════════

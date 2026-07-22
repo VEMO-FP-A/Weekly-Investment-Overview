@@ -315,7 +315,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       <div class="kpi-card">
         <div class="kpi-label">Rendimiento Acumulado Real</div>
         <div class="kpi-value" style="font-size:24px;">$17.8M</div>
-        <div class="kpi-sub">Ene–Jun 2026 · <span style="color:var(--teal);">Yield YTD: 4.46%</span></div>
+        <div class="kpi-sub">Ene–Jun 2026 · <span style="color:var(--teal);">Yield YTD: 5.21%</span></div>
       </div>
     </div>
     <div style="font-size:10px;color:var(--text3);margin-top:-8px;margin-bottom:14px;padding:0 4px;line-height:1.5;">
@@ -1103,20 +1103,20 @@ const YIELD_INT={
 };
 // Pre-computed annualized yields from Excel (exact cached values from file)
 const YIELD_PCT={
-  CHARGING:[5.79,0.72,18.85,9.61,12.88,11.54],
-  DAE:[11.51,9.20,7.63,9.93,9.78,9.32],
-  EMC:[8.47,5.33,8.17,16.94,7.56,12.22],
-  ESPACIOS:[9.75,0.18,1.92,0.15,4.44,1.67],
-  FIMECO:[4.97,4.71,5.31,4.22,4.35,4.26],
-  FLEETS:[7.92,3.50,2.59,6.54,6.17,1.73],
-  GREEN:[4.83,5.01,5.87,5.17,4.31,5.22],
-  HOLDCO:[4.50,4.31,4.78,3.84,1.34,4.58],
-  INGENIERIA:[0.32,5.26,2.38,32.77,-0.42,3.24],
-  IP:[1.53,2.36,1.65,2.04,2.59,3.34],
-  MORELCAMP:[4.71,1.51,14.41,3.38,2.96,2.17],
-  MOVILIDAD:[7.79,5.13,2.72,3.48,1.54,0.68],
-  PSM:[6.12,4.62,10.98,9.91,15.39,10.28],
-  TOTAL:[4.74,3.35,10.12,5.94,2.10,3.81]
+  CHARGING:[3.28,0.72,17.08,8.88,8.80,8.58],
+  DAE:[9.82,9.20,6.78,6.66,6.26,5.71],
+  EMC:[3.67,5.33,5.73,9.24,11.32,22.49],
+  ESPACIOS:[8.19,0.18,1.35,0.21,19.11,4.40],
+  FIMECO:[5.05,4.71,4.65,3.98,4.43,4.35],
+  FLEETS:[4.84,3.50,2.92,5.21,4.93,0.67],
+  GREEN:[4.92,5.01,5.93,5.32,4.36,5.14],
+  HOLDCO:[4.20,4.31,5.43,7.21,1.48,3.41],
+  INGENIERIA:[0.55,5.26,2.80,36.05,-0.44,2.59],
+  IP:[1.86,2.36,2.60,2.53,3.42,3.40],
+  MORELCAMP:[9.06,1.51,14.40,3.41,3.03,2.25],
+  MOVILIDAD:[5.57,5.13,5.22,5.68,3.64,0.40],
+  PSM:[5.51,4.62,9.83,15.86,13.87,4.42],
+  TOTAL:[5.51,3.26,9.44,4.81,2.87,3.32]
 };
 function getYieldData(entity){
   if(entity==='TOTAL'){

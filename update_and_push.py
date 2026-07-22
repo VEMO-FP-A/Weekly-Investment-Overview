@@ -146,6 +146,231 @@ def print_report(data: dict):
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# PARTE 1.5 — DATOS DE MERCADO VÍA APIs (FRED + Banxico)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Proyecciones H2 2026 — actualizar manualmente con consenso de analistas
+PROJ_TIIE = {
+    "2026-08": 6.50, "2026-09": 6.50,
+    "2026-10": 6.50, "2026-11": 6.50, "2026-12": 6.50,
+}
+PROJ_FED = {
+    "2026-08": 3.75, "2026-09": 3.75,
+    "2026-10": 3.75, "2026-11": 3.80, "2026-12": 3.80,
+}
+PROJ_FX = {
+    "2026-08": 17.40, "2026-09": 17.50,
+    "2026-10": 17.60, "2026-11": 17.70, "2026-12": 17.92,
+}
+
+
+def get_api_key(filenames):
+    """Lee API key del primer archivo encontrado en SCRIPT_DIR."""
+    for fn in filenames:
+        path = os.path.join(SCRIPT_DIR, fn)
+        if os.path.exists(path):
+            with open(path, "r", encoding="utf-8") as f:
+                key = f.read().strip()
+            if key:
+                return key
+    return None
+
+
+def fetch_fred_series(series_id, fred_key, start="2022-01-01", freq="m", agg="eop"):
+    """Descarga serie mensual de FRED. Devuelve {YYYY-MM: valor}."""
+    end = datetime.now().strftime("%Y-%m-%d")
+    url = (
+        f"https://api.stlouisfed.org/fred/series/observations"
+        f"?series_id={series_id}&api_key={fred_key}&file_type=json"
+        f"&observation_start={start}&observation_end={end}"
+        f"&frequency={freq}&aggregation_method={agg}"
+    )
+    req = request.Request(url, headers={"User-Agent": "VEMO-Treasury-Dashboard"})
+    resp = request.urlopen(req, timeout=20)
+    data = json.loads(resp.read())
+    monthly = {}
+    for obs in data.get("observations", []):
+        val = obs["value"]
+        if val and val != ".":
+            ym = obs["date"][:7]
+            monthly[ym] = round(float(val), 2)
+    return monthly
+
+
+def fetch_banxico_tiie(token, start="2022-01-01"):
+    """Descarga TIIE 28d de Banxico SIE. Devuelve {YYYY-MM: último valor del mes}."""
+    end = datetime.now().strftime("%Y-%m-%d")
+    url = (
+        f"https://www.banxico.org.mx/SieAPIRest/service/v1/"
+        f"series/SF43783/datos/{start}/{end}?mediaType=json"
+    )
+    req = request.Request(url, headers={
+        "Bmx-Token": token,
+        "User-Agent": "VEMO-Treasury-Dashboard",
+        "Accept": "application/json",
+    })
+    resp = request.urlopen(req, timeout=20)
+    data = json.loads(resp.read())
+    monthly = {}
+    series = data.get("bmx", {}).get("series", [{}])[0]
+    for dato in series.get("datos", []):
+        fecha = dato["fecha"]  # dd/mm/yyyy
+        val = dato.get("dato", "")
+        if val and val not in ("N/E", ""):
+            parts = fecha.split("/")
+            ym = f"{parts[2]}-{parts[1]}"
+            monthly[ym] = round(float(val.replace(",", "")), 2)
+    return monthly
+
+
+def build_market_data(tiie_raw, fed_raw, fx_raw):
+    """Construye arrays de 60 elementos (Ene'22 - Dic'26) para las gráficas."""
+    all_yms = []
+    for y in range(2022, 2027):
+        for m in range(1, 13):
+            all_yms.append(f"{y}-{m:02d}")
+
+    tiie_m = [tiie_raw.get(ym) for ym in all_yms]
+    fed_m = [fed_raw.get(ym) for ym in all_yms]
+    fx_m = [fx_raw.get(ym) for ym in all_yms]
+
+    # Último mes donde las tres series tienen dato
+    last_actual = -1
+    for i in range(len(all_yms)):
+        if tiie_m[i] is not None and fed_m[i] is not None and fx_m[i] is not None:
+            last_actual = i
+
+    # Nullificar meses posteriores
+    for i in range(last_actual + 1, 60):
+        tiie_m[i] = None
+        fed_m[i] = None
+        fx_m[i] = None
+
+    proj_start = last_actual
+
+    # Proyecciones (conectan desde el último dato real)
+    tiie_proj = [None] * 60
+    fed_proj = [None] * 60
+    fx_proj = [None] * 60
+
+    if proj_start >= 0:
+        tiie_proj[proj_start] = tiie_m[proj_start]
+        fed_proj[proj_start] = fed_m[proj_start]
+        fx_proj[proj_start] = fx_m[proj_start]
+
+    for i in range(proj_start + 1, 60):
+        ym = all_yms[i]
+        tiie_proj[i] = PROJ_TIIE.get(ym)
+        fed_proj[i] = PROJ_FED.get(ym)
+        fx_proj[i] = PROJ_FX.get(ym)
+
+    return {
+        "tiie_m": tiie_m, "fed_m": fed_m, "fx_m": fx_m,
+        "tiie_proj": tiie_proj, "fed_proj": fed_proj, "fx_proj": fx_proj,
+        "proj_start": proj_start,
+        "tiie_26": tiie_m[48:60], "fed_26": fed_m[48:60], "fx_26": fx_m[48:60],
+        "last_ym": all_yms[last_actual] if last_actual >= 0 else "N/A",
+    }
+
+
+def js_array(arr, decimals=2, per_line=12):
+    """Convierte lista Python a string de array JS formateado."""
+    parts = []
+    for v in arr:
+        if v is None:
+            parts.append("null")
+        else:
+            parts.append(f"{v:.{decimals}f}")
+    lines = []
+    for i in range(0, len(parts), per_line):
+        lines.append("  " + ",".join(parts[i:i + per_line]))
+    return "[\n" + ",\n".join(lines) + "\n]"
+
+
+def update_market_html(html, market):
+    """Reemplaza arrays de datos de mercado en el HTML."""
+    def replace_const(h, name, arr, dec=2):
+        pattern = rf"const {name}=\[[\s\S]*?\];"
+        repl = f"const {name}={js_array(arr, dec)};"
+        return re.sub(pattern, repl, h)
+
+    html = replace_const(html, "TIIE_M", market["tiie_m"])
+    html = replace_const(html, "TIIE_PROJ", market["tiie_proj"])
+    html = replace_const(html, "FED_M", market["fed_m"])
+    html = replace_const(html, "FED_PROJ", market["fed_proj"])
+    html = replace_const(html, "FX_M", market["fx_m"])
+    html = replace_const(html, "FX_PROJ", market["fx_proj"])
+
+    html = re.sub(
+        r"const PROJ_START=\d+;.*",
+        f'const PROJ_START={market["proj_start"]}; // último mes con data real',
+        html,
+    )
+
+    html = replace_const(html, "TIIE_26", market["tiie_26"])
+    html = replace_const(html, "FED_26", market["fed_26"])
+    html = replace_const(html, "FX_26", market["fx_26"])
+
+    return html
+
+
+def fetch_market_data():
+    """Descarga datos de mercado y construye los arrays para las gráficas."""
+    fred_key = get_api_key(["fred_key.txt", "fred_key"])
+    banxico_token = get_api_key(["banxico_token.txt", "banxico_token"])
+
+    if not fred_key:
+        print("  ⚠ No se encontró fred_key.txt")
+    if not banxico_token:
+        print("  ⚠ No se encontró banxico_token.txt")
+    if not fred_key and not banxico_token:
+        return None
+
+    tiie_raw, fed_raw, fx_raw = {}, {}, {}
+
+    if banxico_token:
+        try:
+            print("  Descargando TIIE 28d (Banxico)...", end=" ", flush=True)
+            tiie_raw = fetch_banxico_tiie(banxico_token)
+            print(f"✓ {len(tiie_raw)} meses")
+        except Exception as e:
+            print(f"✗ {e}")
+
+    if fred_key:
+        try:
+            print("  Descargando Fed Funds Rate (FRED)...", end=" ", flush=True)
+            fed_raw = fetch_fred_series("DFEDTARU", fred_key)
+            print(f"✓ {len(fed_raw)} meses")
+        except Exception as e:
+            print(f"✗ {e}")
+            try:
+                print("    Fallback FEDFUNDS...", end=" ", flush=True)
+                fed_raw = fetch_fred_series("FEDFUNDS", fred_key, agg="avg")
+                print(f"✓ {len(fed_raw)} meses (tasa efectiva)")
+            except Exception:
+                print("✗")
+
+        try:
+            print("  Descargando FX MXN/USD (FRED)...", end=" ", flush=True)
+            fx_raw = fetch_fred_series("DEXMXUS", fred_key)
+            print(f"✓ {len(fx_raw)} meses")
+        except Exception as e:
+            print(f"✗ {e}")
+
+    if not tiie_raw or not fed_raw or not fx_raw:
+        missing = []
+        if not tiie_raw: missing.append("TIIE")
+        if not fed_raw: missing.append("Fed")
+        if not fx_raw: missing.append("FX")
+        print(f"  ⚠ Faltan: {', '.join(missing)} — se necesitan las 3 series")
+        return None
+
+    market = build_market_data(tiie_raw, fed_raw, fx_raw)
+    print(f"  Último dato real: {market['last_ym']} (PROJ_START={market['proj_start']})")
+    return market
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # PARTE 2 — ACTUALIZACIÓN DEL HTML
 # ═══════════════════════════════════════════════════════════════════════════════
 
@@ -366,6 +591,7 @@ def main():
     parser.add_argument("--dry-run", action="store_true", help="Preview sin escribir ni subir")
     parser.add_argument("--update-only", action="store_true", help="Solo actualizar HTML, no subir a GitHub")
     parser.add_argument("--push-only", action="store_true", help="Solo subir a GitHub, no tocar HTML")
+    parser.add_argument("--skip-market", action="store_true", help="No descargar datos de mercado (FRED/Banxico)")
     args = parser.parse_args()
 
     now = datetime.now().strftime("%d %b %Y %H:%M")
@@ -393,6 +619,22 @@ def main():
 
         print(f"\n── Actualizando: {os.path.basename(args.html)} ──")
         updated_html = update_html(args.html, data)
+
+        # ── Paso 1.5: Datos de mercado (APIs) ─────────────────────────
+        if not args.skip_market:
+            print(f"\n── Datos de mercado (FRED + Banxico) ──")
+            try:
+                market = fetch_market_data()
+                if market:
+                    updated_html = update_market_html(updated_html, market)
+                    print("  ✓ Gráficas actualizadas con datos reales")
+                else:
+                    print("  Usando datos existentes en el HTML")
+            except Exception as e:
+                print(f"  ⚠ Error: {e}")
+                print("  Usando datos existentes en el HTML")
+        else:
+            print("\n  [skip-market] Datos de mercado omitidos")
 
         if args.dry_run:
             print("  [DRY RUN] No se escribieron cambios.")

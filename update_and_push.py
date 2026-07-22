@@ -56,10 +56,10 @@ def extract(filepath: str) -> dict:
 
     months = ["Ene", "Feb", "Mar", "Abr", "May", "Jun"]
 
-    # Mapeo de columnas: U(21)=nombre, W(23)=AVG/SUM, X-AC(24-29)=Ene-Jun
+    # Mapeo de columnas: U(21)=nombre, W(23)=AVG/SUM, Y-AD(25-30)=Ene-Jun
     COL_NAME = 21
-    COL_START = 24
-    COL_END = 29
+    COL_START = 25
+    COL_END = 30
     COL_AVG = 23
 
     def read_row(row: int) -> dict:
@@ -79,7 +79,7 @@ def extract(filepath: str) -> dict:
     for offset in range(0, 13):
         int_row = read_row(7 + offset)
         cash_row = read_row(24 + offset)
-        yld_row = read_row(40 + offset)
+        yld_row = read_row(41 + offset)
         name = int_row["name"]
         if name is None:
             continue
@@ -90,7 +90,7 @@ def extract(filepath: str) -> dict:
 
     int_total = read_row(20)
     cash_total = read_row(37)
-    yld_total = read_row(53)
+    yld_total = read_row(54)
 
     wb.close()
 

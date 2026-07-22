@@ -722,22 +722,22 @@ const M_LABELS=[
   'Ene25','Feb25','Mar25','Abr25','May25','Jun25','Jul25','Ago25','Sep25','Oct25','Nov25','Dic25',
   'Ene26','Feb26','Mar26','Abr26','May26','Jun26','Jul26','Ago26','Sep26','Oct26','Nov26','Dic26'
 ];
-const PROJ_START=54; // index where projection begins (Aug'26)
+const PROJ_START=53; // último mes con data real
 
 // TIIE 28d monthly
 const TIIE_M=[
-  5.78,6.28,6.50,7.00,7.25,7.75,8.00,8.50,9.25,9.25,10.00,10.53,
-  10.75,11.00,11.34,11.34,11.50,11.50,11.50,11.50,11.50,11.50,11.50,11.50,
-  11.50,11.50,11.50,11.25,11.25,11.25,11.00,11.00,11.00,10.50,10.50,10.50,
-  10.25,10.00,9.25,9.00,8.75,8.25,7.75,7.75,7.50,7.25,7.25,7.25,
-  7.25,7.25,7.00,7.00,6.76,6.76,6.76,null,null,null,null,null
+  5.73,6.23,6.73,6.75,7.22,8.02,8.07,8.82,9.02,9.59,10.29,10.76,
+  10.82,11.27,11.43,11.54,11.51,11.49,11.51,11.51,11.50,11.50,11.50,11.50,
+  11.50,11.49,11.25,11.24,11.24,11.24,11.24,11.00,10.74,10.72,10.48,10.24,
+  10.28,9.75,9.26,9.30,8.77,8.28,8.23,8.03,7.88,7.78,7.61,7.35,
+  7.30,7.31,7.03,7.01,6.76,6.76,null,null,null,null,null,null
 ];
 const TIIE_PROJ=[
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
-  null,null,null,null,null,null,6.76,6.50,6.50,6.50,6.50,6.50
+  null,null,null,null,null,6.76,null,6.50,6.50,6.50,6.50,6.50
 ];
 
 // Fed Funds Rate monthly (upper bound)
@@ -745,37 +745,43 @@ const FED_M=[
   0.25,0.25,0.50,0.50,1.00,1.75,2.50,2.50,3.25,3.25,4.00,4.50,
   4.50,4.75,5.00,5.00,5.25,5.25,5.50,5.50,5.50,5.50,5.50,5.50,
   5.50,5.50,5.50,5.50,5.50,5.50,5.50,5.50,5.00,5.00,4.75,4.50,
-  4.50,4.50,4.50,4.50,4.50,4.50,4.25,4.25,4.00,3.75,3.75,3.75,
-  3.75,3.75,3.75,3.75,3.75,3.75,3.75,null,null,null,null,null
+  4.50,4.50,4.50,4.50,4.50,4.50,4.50,4.50,4.25,4.00,4.00,3.75,
+  3.75,3.75,3.75,3.75,3.75,3.75,null,null,null,null,null,null
 ];
 const FED_PROJ=[
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
-  null,null,null,null,null,null,3.75,3.75,3.75,3.75,3.80,3.80
+  null,null,null,null,null,3.75,null,3.75,3.75,3.75,3.80,3.80
 ];
 
 // FX monthly
 const FX_M=[
-  20.50,20.60,20.00,20.30,19.80,20.10,20.30,20.10,20.15,19.80,19.40,19.50,
-  18.80,18.30,18.00,18.10,17.60,17.10,16.80,17.10,17.40,17.30,17.10,17.10,
-  17.20,17.10,16.70,17.10,16.90,18.30,18.50,19.20,19.60,20.00,20.50,20.30,
-  20.60,20.50,20.20,19.60,19.30,19.00,19.10,18.90,18.50,18.30,18.20,18.40,
-  17.85,17.25,17.90,17.35,17.25,17.47,17.42,null,null,null,null,null
+  20.64,20.40,19.91,20.36,19.68,20.12,20.36,20.09,20.11,19.85,19.37,19.50,
+  18.80,18.34,18.02,18.00,17.75,17.14,16.72,16.88,17.41,18.05,17.38,16.90,
+  17.18,17.06,16.56,17.06,16.99,18.26,18.60,19.66,19.69,20.03,20.31,20.86,
+  20.63,20.53,20.46,19.59,19.39,18.83,18.80,18.64,18.34,18.55,18.29,18.01,
+  17.35,17.22,18.03,17.52,17.35,17.45,null,null,null,null,null,null
 ];
 const FX_PROJ=[
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
-  null,null,null,null,null,null,17.42,17.40,17.50,17.60,17.70,17.92
+  null,null,null,null,null,17.45,null,17.40,17.50,17.60,17.70,17.92
 ];
 // 2026 Monthly data for Actuals vs Budget zoom-in
 const MO26=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-const TIIE_26=[7.25,7.25,7.00,7.00,6.76,6.76,6.76,null,null,null,null,null];
-const FED_26=[3.75,3.75,3.75,3.75,3.75,3.75,3.75,null,null,null,null,null];
-const FX_26=[17.85,17.25,17.90,17.35,17.25,17.47,17.42,null,null,null,null,null];
+const TIIE_26=[
+  7.30,7.31,7.03,7.01,6.76,6.76,null,null,null,null,null,null
+];
+const FED_26=[
+  3.75,3.75,3.75,3.75,3.75,3.75,null,null,null,null,null,null
+];
+const FX_26=[
+  17.35,17.22,18.03,17.52,17.35,17.45,null,null,null,null,null,null
+];
 const TIIE_BDG=MO26.map(()=>6.50);
 const FED_BDG=MO26.map(()=>3.00);
 const FX_BDG=[17.99,18.01,18.04,18.06,18.08,18.10,18.12,18.14,18.17,18.19,18.21,18.23];

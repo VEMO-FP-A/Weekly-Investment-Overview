@@ -140,30 +140,30 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
   <div class="section active" id="sec-overview">
     <div class="section-head">
       <span>Vista General</span>
-      <span class="section-note">Saldos al 30 Jun 2026</span>
+      <span class="section-note">Saldos al 27 Jul 2026</span>
     </div>
 
     <!-- KPI ROW 1 -->
     <div class="kpi-grid" style="grid-template-columns:repeat(4,minmax(0,1fr));">
       <div class="kpi-card">
         <div class="kpi-label">Caja Total</div>
-        <div class="kpi-value" style="font-size:24px;color:var(--teal);">$757.0M</div>
-        <div class="kpi-sub">MXN $148.1M + USD $35.0M (MXN eq.)</div>
+        <div class="kpi-value" style="font-size:24px;color:var(--teal);">$553.6M</div>
+        <div class="kpi-sub">MXN $65.4M + USD $28.1M (MXN eq.)</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">Caja Operativa</div>
-        <div class="kpi-value" style="font-size:24px;">$467.9M</div>
-        <div class="kpi-sub"><span style="color:var(--amber);font-weight:600;">● 61.8%</span> del total</div>
+        <div class="kpi-value" style="font-size:24px;">$265.1M</div>
+        <div class="kpi-sub"><span style="color:var(--amber);font-weight:600;">● 47.9%</span> del total</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">Restricted Cash Flow</div>
-        <div class="kpi-value" style="font-size:24px;">$289.1M</div>
-        <div class="kpi-sub"><span style="color:var(--text3);">● 38.2%</span> MORELCAMP</div>
+        <div class="kpi-value" style="font-size:24px;">$288.5M</div>
+        <div class="kpi-sub"><span style="color:var(--text3);">● 52.1%</span> MORELCAMP</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">Exposición a USD</div>
-        <div class="kpi-value" style="font-size:24px;color:var(--amber);">$608.9M</div>
-        <div class="kpi-sub">@ $17.40 · 80.4% del cash</div>
+        <div class="kpi-value" style="font-size:24px;color:var(--amber);">$488.2M</div>
+        <div class="kpi-sub">@ $17.40 · 88.2% del cash</div>
       </div>
     </div>
 
@@ -171,8 +171,8 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     <div class="kpi-grid" style="grid-template-columns:repeat(5,minmax(0,1fr));margin-top:-8px;">
       <div class="kpi-card" style="border:1px solid var(--red);">
         <div class="kpi-label">Runway <span style="font-weight:400;text-transform:none;letter-spacing:0;">(with vehicle payments)</span></div>
-        <div class="kpi-value" style="font-size:24px;color:var(--red);">2.9 <span style="font-size:14px;color:var(--text3);">meses</span></div>
-        <div class="kpi-sub">Jul–Ago: $185M/mes · Sep+: $105M/mes<br><span style="color:var(--red);font-weight:600;">Agotamiento: Oct 2026</span></div>
+        <div class="kpi-value" style="font-size:24px;color:var(--red);">1.4 <span style="font-size:14px;color:var(--text3);">meses</span></div>
+        <div class="kpi-sub">Ago: $185M · Sep+: $105M/mes · Mín: $40M<br><span style="color:var(--red);font-weight:600;">Agotamiento: Sep 2026</span></div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">TIIE Overnight MXN <span style="font-weight:400;text-transform:none;letter-spacing:0;">(1 día)</span></div>
@@ -192,7 +192,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       <div class="kpi-card">
         <div class="kpi-label">FX (MXN/USD) <span id="fxLiveBadge" style="display:none;font-size:8px;font-weight:400;text-transform:none;letter-spacing:0;background:rgba(17,171,171,.15);color:var(--teal);padding:2px 6px;border-radius:3px;margin-left:4px;">LIVE</span></div>
         <div class="kpi-value" style="font-size:24px;" id="fxLiveValue">17.40</div>
-        <div class="kpi-sub" id="fxLiveSub">30 Jun 2026 · <span style="font-size:9px;color:var(--text3);">Fuente: Banxico FIX / DOF</span></div>
+        <div class="kpi-sub" id="fxLiveSub">27 Jul 2026 · <span style="font-size:9px;color:var(--text3);">Fuente: Banxico FIX / DOF</span></div>
       </div>
     </div>
 
@@ -309,7 +309,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       </div>
       <div class="kpi-card">
         <div class="kpi-label">Rendimiento Mensual Esperado</div>
-        <div class="kpi-value" style="font-size:24px;color:var(--green);">$2.36M</div>
+        <div class="kpi-value" style="font-size:24px;color:var(--green);">$1.56M</div>
         <div class="kpi-sub">MXN equivalente *</div>
       </div>
       <div class="kpi-card">
@@ -722,7 +722,7 @@ const M_LABELS=[
   'Ene25','Feb25','Mar25','Abr25','May25','Jun25','Jul25','Ago25','Sep25','Oct25','Nov25','Dic25',
   'Ene26','Feb26','Mar26','Abr26','May26','Jun26','Jul26','Ago26','Sep26','Oct26','Nov26','Dic26'
 ];
-const PROJ_START=53; // último mes con data real
+const PROJ_START=54; // último mes con data real
 
 // TIIE 28d monthly
 const TIIE_M=[
@@ -730,14 +730,14 @@ const TIIE_M=[
   10.82,11.27,11.43,11.54,11.51,11.49,11.51,11.51,11.50,11.50,11.50,11.50,
   11.50,11.49,11.25,11.24,11.24,11.24,11.24,11.00,10.74,10.72,10.48,10.24,
   10.28,9.75,9.26,9.30,8.77,8.28,8.23,8.03,7.88,7.78,7.61,7.35,
-  7.30,7.31,7.03,7.01,6.76,6.76,null,null,null,null,null,null
+  7.30,7.31,7.03,7.01,6.76,6.76,6.76,null,null,null,null,null
 ];
 const TIIE_PROJ=[
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
-  null,null,null,null,null,6.76,null,6.50,6.50,6.50,6.50,6.50
+  null,null,null,null,null,null,6.76,6.50,6.50,6.50,6.50,6.50
 ];
 
 // Fed Funds Rate monthly (upper bound)
@@ -746,14 +746,14 @@ const FED_M=[
   4.50,4.75,5.00,5.00,5.25,5.25,5.50,5.50,5.50,5.50,5.50,5.50,
   5.50,5.50,5.50,5.50,5.50,5.50,5.50,5.50,5.00,5.00,4.75,4.50,
   4.50,4.50,4.50,4.50,4.50,4.50,4.50,4.50,4.25,4.00,4.00,3.75,
-  3.75,3.75,3.75,3.75,3.75,3.75,null,null,null,null,null,null
+  3.75,3.75,3.75,3.75,3.75,3.75,3.75,null,null,null,null,null
 ];
 const FED_PROJ=[
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
-  null,null,null,null,null,3.75,null,3.75,3.75,3.75,3.80,3.80
+  null,null,null,null,null,null,3.75,3.75,3.75,3.75,3.80,3.80
 ];
 
 // FX monthly
@@ -762,36 +762,35 @@ const FX_M=[
   18.80,18.34,18.02,18.00,17.75,17.14,16.72,16.88,17.41,18.05,17.38,16.90,
   17.18,17.06,16.56,17.06,16.99,18.26,18.60,19.66,19.69,20.03,20.31,20.86,
   20.63,20.53,20.46,19.59,19.39,18.83,18.80,18.64,18.34,18.55,18.29,18.01,
-  17.35,17.22,18.03,17.52,17.35,17.45,null,null,null,null,null,null
+  17.35,17.22,18.03,17.52,17.35,17.45,17.45,null,null,null,null,null
 ];
 const FX_PROJ=[
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
-  null,null,null,null,null,17.45,null,17.40,17.50,17.60,17.70,17.92
+  null,null,null,null,null,null,17.45,17.40,17.50,17.60,17.70,17.92
 ];
 // 2026 Monthly data for Actuals vs Budget zoom-in
 const MO26=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 const TIIE_26=[
-  7.30,7.31,7.03,7.01,6.76,6.76,null,null,null,null,null,null
+  7.30,7.31,7.03,7.01,6.76,6.76,6.76,null,null,null,null,null
 ];
 const FED_26=[
-  3.75,3.75,3.75,3.75,3.75,3.75,null,null,null,null,null,null
+  3.75,3.75,3.75,3.75,3.75,3.75,3.75,null,null,null,null,null
 ];
 const FX_26=[
-  17.35,17.22,18.03,17.52,17.35,17.45,null,null,null,null,null,null
+  17.35,17.22,18.03,17.52,17.35,17.45,17.45,null,null,null,null,null
 ];
 const TIIE_BDG=MO26.map(()=>6.50);
 const FED_BDG=MO26.map(()=>3.00);
 const FX_BDG=[17.99,18.01,18.04,18.06,18.08,18.10,18.12,18.14,18.17,18.19,18.21,18.23];
 
 const BANKS=[
-  {name:'BBVA',mxn:66546503,usd:18399139,rateMXN:0.0605,rateUSD:0.0315,color:'#1F5556'},
   {name:'BX+',mxn:0,usd:16255963,rateMXN:null,rateUSD:0.0323,color:'#11ABAB'},
-  {name:'Monex',mxn:32403103,usd:347123,rateMXN:0.0605,rateUSD:0.0275,color:'#2a8a8a'},
-  {name:'BASE',mxn:20724768,usd:0,rateMXN:0.0605,rateUSD:null,color:'#4abfbf'},
-  {name:'Otros',mxn:28452938,usd:0,rateMXN:0,rateUSD:null,color:'#3d9494'},
+  {name:'Monex',mxn:27796061,usd:11810586,rateMXN:0.0605,rateUSD:0.0275,color:'#2a8a8a'},
+  {name:'BASE',mxn:22253737,usd:0,rateMXN:0.0605,rateUSD:null,color:'#4abfbf'},
+  {name:'BBVA',mxn:15341000,usd:0,rateMXN:0.0605,rateUSD:0.0315,color:'#1F5556'},
 ];
 BANKS.forEach(b=>{b.totalMXN=b.mxn+(b.usd*FX);b.monthlyYield=(b.mxn*(b.rateMXN||0)+(b.usd*FX)*(b.rateUSD||0))/12;});
 const TOTAL_MXN_EQ=BANKS.reduce((s,b)=>s+b.totalMXN,0);
@@ -801,16 +800,14 @@ const TOTAL_USD_MXN=TOTAL_USD*FX;
 document.getElementById('totalMXNeq').textContent=fmtFull(TOTAL_MXN_EQ);
 
 const ENTITIES=[
-  {name:'HOLDCO',mxn:2960000,usd:18399139,total:323000000},
-  {name:'MORELCAMP',mxn:244000,usd:16603085,total:289100000},
-  {name:'DAE',mxn:70899355,usd:0,total:70899355},
-  {name:'FIMECO',mxn:42459978,usd:0,total:42459978},
-  {name:'GREEN',mxn:10382481,usd:0,total:10382481},
-  {name:'CHARGING',mxn:5988944,usd:0,total:5988944},
-  {name:'FLEETS',mxn:10139000,usd:0,total:10139000},
-  {name:'PSM',mxn:2297146,usd:0,total:2297146},
-  {name:'ESPACIOS',mxn:470000,usd:0,total:470000},
-  {name:'Otros',mxn:2283408,usd:0,total:2283408},
+  {name:'MORELCAMP',mxn:388000,usd:16563573,total:288511354},
+  {name:'HOLDCO',mxn:1451000,usd:11502975,total:201545253},
+  {name:'DAE',mxn:46922919,usd:0,total:46922919},
+  {name:'FLEETS',mxn:6518000,usd:0,total:6518000},
+  {name:'GREEN',mxn:6297307,usd:0,total:6297307},
+  {name:'FIMECO',mxn:2513661,usd:0,total:2513661},
+  {name:'Otros',mxn:1102000,usd:0,total:1102000},
+  {name:'PSM',mxn:197911,usd:0,total:197911},
 ];
 
 function fmt(n){if(Math.abs(n)>=1e9)return'$'+(n/1e9).toFixed(1)+'B';if(Math.abs(n)>=1e6)return'$'+(n/1e6).toFixed(1)+'M';if(Math.abs(n)>=1e3)return'$'+(n/1e3).toFixed(0)+'K';return'$'+n.toFixed(0);}

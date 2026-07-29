@@ -572,12 +572,149 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
   <div class="section" id="sec-capital">
     <div class="section-head">
       <span>Usos de Capital</span>
-      <span class="section-note">Próximamente</span>
+      <span class="section-note">Proyección semanal · Base: 27 Jul 2026</span>
     </div>
-    <div class="placeholder-section">
-      <div style="font-size:24px;margin-bottom:8px;">🚧</div>
-      <div style="font-weight:700;color:var(--teal);margin-bottom:4px;">Sección en Desarrollo</div>
-      <div>Incluirá proyecciones de uso de capital, vencimientos de deuda, pagos de vehículos y necesidades de liquidez por entidad.</div>
+
+    <!-- KPI ROW: summary -->
+    <div class="kpi-grid" style="grid-template-columns:repeat(4,minmax(0,1fr));">
+      <div class="kpi-card">
+        <div class="kpi-label">Pagos Ago (Autos)</div>
+        <div class="kpi-value" style="font-size:22px;color:var(--red);">$111.6M</div>
+        <div class="kpi-sub">260 unidades · GAC ES + BYD Yuan</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Pagos Sep (Autos)</div>
+        <div class="kpi-value" style="font-size:22px;color:var(--amber);">$44.6M</div>
+        <div class="kpi-sub">105 unidades · GAC ES</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Cargadores (Jul pagado)</div>
+        <div class="kpi-value" style="font-size:22px;color:var(--green);">$0</div>
+        <div class="kpi-sub">Jul: $71.3M pagado · Grasen + Autel</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Working Capital</div>
+        <div class="kpi-value" style="font-size:22px;">$40M<span style="font-size:12px;color:var(--text3);">/sem</span></div>
+        <div class="kpi-sub">Promedio tendencia últimos meses</div>
+      </div>
+    </div>
+
+    <!-- CRITICAL PAYMENT TRACKER -->
+    <div class="section-head-light"><span>Seguimiento de Pagos Críticos</span></div>
+    <div class="grid-2" style="margin-top:0;">
+      <!-- Vehicles -->
+      <div class="chart-card" style="padding:16px;">
+        <div style="font-weight:700;font-size:13px;color:var(--teal);margin-bottom:12px;">Vehículos</div>
+        <table style="width:100%;font-size:11px;border-collapse:collapse;">
+          <thead><tr style="color:var(--text3);border-bottom:1px solid var(--border);">
+            <th style="text-align:left;padding:4px 6px;">Modelo</th>
+            <th style="text-align:center;padding:4px;">Unid.</th>
+            <th style="text-align:right;padding:4px 6px;">Monto</th>
+            <th style="text-align:center;padding:4px 6px;">Fecha Est.</th>
+            <th style="text-align:center;padding:4px;">Status</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.04);">
+              <td style="padding:6px;">GAC UT (Light)</td><td style="text-align:center;">150</td>
+              <td style="text-align:right;font-weight:600;">$54.8M</td><td style="text-align:center;color:var(--text3);">Jul</td>
+              <td style="text-align:center;"><span style="color:var(--green);font-weight:700;">Pagado</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.04);">
+              <td style="padding:6px;">BYD Yuan Pro</td><td style="text-align:center;">60</td>
+              <td style="text-align:right;font-weight:600;">$29.9M</td><td style="text-align:center;color:var(--text3);">Jul</td>
+              <td style="text-align:center;"><span style="color:var(--green);font-weight:700;">Pagado</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.04);">
+              <td style="padding:6px;">Toyota Avanza</td><td style="text-align:center;">20</td>
+              <td style="text-align:right;font-weight:600;">$7.2M</td><td style="text-align:center;color:var(--text3);">Jul</td>
+              <td style="text-align:center;"><span style="color:var(--green);font-weight:700;">Pagado</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.06);background:rgba(245,158,11,.05);">
+              <td style="padding:6px;font-weight:600;">GAC ES (Premium)</td><td style="text-align:center;font-weight:600;">245</td>
+              <td style="text-align:right;font-weight:700;color:var(--red);">$104.1M</td><td style="text-align:center;font-weight:600;color:var(--amber);">10 Ago</td>
+              <td style="text-align:center;"><span style="color:var(--amber);font-weight:700;">Pendiente</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.06);background:rgba(245,158,11,.05);">
+              <td style="padding:6px;font-weight:600;">BYD Yuan Pro</td><td style="text-align:center;font-weight:600;">15</td>
+              <td style="text-align:right;font-weight:700;color:var(--amber);">$7.5M</td><td style="text-align:center;font-weight:600;color:var(--amber);">24 Ago</td>
+              <td style="text-align:center;"><span style="color:var(--amber);font-weight:700;">Pendiente</span></td>
+            </tr>
+            <tr style="background:rgba(239,68,68,.05);">
+              <td style="padding:6px;font-weight:600;">GAC ES (Premium)</td><td style="text-align:center;font-weight:600;">105</td>
+              <td style="text-align:right;font-weight:700;color:var(--red);">$44.6M</td><td style="text-align:center;font-weight:600;color:var(--red);">Sep</td>
+              <td style="text-align:center;"><span style="color:var(--red);font-weight:700;">Proyectado</span></td>
+            </tr>
+          </tbody>
+          <tfoot><tr style="border-top:1px solid var(--border);font-weight:700;">
+            <td style="padding:6px;">Pendiente Total</td><td style="text-align:center;">365</td>
+            <td style="text-align:right;color:var(--red);">$156.2M</td><td colspan="2" style="text-align:center;color:var(--text3);">Ago–Sep</td>
+          </tr></tfoot>
+        </table>
+      </div>
+      <!-- Chargers -->
+      <div class="chart-card" style="padding:16px;">
+        <div style="font-weight:700;font-size:13px;color:var(--teal);margin-bottom:12px;">Cargadores</div>
+        <table style="width:100%;font-size:11px;border-collapse:collapse;">
+          <thead><tr style="color:var(--text3);border-bottom:1px solid var(--border);">
+            <th style="text-align:left;padding:4px 6px;">Proveedor</th>
+            <th style="text-align:right;padding:4px 6px;">Anticipo</th>
+            <th style="text-align:right;padding:4px 6px;">Pago Restante</th>
+            <th style="text-align:center;padding:4px 6px;">Mes</th>
+            <th style="text-align:center;padding:4px;">Status</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.04);">
+              <td style="padding:6px;">Grasen</td>
+              <td style="text-align:right;">$25.6M</td><td style="text-align:right;">$40.9M</td>
+              <td style="text-align:center;color:var(--text3);">Jun–Jul</td>
+              <td style="text-align:center;"><span style="color:var(--green);font-weight:700;">Pagado</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.04);">
+              <td style="padding:6px;">Autel</td>
+              <td style="text-align:right;">$15.6M</td><td style="text-align:right;">$24.5M</td>
+              <td style="text-align:center;color:var(--text3);">May–Jul</td>
+              <td style="text-align:center;"><span style="color:var(--green);font-weight:700;">Pagado</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.04);">
+              <td style="padding:6px;">Others (ABB, EVBox, StarCharge)</td>
+              <td style="text-align:right;">—</td><td style="text-align:right;">$5.9M</td>
+              <td style="text-align:center;color:var(--text3);">Jul</td>
+              <td style="text-align:center;"><span style="color:var(--green);font-weight:700;">Pagado</span></td>
+            </tr>
+          </tbody>
+          <tfoot><tr style="border-top:1px solid var(--border);font-weight:700;">
+            <td style="padding:6px;">Total Pagado H2</td><td colspan="2" style="text-align:right;color:var(--green);">$131.9M</td>
+            <td colspan="2" style="text-align:center;color:var(--green);">Completado</td>
+          </tr></tfoot>
+        </table>
+        <div style="margin-top:16px;padding:10px;background:rgba(17,171,171,.08);border-radius:6px;font-size:11px;color:var(--text2);line-height:1.5;">
+          Sin pagos de cargadores pendientes para Ago–Dic. El CAPEX de cargadores H2 se concentró en Jul ($71.3M).
+        </div>
+      </div>
+    </div>
+
+    <!-- WEEKLY CASH WATERFALL -->
+    <div class="section-head-light"><span>Proyección Semanal de Caja Operativa</span>
+      <span style="font-size:10px;color:var(--text3);font-weight:400;">MXN millones · Inflows $25M/sem · WK $40M/sem · Caja mínima $40M</span>
+    </div>
+    <div class="chart-card" style="overflow-x:auto;">
+      <table id="waterfallTable" style="width:100%;min-width:800px;font-size:11px;border-collapse:collapse;text-align:right;">
+        <thead>
+          <tr style="color:var(--text3);border-bottom:1px solid var(--border);font-size:10px;text-transform:uppercase;letter-spacing:.5px;">
+            <th style="text-align:left;padding:6px;min-width:130px;"></th>
+            <th style="padding:6px;">17-Jul</th><th style="padding:6px;">20-Jul</th>
+            <th style="padding:6px;background:rgba(17,171,171,.08);">27-Jul</th>
+            <th style="padding:6px;">03-Ago</th><th style="padding:6px;">10-Ago</th>
+            <th style="padding:6px;">17-Ago</th><th style="padding:6px;">24-Ago</th>
+            <th style="padding:6px;">31-Ago</th><th style="padding:6px;">07-Sep</th>
+            <th style="padding:6px;">14-Sep</th>
+          </tr>
+        </thead>
+        <tbody id="waterfallBody"></tbody>
+      </table>
+    </div>
+    <div class="chart-card" style="height:280px;margin-top:4px;">
+      <canvas id="waterfallChart"></canvas>
     </div>
   </div>
 
@@ -1181,6 +1318,78 @@ updateYieldChart();
     tr.innerHTML='<td style="padding-left:28px;color:var(--text2);font-weight:400;">'+item.name+'</td>'+item.ints.map(function(v){return'<td>'+(v<0?'−$'+Math.abs(Math.round(v)).toLocaleString('en-US'):'$'+Math.round(v).toLocaleString('en-US'))+'</td>';}).join('')+'<td style="font-weight:700;color:var(--teal);">$'+Math.round(item.total).toLocaleString('en-US')+'</td>';
     tbody.appendChild(tr);
   });
+})();
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECTION 4 — WEEKLY CASH WATERFALL (USE OF FUNDS)
+// ═══════════════════════════════════════════════════════════════════════════════
+(function(){
+  var weeks=[
+    {label:'17-Jul',bop:390.3,inflows:0,vehicles:0,wk:0,usd:22.4,actual:true},
+    {label:'20-Jul',bop:390.3,inflows:25.0,vehicles:42.7,wk:40.0,usd:19.1,actual:true},
+    {label:'27-Jul',bop:332.7,inflows:25.0,vehicles:63.2,wk:40.0,usd:14.6,actual:true,current:true},
+    {label:'03-Ago',bop:254.4,inflows:25.0,vehicles:0,wk:40.0,usd:13.8},
+    {label:'10-Ago',bop:239.4,inflows:25.0,vehicles:104.1,wk:40.0,usd:6.9},
+    {label:'17-Ago',bop:120.3,inflows:25.0,vehicles:0,wk:40.0,usd:6.1},
+    {label:'24-Ago',bop:105.3,inflows:25.0,vehicles:7.5,wk:40.0,usd:4.8},
+    {label:'31-Ago',bop:82.8,inflows:25.0,vehicles:0,wk:40.0,usd:3.9},
+    {label:'07-Sep',bop:67.8,inflows:25.0,vehicles:22.3,wk:40.0,usd:1.8},
+    {label:'14-Sep',bop:30.5,inflows:25.0,vehicles:22.3,wk:40.0,usd:0},
+  ];
+  weeks.forEach(function(w){w.eop=w.bop+w.inflows-w.vehicles-w.wk;});
+  var MIN=40;
+  // Build table
+  var tb=document.getElementById('waterfallBody');
+  if(!tb)return;
+  function row(label,vals,opts){
+    opts=opts||{};
+    var tr=document.createElement('tr');
+    if(opts.border)tr.style.borderTop='1px solid var(--border)';
+    if(opts.bold)tr.style.fontWeight='700';
+    var td0=document.createElement('td');
+    td0.style.cssText='text-align:left;padding:6px;white-space:nowrap;color:'+(opts.color||'var(--text)')+';';
+    td0.textContent=label;
+    tr.appendChild(td0);
+    vals.forEach(function(v,i){
+      var td=document.createElement('td');
+      td.style.cssText='padding:6px;font-variant-numeric:tabular-nums;';
+      if(weeks[i].current)td.style.background='rgba(17,171,171,.08)';
+      if(opts.alert&&typeof v==='number'&&v<MIN)td.style.color='var(--red)';
+      if(typeof v==='number'){
+        if(opts.prefix)td.textContent=(v<0?'-':'')+opts.prefix+Math.abs(v).toFixed(1);
+        else td.textContent=v.toFixed(1);
+      }else td.textContent=v||'—';
+      tr.appendChild(td);
+    });
+    tb.appendChild(tr);
+  }
+  row('Cash BoP',weeks.map(function(w){return w.bop;}),{bold:true,prefix:'$'});
+  row('(+) Inflows',weeks.map(function(w){return w.inflows||null;}),{color:'var(--green)',prefix:'$'});
+  row('(−) Vehículos',weeks.map(function(w){return w.vehicles?-w.vehicles:null;}),{color:'var(--red)',prefix:'$'});
+  row('(−) Working Capital',weeks.map(function(w){return w.wk?-w.wk:null;}),{color:'var(--amber)',prefix:'$'});
+  row('Cash EoP (MXNm)',weeks.map(function(w){return w.eop;}),{bold:true,border:true,alert:true,prefix:'$'});
+  row('Cash EoP (USDm)',weeks.map(function(w){return w.usd;}),{color:'var(--text3)',prefix:'$'});
+  // Chart
+  var ctx=document.getElementById('waterfallChart');
+  if(!ctx)return;
+  var labels=weeks.map(function(w){return w.label;});
+  var eopData=weeks.map(function(w){return w.eop;});
+  var vehData=weeks.map(function(w){return w.vehicles;});
+  var wkData=weeks.map(function(w){return w.wk;});
+  var inflowData=weeks.map(function(w){return w.inflows;});
+  new Chart(ctx,{type:'bar',data:{labels:labels,datasets:[
+    {label:'Inflows',data:inflowData,backgroundColor:'rgba(16,185,129,.5)',borderColor:'#10B981',borderWidth:1,borderRadius:3,stack:'flow'},
+    {label:'Vehículos',data:vehData.map(function(v){return -v;}),backgroundColor:'rgba(239,68,68,.5)',borderColor:'#EF4444',borderWidth:1,borderRadius:3,stack:'flow'},
+    {label:'Working Capital',data:wkData.map(function(v){return -v;}),backgroundColor:'rgba(245,158,11,.4)',borderColor:'#F59E0B',borderWidth:1,borderRadius:3,stack:'flow'},
+    {label:'Cash EoP',data:eopData,type:'line',borderColor:'#11ABAB',backgroundColor:'transparent',borderWidth:2.5,pointRadius:5,pointBackgroundColor:eopData.map(function(v){return v<MIN?'#EF4444':'#11ABAB';}),pointBorderColor:'#161921',pointBorderWidth:2,tension:.3,order:0}
+  ]},plugins:[{id:'minLine',afterDraw:function(chart){var yScale=chart.scales.y;var yy=yScale.getPixelForValue(MIN);var c2=chart.ctx;c2.save();c2.beginPath();c2.setLineDash([6,4]);c2.strokeStyle='rgba(239,68,68,.6)';c2.lineWidth=2;c2.moveTo(chart.chartArea.left,yy);c2.lineTo(chart.chartArea.right,yy);c2.stroke();c2.fillStyle='#EF4444';c2.font='600 9px "Space Grotesk"';c2.fillText('Caja Mín $40M',chart.chartArea.left+4,yy-6);c2.restore();}}],options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+    plugins:{legend:{display:true,position:'bottom',labels:{font:{size:10},boxWidth:12,padding:10}},
+      tooltip:{...tooltipStyle,callbacks:{label:function(i){return' '+i.dataset.label+': $'+Math.abs(i.raw).toFixed(1)+'M';}}},
+    },
+    scales:{
+      x:{stacked:true,grid:{display:false},border:{display:false},ticks:{font:{size:9,weight:'500'},color:'#6B7280'}},
+      y:{stacked:true,grid:{color:'rgba(255,255,255,.04)'},border:{display:false},ticks:{font:{size:9},color:'#6B7280',callback:function(v){return'$'+v+'M';}}}
+    }}});
 })();
 
 // ═══════════════════════════════════════════════════════════════════════════════

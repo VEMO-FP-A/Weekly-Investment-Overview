@@ -169,10 +169,10 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
 
     <!-- KPI ROW 2 -->
     <div class="kpi-grid" style="grid-template-columns:repeat(5,minmax(0,1fr));margin-top:-8px;">
-      <div class="kpi-card" style="border:1px solid var(--red);">
-        <div class="kpi-label">Runway <span style="font-weight:400;text-transform:none;letter-spacing:0;">(with vehicle payments)</span></div>
-        <div class="kpi-value" style="font-size:24px;color:var(--red);">~6 <span style="font-size:14px;color:var(--text3);">semanas</span></div>
-        <div class="kpi-sub">Ago: $170M · Sep+: $105M/mes · Cargadores: $11.2M · Mín: $40M<br><span style="color:var(--red);font-weight:600;">Agotamiento: ~9 Sep 2026</span></div>
+      <div class="kpi-card" style="border:1px solid var(--amber);">
+        <div class="kpi-label">Runway <span style="font-weight:400;text-transform:none;letter-spacing:0;">(with debt draw)</span></div>
+        <div class="kpi-value" style="font-size:24px;color:var(--amber);">~9 <span style="font-size:14px;color:var(--text3);">semanas</span></div>
+        <div class="kpi-sub">BoP $254M + Debt $84M (14-Ago) · Neto: Ago $105M · Sep $185M<br>EoP Ago: $233M · EoP Sep: $49M<br><span style="color:var(--red);font-weight:600;">Agotamiento: ~2 Oct 2026</span></div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">TIIE Overnight MXN <span style="font-weight:400;text-transform:none;letter-spacing:0;">(1 día)</span></div>
@@ -576,26 +576,31 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     </div>
 
     <!-- KPI ROW: summary -->
-    <div class="kpi-grid" style="grid-template-columns:repeat(4,minmax(0,1fr));">
+    <div class="kpi-grid" style="grid-template-columns:repeat(5,minmax(0,1fr));">
       <div class="kpi-card" style="border-left:3px solid #1F5556;">
         <div class="kpi-label">Pagos Ago (Autos)</div>
-        <div class="kpi-value" style="font-size:22px;color:#4abfbf;">$111.6M</div>
-        <div class="kpi-sub">260 unidades · GAC ES + BYD Yuan</div>
+        <div class="kpi-value" style="font-size:20px;color:#4abfbf;">$136.5M</div>
+        <div class="kpi-sub">310 unidades · GAC ES + BYD</div>
       </div>
       <div class="kpi-card" style="border-left:3px solid #2a8a8a;">
         <div class="kpi-label">Pagos Sep (Autos)</div>
-        <div class="kpi-value" style="font-size:22px;color:#2a8a8a;">$44.6M</div>
+        <div class="kpi-value" style="font-size:20px;color:#2a8a8a;">$44.6M</div>
         <div class="kpi-sub">105 unidades · GAC ES</div>
       </div>
-      <div class="kpi-card" style="border-left:3px solid var(--teal);">
-        <div class="kpi-label">Cargadores (pendiente)</div>
-        <div class="kpi-value" style="font-size:22px;color:#4abfbf;">$11.2M</div>
-        <div class="kpi-sub">Autel: $6.0M Ago + $5.2M Sep</div>
+      <div class="kpi-card" style="border-left:3px solid #0E8585;">
+        <div class="kpi-label">Cargadores (pend.)</div>
+        <div class="kpi-value" style="font-size:20px;color:#4abfbf;">$11.0M</div>
+        <div class="kpi-sub">Autel: $5.9M Ago + $5.1M Sep</div>
+      </div>
+      <div class="kpi-card" style="border-left:3px solid #3d9e9e;">
+        <div class="kpi-label">Otros / Infra (pend.)</div>
+        <div class="kpi-value" style="font-size:20px;color:#4abfbf;">$2.3M</div>
+        <div class="kpi-sub">Hub GDL + Terreno TJ · 24 Ago</div>
       </div>
       <div class="kpi-card" style="border-left:3px solid var(--teal);">
-        <div class="kpi-label">Working Capital</div>
-        <div class="kpi-value" style="font-size:22px;color:var(--teal);">$40M<span style="font-size:12px;color:var(--text3);">/sem</span></div>
-        <div class="kpi-sub">Promedio tendencia últimos meses</div>
+        <div class="kpi-label">OPEX Semanal</div>
+        <div class="kpi-value" style="font-size:20px;color:var(--teal);">$35M<span style="font-size:12px;color:var(--text3);">/sem</span></div>
+        <div class="kpi-sub">+Nómina $10.8M (Q15+fin) +Renta 1er sem</div>
       </div>
     </div>
 
@@ -636,12 +641,17 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
               <td style="text-align:center;"><span style="color:var(--teal);font-weight:600;font-size:10px;background:rgba(17,171,171,.1);padding:2px 8px;border-radius:10px;">Pagado</span></td>
             </tr>
             <tr style="border-bottom:1px solid rgba(255,255,255,.06);background:rgba(17,171,171,.04);">
+              <td style="padding:6px;font-weight:600;">BYD Yuan Pro · CDMX</td><td style="text-align:center;font-weight:600;">50</td>
+              <td style="text-align:right;font-weight:700;color:#4abfbf;">$24.9M</td><td style="text-align:center;font-weight:600;color:var(--teal);">10 Ago</td>
+              <td style="text-align:center;"><span style="color:#4abfbf;font-weight:600;font-size:10px;background:rgba(74,191,191,.1);padding:2px 8px;border-radius:10px;">Pendiente</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.06);background:rgba(17,171,171,.04);">
               <td style="padding:6px;font-weight:600;">GAC ES (Premium)</td><td style="text-align:center;font-weight:600;">245</td>
               <td style="text-align:right;font-weight:700;color:#4abfbf;">$104.1M</td><td style="text-align:center;font-weight:600;color:var(--teal);">13 Ago</td>
               <td style="text-align:center;"><span style="color:#4abfbf;font-weight:600;font-size:10px;background:rgba(74,191,191,.1);padding:2px 8px;border-radius:10px;">Pendiente</span></td>
             </tr>
             <tr style="border-bottom:1px solid rgba(255,255,255,.06);background:rgba(17,171,171,.04);">
-              <td style="padding:6px;font-weight:600;">BYD Yuan Pro</td><td style="text-align:center;font-weight:600;">15</td>
+              <td style="padding:6px;font-weight:600;">BYD Yuan Pro · TJ</td><td style="text-align:center;font-weight:600;">15</td>
               <td style="text-align:right;font-weight:700;color:#4abfbf;">$7.5M</td><td style="text-align:center;font-weight:600;color:var(--teal);">24 Ago</td>
               <td style="text-align:center;"><span style="color:#4abfbf;font-weight:600;font-size:10px;background:rgba(74,191,191,.1);padding:2px 8px;border-radius:10px;">Pendiente</span></td>
             </tr>
@@ -652,8 +662,8 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
             </tr>
           </tbody>
           <tfoot><tr style="border-top:1px solid var(--border);font-weight:700;">
-            <td style="padding:6px;">Pendiente Total</td><td style="text-align:center;">365</td>
-            <td style="text-align:right;color:var(--red);">$156.2M</td><td colspan="2" style="text-align:center;color:var(--text3);">Ago–Sep</td>
+            <td style="padding:6px;">Pendiente Total</td><td style="text-align:center;">415</td>
+            <td style="text-align:right;color:var(--red);">$181.1M</td><td colspan="2" style="text-align:center;color:var(--text3);">Ago–Sep</td>
           </tr></tfoot>
         </table>
       </div>
@@ -696,32 +706,168 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
             </tr>
             <tr style="border-bottom:1px solid rgba(255,255,255,.06);background:rgba(17,171,171,.04);">
               <td style="padding:6px;font-weight:600;">Autel (anticipo)</td>
-              <td style="text-align:right;">—</td><td style="text-align:right;font-weight:700;color:#4abfbf;">$6.0M</td>
+              <td style="text-align:right;">—</td><td style="text-align:right;font-weight:700;color:#4abfbf;">$5.9M</td>
               <td style="text-align:center;font-weight:600;color:var(--teal);">~3 Ago</td>
               <td style="text-align:center;"><span style="color:#4abfbf;font-weight:600;font-size:10px;background:rgba(74,191,191,.1);padding:2px 8px;border-radius:10px;">Pendiente</span></td>
             </tr>
             <tr style="background:rgba(42,138,138,.06);">
               <td style="padding:6px;font-weight:600;">Autel (pago restante)</td>
-              <td style="text-align:right;">—</td><td style="text-align:right;font-weight:700;color:#2a8a8a;">$5.2M</td>
+              <td style="text-align:right;">—</td><td style="text-align:right;font-weight:700;color:#2a8a8a;">$5.1M</td>
               <td style="text-align:center;font-weight:600;color:#2a8a8a;">~12 Sep</td>
               <td style="text-align:center;"><span style="color:#2a8a8a;font-weight:600;font-size:10px;background:rgba(42,138,138,.15);padding:2px 8px;border-radius:10px;">Proyectado</span></td>
             </tr>
           </tbody>
           <tfoot><tr style="border-top:1px solid var(--border);font-weight:700;">
             <td style="padding:6px;">Total</td><td style="text-align:right;color:var(--green);">Pagado: $93.5M</td>
-            <td style="text-align:right;color:#4abfbf;">Pend: $11.2M</td>
+            <td style="text-align:right;color:#4abfbf;">Pend: $11.0M</td>
             <td colspan="2" style="text-align:center;color:var(--text3);">Ago–Sep</td>
           </tr></tfoot>
         </table>
         <div style="margin-top:16px;padding:10px;background:rgba(17,171,171,.08);border-radius:6px;font-size:11px;color:var(--text2);line-height:1.5;">
-          Pagos Autel pendientes: anticipo $6.0M (Ago) + pago restante $5.2M (Sep) = $11.2M. Cargadores pagados concentrados en May–Jul ($93.5M).
+          Pagos Autel pendientes: anticipo $5.9M (Ago) + pago restante $5.1M (Sep) = $11.0M. Cargadores pagados concentrados en May–Jul ($93.5M).
         </div>
       </div>
     </div>
 
+    <!-- Otros / Infraestructura -->
+    <div class="chart-card" style="padding:16px;margin-top:4px;">
+      <div style="font-weight:700;font-size:13px;color:var(--teal);margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+        <span style="width:3px;height:14px;background:var(--teal);border-radius:2px;display:inline-block;"></span>Otros / Infraestructura</div>
+      <table style="width:100%;font-size:11px;border-collapse:collapse;">
+        <thead><tr style="color:var(--teal);border-bottom:1px solid var(--border);font-size:9px;text-transform:uppercase;letter-spacing:.5px;">
+          <th style="text-align:left;padding:6px;">Concepto</th>
+          <th style="text-align:left;padding:6px;">Entidad</th>
+          <th style="text-align:right;padding:6px;">Monto</th>
+          <th style="text-align:center;padding:6px;">Fecha</th>
+          <th style="text-align:center;padding:6px;">Status</th>
+        </tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid rgba(255,255,255,.04);background:rgba(17,171,171,.04);">
+            <td style="padding:6px;font-weight:600;">Anchored Hub GDL<br><span style="font-weight:400;color:var(--text3);font-size:10px;">Depósito $264K + Rentas $529K</span></td>
+            <td style="text-align:left;color:var(--text2);">VCN</td>
+            <td style="text-align:right;font-weight:700;color:#4abfbf;">$0.8M</td>
+            <td style="text-align:center;font-weight:600;color:var(--teal);">24 Ago</td>
+            <td style="text-align:center;"><span style="color:#4abfbf;font-weight:600;font-size:10px;background:rgba(74,191,191,.1);padding:2px 8px;border-radius:10px;">Pendiente</span></td>
+          </tr>
+          <tr style="background:rgba(17,171,171,.04);">
+            <td style="padding:6px;font-weight:600;">Terreno TJ (1er Anchored Hub)<br><span style="font-weight:400;color:var(--text3);font-size:10px;">Pago inicial 4 meses · $88K USD</span></td>
+            <td style="text-align:left;color:var(--text2);">VCN</td>
+            <td style="text-align:right;font-weight:700;color:#4abfbf;">$1.5M</td>
+            <td style="text-align:center;font-weight:600;color:var(--teal);">24 Ago</td>
+            <td style="text-align:center;"><span style="color:#4abfbf;font-weight:600;font-size:10px;background:rgba(74,191,191,.1);padding:2px 8px;border-radius:10px;">Pendiente</span></td>
+          </tr>
+        </tbody>
+        <tfoot><tr style="border-top:1px solid var(--border);font-weight:700;">
+          <td style="padding:6px;" colspan="2">Total Pendiente</td>
+          <td style="text-align:right;color:#4abfbf;">$2.3M</td>
+          <td style="text-align:center;color:var(--text3);">24 Ago</td>
+          <td></td>
+        </tr></tfoot>
+      </table>
+    </div>
+
+    <!-- MONTHLY USE OF FUNDS TABLE -->
+    <div class="section-head-light" style="margin-top:12px;"><span>VEMO | Use of Funds</span>
+      <span style="font-size:10px;color:var(--text3);font-weight:400;">MXN$m (Investment) · USD$m (OPEX) · Verde = Actual · Gris = Proyectado</span>
+    </div>
+    <div class="chart-card" style="overflow-x:auto;padding:12px;">
+      <table style="width:100%;min-width:900px;font-size:11px;border-collapse:collapse;text-align:right;">
+        <thead>
+          <tr style="color:var(--teal);border-bottom:1px solid var(--border);font-size:9px;text-transform:uppercase;letter-spacing:.5px;">
+            <th style="text-align:left;padding:5px;min-width:60px;"></th>
+            <th style="text-align:left;padding:5px;min-width:130px;"></th>
+            <th style="padding:5px;">Mar</th><th style="padding:5px;">Abr</th><th style="padding:5px;">May</th>
+            <th style="padding:5px;">Jun</th><th style="padding:5px;">Jul</th>
+            <th style="padding:5px;background:rgba(17,171,171,.08);">Ago</th>
+            <th style="padding:5px;">Sep</th><th style="padding:5px;">Oct</th><th style="padding:5px;">Nov</th><th style="padding:5px;">Dic</th>
+          </tr>
+        </thead>
+        <tbody id="uofBody"></tbody>
+      </table>
+    </div>
+    <script>
+    (function(){
+      var tb=document.getElementById('uofBody');if(!tb)return;
+      // 0=Mar,1=Apr,...9=Dec — first 5 months (Mar-Jul) are actuals, rest projected
+      var act=[true,true,true,true,true,false,false,false,false,false];
+      var inv={
+        vehicles:[58.1,142.6,0,115.5,105.9,136.5,44.6,0,0,0],
+        chargers:[25.2,12.0,21.4,39.2,32.8,5.9,5.1,0,0,0],
+        otros:[0,0,0,0,0,2.3,0,0,0,0]
+      };
+      var opex={
+        argentina:[0.2,0.3,0.2,0.2,0.2,0.3,0.3,0.3,0.3,0.3],
+        nomina:[0.2,0.3,0.2,0.3,0.1,0.2,0.2,0.2,0.2,0.2],
+        fundraising:[0,0,0,0,0,0,0,0,0,0],
+        rent:[0.1,0.1,0.1,0.1,0.1,0.2,0.1,0.1,0.1,0.1],
+        consulting:[0.1,0,0,0.1,0,0.1,0.1,0.1,0.1,0.1],
+        software:[0,0,0,0.1,0,0,0,0,0,0],
+        fleet:[0,0,0,0,0,0,0,0,0,0],
+        others:[0,0,0,0,0,0,0,0,0,0],
+        operacion:[0,0,0,0,0,0,0,0,0,0],
+        marketing:[0,0,0,0,0,0,0,0,0,0]
+      };
+      var mxnTot=inv.vehicles.map(function(_,i){return +(inv.vehicles[i]+inv.chargers[i]+inv.otros[i]).toFixed(1);});
+      var usdTot=opex.argentina.map(function(_,i){
+        var s=0;for(var k in opex)s+=opex[k][i];return +s.toFixed(1);
+      });
+      function fmt(v,dec){return v===0?'0.0':v.toFixed(dec||1);}
+      function cell(v,isAct,opts){
+        opts=opts||{};
+        var c=isAct?(opts.color||'var(--green)'):'var(--text3)';
+        var fw=opts.bold?'700':'400';
+        var bg=opts.highlight?'rgba(17,171,171,.08)':'';
+        return '<td style="padding:5px;color:'+c+';font-weight:'+fw+';'+(bg?'background:'+bg:'')+'">'+(opts.prefix||'')+fmt(v,opts.dec)+'</td>';
+      }
+      function section(label){
+        return '<tr><td colspan="12" style="padding:8px 5px 4px;font-weight:700;font-size:12px;color:var(--text);letter-spacing:.5px;">'+label+'</td></tr>';
+      }
+      function dataRow(cat,subcategory,data,opts){
+        opts=opts||{};
+        var h='<tr style="border-bottom:1px solid rgba(255,255,255,.03);">';
+        h+='<td style="padding:5px;color:var(--text3);font-size:10px;font-style:italic;">'+cat+'</td>';
+        h+='<td style="padding:5px;text-align:left;white-space:nowrap;">'+subcategory+'</td>';
+        for(var i=0;i<10;i++){
+          h+=cell(data[i],act[i],{color:opts.color,bold:opts.bold,prefix:opts.prefix,highlight:i===5,dec:opts.dec});
+        }
+        return h+'</tr>';
+      }
+      function totalRow(label,data,opts){
+        opts=opts||{};
+        var h='<tr style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);">';
+        h+='<td style="padding:5px;"></td>';
+        h+='<td style="padding:5px;text-align:left;font-weight:700;white-space:nowrap;">'+label+'</td>';
+        for(var i=0;i<10;i++){
+          h+=cell(data[i],act[i],{bold:true,color:opts.color,prefix:opts.prefix,highlight:i===5,dec:opts.dec});
+        }
+        return h+'</tr>';
+      }
+      var html='';
+      html+=section('INVESTMENT');
+      html+=dataRow('Investment','Vehicle Payments',inv.vehicles,{color:'#4abfbf'});
+      html+=dataRow('Investment','Charging Infra',inv.chargers,{color:'#4abfbf'});
+      html+=dataRow('Investment','Otros / Infra',inv.otros,{color:'#4abfbf'});
+      html+=totalRow('Outflows in MXN$m',mxnTot,{color:'var(--teal)',prefix:'$'});
+      html+='<tr><td colspan="12" style="padding:4px;"></td></tr>';
+      html+=section('OPEX');
+      html+=dataRow('Operations','Argentina (Opex)',opex.argentina);
+      html+=dataRow('Operations','Nómina y gastos al personal',opex.nomina);
+      html+=dataRow('Operations','Fundraising Expenses',opex.fundraising);
+      html+=dataRow('Operations','Rent & Lease Expense',opex.rent);
+      html+=dataRow('Operations','Consulting services',opex.consulting);
+      html+=dataRow('Operations','Software & Tech Services',opex.software);
+      html+=dataRow('Operations','Fleet Telematics Services',opex.fleet);
+      html+=dataRow('Operations','Others',opex.others);
+      html+=dataRow('Operations','Operación',opex.operacion);
+      html+=dataRow('Operations','Marketing',opex.marketing);
+      html+=totalRow('Outflows in USD$m',usdTot,{color:'var(--teal)',prefix:'$'});
+      tb.innerHTML=html;
+    })();
+    </script>
+
     <!-- WEEKLY CASH WATERFALL -->
     <div class="section-head-light"><span>Proyección Semanal de Caja Operativa</span>
-      <span style="font-size:10px;color:var(--text3);font-weight:400;">MXN millones · Inflows $25M/sem · WK $40M/sem · Caja mínima $40M</span>
+      <span style="font-size:10px;color:var(--text3);font-weight:400;">MXN millones · Inflows $25M/sem · Debt Draw $84M (14-Ago) · Nómina $10.8M (Q15+fin) · Renta 1er sem · WK $35M/sem · Caja mín $40M</span>
     </div>
     <div class="chart-card" style="overflow-x:auto;">
       <table id="waterfallTable" style="width:100%;min-width:800px;font-size:11px;border-collapse:collapse;text-align:right;">
@@ -733,7 +879,8 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
             <th style="padding:6px;">03-Ago</th><th style="padding:6px;">10-Ago</th>
             <th style="padding:6px;">17-Ago</th><th style="padding:6px;">24-Ago</th>
             <th style="padding:6px;">31-Ago</th><th style="padding:6px;">07-Sep</th>
-            <th style="padding:6px;">14-Sep</th>
+            <th style="padding:6px;">14-Sep</th><th style="padding:6px;">21-Sep</th>
+            <th style="padding:6px;">28-Sep</th>
           </tr>
         </thead>
         <tbody id="waterfallBody"></tbody>
@@ -1351,20 +1498,24 @@ updateYieldChart();
 // ═══════════════════════════════════════════════════════════════════════════════
 (function(){
   var weeks=[
-    {label:'17-Jul',bop:390.3,inflows:0,vehicles:0,chargers:0,wk:0,usd:22.4,actual:true},
-    {label:'20-Jul',bop:390.3,inflows:25.0,vehicles:42.7,chargers:0,wk:40.0,usd:19.1,actual:true},
-    {label:'27-Jul',bop:332.7,inflows:25.0,vehicles:63.2,chargers:0,wk:40.0,usd:14.6,actual:true,current:true},
-    {label:'03-Ago',bop:0,inflows:25.0,vehicles:0,chargers:6.0,wk:40.0,usd:13.8},
-    {label:'10-Ago',bop:0,inflows:25.0,vehicles:104.1,chargers:0,wk:40.0,usd:6.9},
-    {label:'17-Ago',bop:0,inflows:25.0,vehicles:0,chargers:0,wk:40.0,usd:6.1},
-    {label:'24-Ago',bop:0,inflows:25.0,vehicles:7.5,chargers:0,wk:40.0,usd:4.8},
-    {label:'31-Ago',bop:0,inflows:25.0,vehicles:0,chargers:0,wk:40.0,usd:3.9},
-    {label:'07-Sep',bop:0,inflows:25.0,vehicles:22.3,chargers:0,wk:40.0,usd:1.8},
-    {label:'14-Sep',bop:0,inflows:25.0,vehicles:22.3,chargers:5.2,wk:40.0,usd:0},
+    {label:'17-Jul',bop:390.3,inflows:0,debt:0,vehicles:0,chargers:0,otros:0,nomina:0,renta:0,wk:0,actual:true},
+    {label:'20-Jul',bop:390.3,inflows:25.0,debt:0,vehicles:42.7,chargers:0,otros:0,nomina:0,renta:0,wk:40.0,actual:true},
+    {label:'27-Jul',bop:332.7,inflows:25.0,debt:0,vehicles:63.2,chargers:0,otros:0,nomina:10.8,renta:0,wk:29.2,actual:true,current:true},
+    {label:'03-Ago',bop:0,inflows:25.0,debt:0,vehicles:0,chargers:5.9,otros:0,nomina:0,renta:3.5,wk:35.0},
+    {label:'10-Ago',bop:0,inflows:25.0,debt:84.0,vehicles:129.0,chargers:0,otros:0,nomina:10.8,renta:0,wk:35.0},
+    {label:'17-Ago',bop:0,inflows:25.0,debt:0,vehicles:0,chargers:0,otros:0,nomina:0,renta:0,wk:35.0},
+    {label:'24-Ago',bop:0,inflows:25.0,debt:0,vehicles:7.5,chargers:0,otros:2.3,nomina:0,renta:0,wk:35.0},
+    {label:'31-Ago',bop:0,inflows:25.0,debt:0,vehicles:0,chargers:0,otros:0,nomina:10.8,renta:0,wk:35.0},
+    {label:'07-Sep',bop:0,inflows:25.0,debt:0,vehicles:22.3,chargers:0,otros:0,nomina:0,renta:1.7,wk:35.0},
+    {label:'14-Sep',bop:0,inflows:25.0,debt:0,vehicles:22.3,chargers:5.1,otros:0,nomina:10.8,renta:0,wk:35.0},
+    {label:'21-Sep',bop:0,inflows:25.0,debt:0,vehicles:0,chargers:0,otros:0,nomina:0,renta:0,wk:35.0},
+    {label:'28-Sep',bop:0,inflows:25.0,debt:0,vehicles:0,chargers:0,otros:0,nomina:10.8,renta:0,wk:35.0},
   ];
+  var FX=17.3;
   weeks.forEach(function(w,i){
     if(i>0&&!w.actual)w.bop=+(weeks[i-1].eop.toFixed(1));
-    w.eop=w.bop+w.inflows-w.vehicles-w.chargers-w.wk;
+    w.eop=w.bop+w.inflows+(w.debt||0)-w.vehicles-w.chargers-w.otros-w.nomina-w.renta-w.wk;
+    w.usd=+(w.eop/FX).toFixed(1);
   });
   var MIN=40;
   // Build table
@@ -1394,8 +1545,12 @@ updateYieldChart();
   }
   row('Cash BoP',weeks.map(function(w){return w.bop;}),{bold:true,prefix:'$',color:'var(--text)'});
   row('(+) Inflows',weeks.map(function(w){return w.inflows||null;}),{color:'var(--teal)',prefix:'$'});
+  row('(+) Debt Draw',weeks.map(function(w){return w.debt?w.debt:null;}),{color:'#3B82F6',prefix:'$'});
   row('(−) Vehículos',weeks.map(function(w){return w.vehicles?-w.vehicles:null;}),{color:'#1F5556',prefix:'$'});
   row('(−) Cargadores',weeks.map(function(w){return w.chargers?-w.chargers:null;}),{color:'#0E8585',prefix:'$'});
+  row('(−) Otros/Infra',weeks.map(function(w){return w.otros?-w.otros:null;}),{color:'#3d9e9e',prefix:'$'});
+  row('(−) Nómina',weeks.map(function(w){return w.nomina?-w.nomina:null;}),{color:'#e67e22',prefix:'$'});
+  row('(−) Renta',weeks.map(function(w){return w.renta?-w.renta:null;}),{color:'#9b59b6',prefix:'$'});
   row('(−) Working Capital',weeks.map(function(w){return w.wk?-w.wk:null;}),{color:'#2a8a8a',prefix:'$'});
   row('Cash EoP (MXNm)',weeks.map(function(w){return w.eop;}),{bold:true,border:true,alert:true,prefix:'$',color:'var(--green)'});
   row('Cash EoP (USDm)',weeks.map(function(w){return w.usd;}),{color:'var(--text3)',prefix:'$'});
@@ -1406,12 +1561,20 @@ updateYieldChart();
   var eopData=weeks.map(function(w){return w.eop;});
   var vehData=weeks.map(function(w){return w.vehicles;});
   var chgData=weeks.map(function(w){return w.chargers;});
+  var otrosData=weeks.map(function(w){return w.otros;});
+  var nomData=weeks.map(function(w){return w.nomina;});
+  var rentData=weeks.map(function(w){return w.renta;});
+  var debtData=weeks.map(function(w){return w.debt||0;});
   var wkData=weeks.map(function(w){return w.wk;});
   var inflowData=weeks.map(function(w){return w.inflows;});
   new Chart(ctx,{type:'bar',data:{labels:labels,datasets:[
     {label:'Inflows',data:inflowData,backgroundColor:'rgba(17,171,171,.45)',borderColor:'#11ABAB',borderWidth:1,borderRadius:3,stack:'flow'},
+    {label:'Debt Draw',data:debtData,backgroundColor:'rgba(59,130,246,.5)',borderColor:'#3B82F6',borderWidth:1,borderRadius:3,stack:'flow'},
     {label:'Vehículos',data:vehData.map(function(v){return -v;}),backgroundColor:'rgba(31,85,86,.7)',borderColor:'#1F5556',borderWidth:1,borderRadius:3,stack:'flow'},
     {label:'Cargadores',data:chgData.map(function(v){return -v;}),backgroundColor:'rgba(14,133,133,.55)',borderColor:'#0E8585',borderWidth:1,borderRadius:3,stack:'flow'},
+    {label:'Otros/Infra',data:otrosData.map(function(v){return -v;}),backgroundColor:'rgba(61,158,158,.5)',borderColor:'#3d9e9e',borderWidth:1,borderRadius:3,stack:'flow'},
+    {label:'Nómina',data:nomData.map(function(v){return -v;}),backgroundColor:'rgba(230,126,34,.55)',borderColor:'#e67e22',borderWidth:1,borderRadius:3,stack:'flow'},
+    {label:'Renta',data:rentData.map(function(v){return -v;}),backgroundColor:'rgba(155,89,182,.5)',borderColor:'#9b59b6',borderWidth:1,borderRadius:3,stack:'flow'},
     {label:'Working Capital',data:wkData.map(function(v){return -v;}),backgroundColor:'rgba(42,138,138,.4)',borderColor:'#2a8a8a',borderWidth:1,borderRadius:3,stack:'flow'},
     {label:'Cash EoP',data:eopData,type:'line',borderColor:'#00C896',backgroundColor:'transparent',borderWidth:2.5,pointRadius:5,pointBackgroundColor:eopData.map(function(v){return v<MIN?'#EF4444':'#00C896';}),pointBorderColor:'#161921',pointBorderWidth:2,tension:.3,order:0}
   ]},plugins:[{id:'minLine',afterDraw:function(chart){var yScale=chart.scales.y;var yy=yScale.getPixelForValue(MIN);var c2=chart.ctx;c2.save();c2.beginPath();c2.setLineDash([6,4]);c2.strokeStyle='rgba(239,68,68,.6)';c2.lineWidth=2;c2.moveTo(chart.chartArea.left,yy);c2.lineTo(chart.chartArea.right,yy);c2.stroke();c2.fillStyle='#EF4444';c2.font='600 9px "Space Grotesk"';c2.fillText('Caja Mín $40M',chart.chartArea.left+4,yy-6);c2.restore();}}],options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},

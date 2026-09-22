@@ -7,15 +7,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-:root{--bg:#0D0F14;--surface:#161921;--surface2:#1E2230;--border:#252A38;--teal:#11ABAB;--forest:#1F5556;--gray:#6B7280;--light:#0D0F14;--white:#161921;--text:#E8EAF0;--text2:#9CA3AF;--text3:#6B7280;--red:#EF4444;--green:#00C896;--amber:#F59E0B;--blue:#3B82F6;}
+:root{--bg:#F5F6F8;--surface:#FFFFFF;--surface2:#EFF1F4;--border:#DCE0E6;--teal:#11ABAB;--forest:#1A5C5C;--gray:#6B7280;--light:#FFFFFF;--white:#FFFFFF;--text:#1A1D23;--text2:#4B5563;--text3:#6B7280;--red:#DC2626;--green:#059669;--amber:#D97706;--blue:#2563EB;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
-.sidebar{position:fixed;left:0;top:0;bottom:0;width:28px;background:var(--surface);border-right:1px solid var(--border);z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:20px 0;}
-.sidebar-label{font-size:8px;font-weight:700;color:var(--teal);letter-spacing:.22em;text-transform:uppercase;writing-mode:vertical-rl;transform:rotate(180deg);}
-.sidebar-dot{width:8px;height:8px;border-radius:50%;background:var(--teal);}
-.sidebar-bottom{font-size:7px;color:var(--text3);writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.12em;text-transform:uppercase;}
-.nav-bar{position:sticky;top:0;z-index:90;background:var(--surface);border-bottom:1px solid var(--border);margin-left:28px;padding:0 40px;display:flex;align-items:stretch;gap:0;box-shadow:0 2px 12px rgba(0,0,0,.3);}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:28px;background:var(--forest);border-right:1px solid var(--border);z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:20px 0;}
+.sidebar-label{font-size:8px;font-weight:700;color:#FFFFFF;letter-spacing:.22em;text-transform:uppercase;writing-mode:vertical-rl;transform:rotate(180deg);}
+.sidebar-dot{width:8px;height:8px;border-radius:50%;background:#FFFFFF;}
+.sidebar-bottom{font-size:7px;color:rgba(255,255,255,.5);writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.12em;text-transform:uppercase;}
+.nav-bar{position:sticky;top:0;z-index:90;background:var(--surface);border-bottom:1px solid var(--border);margin-left:28px;padding:0 40px;display:flex;align-items:stretch;gap:0;box-shadow:0 2px 8px rgba(0,0,0,.08);}
 .nav-tab{padding:14px 24px;font-size:12px;font-weight:700;color:var(--text3);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;letter-spacing:.02em;white-space:nowrap;}
 .nav-tab:hover{color:var(--teal);background:rgba(17,171,171,.06);}
 .nav-tab.active{color:var(--teal);border-bottom-color:var(--teal);}
@@ -32,30 +32,30 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .badge-conf{font-size:9px;color:var(--text3);border:1px solid var(--border);border-radius:3px;padding:4px 10px;letter-spacing:.1em;text-transform:uppercase;}
 .section{display:none;animation:fadeIn .35s ease;}
 .section.active{display:block;}
-.section-head{background:var(--surface2);border:1px solid var(--border);color:var(--teal);font-size:13px;font-weight:700;padding:10px 18px;border-radius:5px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
+.section-head{background:var(--forest);border:1px solid var(--forest);color:#FFFFFF;font-size:13px;font-weight:700;padding:10px 18px;border-radius:5px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
 .section-head-light{border-left:4px solid var(--teal);padding:8px 14px;font-size:12px;font-weight:700;color:var(--teal);margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
-.section-note{font-size:10px;color:var(--text3);font-weight:400;}
+.section-note{font-size:10px;color:rgba(255,255,255,.7);font-weight:400;}
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:16px;}
 .kpi-card{background:var(--surface);padding:18px 16px;border-right:1px solid var(--border);transition:background .15s;}
 .kpi-card:last-child{border-right:none;}
 .kpi-card:hover{background:var(--surface2);}
 .kpi-label{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;}
-.kpi-value{font-size:26px;font-weight:800;color:var(--teal);line-height:1;margin-bottom:4px;text-shadow:0 0 20px rgba(17,171,171,.15);}
+.kpi-value{font-size:26px;font-weight:800;color:var(--teal);line-height:1;margin-bottom:4px;text-shadow:none;}
 .kpi-sub{font-size:11px;color:var(--text3);}
 .kpi-bar{height:3px;border-radius:2px;margin-top:10px;}
 .chart-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:16px;transition:box-shadow .2s;}
-.chart-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.3);}
-.chart-card-head{background:var(--surface2);border-bottom:1px solid var(--border);color:var(--teal);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
-.chart-card-head.forest{background:var(--surface2);}
-.chart-card-title{font-size:12px;font-weight:700;color:var(--text);}
-.chart-card-meta{font-size:10px;color:var(--text3);}
+.chart-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);}
+.chart-card-head{background:var(--forest);border-bottom:1px solid var(--forest);color:#FFFFFF;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.chart-card-head.forest{background:var(--forest);}
+.chart-card-title{font-size:12px;font-weight:700;color:#FFFFFF;}
+.chart-card-meta{font-size:10px;color:rgba(255,255,255,.7);}
 .chart-card-body{padding:16px 20px;}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
 .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px;}
 .tbl-outer{overflow-x:auto;border:1px solid var(--border);border-radius:6px;background:var(--surface);margin-bottom:16px;}
 table.dt{border-collapse:collapse;font-size:11px;width:100%;}
-table.dt thead th{padding:8px 12px;font-size:9px;font-weight:700;text-align:right;white-space:nowrap;background:var(--surface2);color:var(--teal);letter-spacing:.04em;border-bottom:1px solid var(--border);}
-table.dt thead th:first-child{text-align:left;position:sticky;left:0;min-width:100px;background:var(--surface2);}
+table.dt thead th{padding:8px 12px;font-size:9px;font-weight:700;text-align:right;white-space:nowrap;background:var(--forest);color:#FFFFFF;letter-spacing:.04em;border-bottom:1px solid var(--forest);}
+table.dt thead th:first-child{text-align:left;position:sticky;left:0;min-width:100px;background:var(--forest);}
 table.dt tbody td{padding:7px 12px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--border);font-variant-numeric:tabular-nums;color:var(--text);}
 table.dt tbody td:first-child{text-align:left;position:sticky;left:0;background:var(--surface);font-weight:600;}
 table.dt tbody tr:hover td{background:rgba(17,171,171,.06);}
@@ -96,7 +96,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
 .bank-row td:first-child{color:var(--text);}.bank-row:hover td{background:rgba(17,171,171,.06) !important;}
 .toggle-arrow{display:inline-block;width:12px;font-size:9px;color:var(--teal);transition:transform .2s;margin-right:2px;}
 .toggle-arrow.open{transform:rotate(90deg);}
-.entity-row td{background:var(--surface2) !important;font-size:10px;padding:5px 12px !important;border-bottom:1px solid rgba(37,42,56,.5) !important;}
+.entity-row td{background:var(--surface2) !important;font-size:10px;padding:5px 12px !important;border-bottom:1px solid var(--border) !important;}
 .entity-row td:first-child{background:var(--surface2) !important;}
 .inv-jump{font-size:10px;font-weight:600;color:var(--text3);background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:5px 12px;text-decoration:none;transition:all .15s;letter-spacing:.02em;cursor:pointer;}
 .inv-jump:hover{color:var(--teal);border-color:var(--teal);background:rgba(17,171,171,.06);}
@@ -116,7 +116,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
   <div class="nav-tab active" onclick="showSection('overview')"><span class="nav-num">1</span>Vista General</div>
   <div class="nav-tab" onclick="showSection('investments')"><span class="nav-num">2</span>Inversiones</div>
   <div class="nav-tab" onclick="showSection('analytics')"><span class="nav-num">3</span>Análisis & Escenarios</div>
-  <div class="nav-tab" onclick="showSection('capital')"><span class="nav-num">4</span>Usos de Capital</div>
+  <div class="nav-tab" onclick="showSection('capital')"><span class="nav-num">4</span>Cash Flow</div>
   <div class="nav-tab" onclick="showSection('authorized')"><span class="nav-num">5</span>Authorized Investments</div>
 </nav>
 
@@ -140,39 +140,42 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
   <div class="section active" id="sec-overview">
     <div class="section-head">
       <span>Vista General</span>
-      <span class="section-note">Saldos al 27 Jul 2026</span>
+      <span style="display:flex;align-items:center;gap:10px;">
+        <span class="section-note" id="saldos-label">Saldos al 14 Sep 2026</span>
+        <select id="cashDateSelect" style="background:#fff;color:#1A1D23;border:1px solid rgba(255,255,255,.3);border-radius:4px;padding:4px 8px;font-size:10px;font-family:'Space Grotesk',sans-serif;font-weight:600;cursor:pointer;outline:none;"></select>
+      </span>
     </div>
 
     <!-- KPI ROW 1 -->
     <div class="kpi-grid" style="grid-template-columns:repeat(4,minmax(0,1fr));">
       <div class="kpi-card">
         <div class="kpi-label">Caja Total</div>
-        <div class="kpi-value" style="font-size:24px;color:var(--teal);">$553.6M</div>
-        <div class="kpi-sub">MXN $65.4M + USD $28.1M (MXN eq.)</div>
+        <div class="kpi-value" style="font-size:24px;color:var(--teal);" id="kpi-total">$553.6M</div>
+        <div class="kpi-sub" id="kpi-total-sub">MXN $65.4M + USD $28.1M (MXN eq.)</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">Caja Operativa</div>
-        <div class="kpi-value" style="font-size:24px;">$265.1M</div>
-        <div class="kpi-sub"><span style="color:var(--amber);font-weight:600;">● 47.9%</span> del total</div>
+        <div class="kpi-value" style="font-size:24px;" id="kpi-op">$265.1M</div>
+        <div class="kpi-sub" id="kpi-op-sub"><span style="color:var(--amber);font-weight:600;">● 47.9%</span> del total</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Restricted Cash Flow</div>
-        <div class="kpi-value" style="font-size:24px;">$288.5M</div>
-        <div class="kpi-sub"><span style="color:var(--text3);">● 52.1%</span> MORELCAMP</div>
+        <div class="kpi-label">Restricted Cash (MC)</div>
+        <div class="kpi-value" style="font-size:24px;" id="kpi-restricted">$288.5M</div>
+        <div class="kpi-sub" id="kpi-restricted-sub"><span style="color:var(--text3);">● 52.1%</span> MORELCAMP</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">Exposición a USD</div>
-        <div class="kpi-value" style="font-size:24px;color:var(--amber);">$488.2M</div>
-        <div class="kpi-sub">@ $17.40 · 88.2% del cash</div>
+        <div class="kpi-value" style="font-size:24px;color:var(--amber);" id="kpi-usd">$488.2M</div>
+        <div class="kpi-sub" id="kpi-usd-sub">@ $17.40 · 88.2% del cash</div>
       </div>
     </div>
 
     <!-- KPI ROW 2 -->
     <div class="kpi-grid" style="grid-template-columns:repeat(5,minmax(0,1fr));margin-top:-8px;">
-      <div class="kpi-card" style="border:1px solid var(--amber);">
-        <div class="kpi-label">Runway <span style="font-weight:400;text-transform:none;letter-spacing:0;">(with debt draw)</span></div>
-        <div class="kpi-value" style="font-size:24px;color:var(--amber);">~9 <span style="font-size:14px;color:var(--text3);">semanas</span></div>
-        <div class="kpi-sub">BoP $254M + Debt $84M (14-Ago) · Neto: Ago $105M · Sep $185M<br>EoP Ago: $233M · EoP Sep: $49M<br><span style="color:var(--red);font-weight:600;">Agotamiento: ~2 Oct 2026</span></div>
+      <div class="kpi-card" style="border:1px solid var(--teal);">
+        <div class="kpi-label">Runway <span style="font-weight:400;text-transform:none;letter-spacing:0;">(post-capitalización)</span></div>
+        <div class="kpi-value" style="font-size:24px;color:var(--teal);">~23 <span style="font-size:14px;color:var(--text3);">semanas</span></div>
+        <div class="kpi-sub">Actual 07-Sep: $140M · Capitalización +$403M (28-Sep)<br>EoP Oct: $378M · Burn ~$22M/sem<br><span style="color:var(--teal);font-weight:600;">Agotamiento: ~Mar 2027</span></div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">TIIE Overnight MXN <span style="font-weight:400;text-transform:none;letter-spacing:0;">(1 día)</span></div>
@@ -186,8 +189,8 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       </div>
       <div class="kpi-card">
         <div class="kpi-label">Tasa Financiamiento Blended</div>
-        <div class="kpi-value" style="font-size:24px;color:var(--amber);">14.29%</div>
-        <div class="kpi-sub">May'26 · Ponderado todas las entidades</div>
+        <div class="kpi-value" style="font-size:24px;color:var(--amber);">13.74%</div>
+        <div class="kpi-sub">Ago'26 · Ponderado todas las entidades</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">FX (MXN/USD) <span id="fxLiveBadge" style="display:none;font-size:8px;font-weight:400;text-transform:none;letter-spacing:0;background:rgba(17,171,171,.15);color:var(--teal);padding:2px 6px;border-radius:3px;margin-left:4px;">LIVE</span></div>
@@ -567,328 +570,349 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
   </div>
 
   <!-- ═══════════════════════════════════════════════════════════════ -->
-  <!-- SECTION 4 · USOS DE CAPITAL                                     -->
+  <!-- SECTION 4 · CASH FLOW                                           -->
   <!-- ═══════════════════════════════════════════════════════════════ -->
   <div class="section" id="sec-capital">
     <div class="section-head">
-      <span>Usos de Capital</span>
-      <span class="section-note">Proyección semanal · Base: 27 Jul 2026</span>
+      <span>Cash Flow</span>
+      <span class="section-note">Semanal · Ago–Oct 2026 · MXN$m · Verde=Actual · Gris=Proyección</span>
     </div>
 
-    <!-- KPI ROW: summary -->
-    <div class="kpi-grid" style="grid-template-columns:repeat(5,minmax(0,1fr));">
-      <div class="kpi-card" style="border-left:3px solid #1F5556;">
-        <div class="kpi-label">Pagos Ago (Autos)</div>
-        <div class="kpi-value" style="font-size:20px;color:#4abfbf;">$136.5M</div>
-        <div class="kpi-sub">310 unidades · GAC ES + BYD</div>
-      </div>
-      <div class="kpi-card" style="border-left:3px solid #2a8a8a;">
-        <div class="kpi-label">Pagos Sep (Autos)</div>
-        <div class="kpi-value" style="font-size:20px;color:#2a8a8a;">$44.6M</div>
-        <div class="kpi-sub">105 unidades · GAC ES</div>
-      </div>
-      <div class="kpi-card" style="border-left:3px solid #0E8585;">
-        <div class="kpi-label">Cargadores (pend.)</div>
-        <div class="kpi-value" style="font-size:20px;color:#4abfbf;">$11.0M</div>
-        <div class="kpi-sub">Autel: $5.9M Ago + $5.1M Sep</div>
-      </div>
-      <div class="kpi-card" style="border-left:3px solid #3d9e9e;">
-        <div class="kpi-label">Otros / Infra (pend.)</div>
-        <div class="kpi-value" style="font-size:20px;color:#4abfbf;">$2.3M</div>
-        <div class="kpi-sub">Hub GDL + Terreno TJ · 24 Ago</div>
-      </div>
-      <div class="kpi-card" style="border-left:3px solid var(--teal);">
-        <div class="kpi-label">OPEX Semanal</div>
-        <div class="kpi-value" style="font-size:20px;color:var(--teal);">$35M<span style="font-size:12px;color:var(--text3);">/sem</span></div>
-        <div class="kpi-sub">+Nómina $10.8M (Q15+fin) +Renta 1er sem</div>
-      </div>
+    <!-- ENTITY SELECTOR -->
+    <div style="display:flex;align-items:center;gap:12px;margin:8px 0 12px;">
+      <label style="font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;">Vista:</label>
+      <select id="entitySelector" onchange="switchEntityView(this.value)" style="padding:6px 28px 6px 12px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-family:inherit;color:var(--text);background:var(--card);cursor:pointer;appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%226%22><path d=%22M0 0l5 6 5-6z%22 fill=%22%236B7280%22/></svg>');background-repeat:no-repeat;background-position:right 10px center;">
+        <option value="general">Vista General</option>
+        <option value="HOLDCO">HoldCo</option>
+        <option value="LTO">LTO</option>
+        <option value="DAE">DAE</option>
+        <option value="VCN">VCN</option>
+        <option value="AuHaus">Au Haus</option>
+        <option value="CF">CF</option>
+        <option value="Green">Green</option>
+        <option value="PSM">PSM</option>
+        <option value="EMC">EMC</option>
+        <option value="IP">IP</option>
+        <option value="MC">MC</option>
+      </select>
     </div>
 
-    <!-- CRITICAL PAYMENT TRACKER -->
-    <div class="section-head-light"><span>Seguimiento de Pagos Críticos</span></div>
-    <div class="grid-2" style="margin-top:0;">
-      <!-- Vehicles -->
-      <div class="chart-card" style="padding:16px;">
-        <div style="font-weight:700;font-size:13px;color:var(--teal);margin-bottom:12px;display:flex;align-items:center;gap:8px;">
-          <span style="width:3px;height:14px;background:var(--teal);border-radius:2px;display:inline-block;"></span>Vehículos</div>
-        <table style="width:100%;font-size:11px;border-collapse:collapse;">
-          <thead><tr style="color:var(--teal);border-bottom:1px solid var(--border);font-size:9px;text-transform:uppercase;letter-spacing:.5px;">
-            <th style="text-align:left;padding:6px;">Modelo</th>
-            <th style="text-align:center;padding:6px;">Unid.</th>
-            <th style="text-align:right;padding:6px;">Monto</th>
-            <th style="text-align:center;padding:6px;">Fecha</th>
-            <th style="text-align:center;padding:6px;">Status</th>
-          </tr></thead>
-          <tbody>
-            <tr style="border-bottom:1px solid rgba(255,255,255,.04);">
-              <td style="padding:6px;">GAC UT (Light)</td><td style="text-align:center;">150</td>
-              <td style="text-align:right;font-weight:600;">$54.8M</td><td style="text-align:center;color:var(--text3);">21–31 Jul</td>
-              <td style="text-align:center;"><span style="color:var(--teal);font-weight:600;font-size:10px;background:rgba(17,171,171,.1);padding:2px 8px;border-radius:10px;">Pagado</span></td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,.04);">
-              <td style="padding:6px;">BYD Yuan Pro</td><td style="text-align:center;">60</td>
-              <td style="text-align:right;font-weight:600;">$29.9M</td><td style="text-align:center;color:var(--text3);">20 Jul</td>
-              <td style="text-align:center;"><span style="color:var(--teal);font-weight:600;font-size:10px;background:rgba(17,171,171,.1);padding:2px 8px;border-radius:10px;">Pagado</span></td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,.04);">
-              <td style="padding:6px;">Toyota Avanza</td><td style="text-align:center;">20</td>
-              <td style="text-align:right;font-weight:600;">$7.2M</td><td style="text-align:center;color:var(--text3);">14 Jul</td>
-              <td style="text-align:center;"><span style="color:var(--teal);font-weight:600;font-size:10px;background:rgba(17,171,171,.1);padding:2px 8px;border-radius:10px;">Pagado</span></td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,.04);">
-              <td style="padding:6px;">GAC ES (Premium) · GDL</td><td style="text-align:center;">50</td>
-              <td style="text-align:right;font-weight:600;">$21.3M</td><td style="text-align:center;color:var(--text3);">27–29 Jul</td>
-              <td style="text-align:center;"><span style="color:var(--teal);font-weight:600;font-size:10px;background:rgba(17,171,171,.1);padding:2px 8px;border-radius:10px;">Pagado</span></td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,.06);background:rgba(17,171,171,.04);">
-              <td style="padding:6px;font-weight:600;">BYD Yuan Pro · CDMX</td><td style="text-align:center;font-weight:600;">50</td>
-              <td style="text-align:right;font-weight:700;color:#4abfbf;">$24.9M</td><td style="text-align:center;font-weight:600;color:var(--teal);">10 Ago</td>
-              <td style="text-align:center;"><span style="color:#4abfbf;font-weight:600;font-size:10px;background:rgba(74,191,191,.1);padding:2px 8px;border-radius:10px;">Pendiente</span></td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,.06);background:rgba(17,171,171,.04);">
-              <td style="padding:6px;font-weight:600;">GAC ES (Premium)</td><td style="text-align:center;font-weight:600;">245</td>
-              <td style="text-align:right;font-weight:700;color:#4abfbf;">$104.1M</td><td style="text-align:center;font-weight:600;color:var(--teal);">13 Ago</td>
-              <td style="text-align:center;"><span style="color:#4abfbf;font-weight:600;font-size:10px;background:rgba(74,191,191,.1);padding:2px 8px;border-radius:10px;">Pendiente</span></td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,.06);background:rgba(17,171,171,.04);">
-              <td style="padding:6px;font-weight:600;">BYD Yuan Pro · TJ</td><td style="text-align:center;font-weight:600;">15</td>
-              <td style="text-align:right;font-weight:700;color:#4abfbf;">$7.5M</td><td style="text-align:center;font-weight:600;color:var(--teal);">24 Ago</td>
-              <td style="text-align:center;"><span style="color:#4abfbf;font-weight:600;font-size:10px;background:rgba(74,191,191,.1);padding:2px 8px;border-radius:10px;">Pendiente</span></td>
-            </tr>
-            <tr style="background:rgba(42,138,138,.06);">
-              <td style="padding:6px;font-weight:600;">GAC ES (Premium)</td><td style="text-align:center;font-weight:600;">105</td>
-              <td style="text-align:right;font-weight:700;color:#2a8a8a;">$44.6M</td><td style="text-align:center;font-weight:600;color:#2a8a8a;">Sep</td>
-              <td style="text-align:center;"><span style="color:#2a8a8a;font-weight:600;font-size:10px;background:rgba(42,138,138,.15);padding:2px 8px;border-radius:10px;">Proyectado</span></td>
-            </tr>
-          </tbody>
-          <tfoot><tr style="border-top:1px solid var(--border);font-weight:700;">
-            <td style="padding:6px;">Pendiente Total</td><td style="text-align:center;">415</td>
-            <td style="text-align:right;color:var(--red);">$181.1M</td><td colspan="2" style="text-align:center;color:var(--text3);">Ago–Sep</td>
-          </tr></tfoot>
-        </table>
-      </div>
-      <!-- Chargers -->
-      <div class="chart-card" style="padding:16px;">
-        <div style="font-weight:700;font-size:13px;color:var(--teal);margin-bottom:12px;display:flex;align-items:center;gap:6px;">
-          <span style="width:3px;height:14px;background:var(--teal);border-radius:2px;display:inline-block;"></span>Cargadores</div>
-        <table style="width:100%;font-size:11px;border-collapse:collapse;">
-          <thead><tr style="color:var(--teal);border-bottom:1px solid var(--border);font-size:9px;text-transform:uppercase;letter-spacing:.5px;">
-            <th style="text-align:left;padding:6px;">Proveedor</th>
-            <th style="text-align:right;padding:6px;">Anticipo</th>
-            <th style="text-align:right;padding:6px;">Pago Restante</th>
-            <th style="text-align:center;padding:6px;">Mes</th>
-            <th style="text-align:center;padding:6px;">Status</th>
-          </tr></thead>
-          <tbody>
-            <tr style="border-bottom:1px solid rgba(255,255,255,.04);">
-              <td style="padding:6px;">Grasen (anticipo)</td>
-              <td style="text-align:right;">$25.6M</td><td style="text-align:right;">—</td>
-              <td style="text-align:center;color:var(--text3);">Jun</td>
-              <td style="text-align:center;"><span style="color:var(--teal);font-weight:600;font-size:10px;background:rgba(17,171,171,.1);padding:2px 8px;border-radius:10px;">Pagado</span></td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,.04);">
-              <td style="padding:6px;">Grasen (finiquito)</td>
-              <td style="text-align:right;">—</td><td style="text-align:right;">$26.9M</td>
-              <td style="text-align:center;color:var(--text3);">30 Jul</td>
-              <td style="text-align:center;"><span style="color:var(--teal);font-weight:600;font-size:10px;background:rgba(17,171,171,.1);padding:2px 8px;border-radius:10px;">Pagado</span></td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,.04);">
-              <td style="padding:6px;">Autel (anticipos)</td>
-              <td style="text-align:right;">$29.2M</td><td style="text-align:right;">—</td>
-              <td style="text-align:center;color:var(--text3);">May–Jun</td>
-              <td style="text-align:center;"><span style="color:var(--teal);font-weight:600;font-size:10px;background:rgba(17,171,171,.1);padding:2px 8px;border-radius:10px;">Pagado</span></td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,.04);">
-              <td style="padding:6px;">Others (ABB, EVBox, StarCharge)</td>
-              <td style="text-align:right;">$5.8M</td><td style="text-align:right;">$5.9M</td>
-              <td style="text-align:center;color:var(--text3);">May–Jul</td>
-              <td style="text-align:center;"><span style="color:var(--teal);font-weight:600;font-size:10px;background:rgba(17,171,171,.1);padding:2px 8px;border-radius:10px;">Pagado</span></td>
-            </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,.06);background:rgba(17,171,171,.04);">
-              <td style="padding:6px;font-weight:600;">Autel (anticipo)</td>
-              <td style="text-align:right;">—</td><td style="text-align:right;font-weight:700;color:#4abfbf;">$5.9M</td>
-              <td style="text-align:center;font-weight:600;color:var(--teal);">~3 Ago</td>
-              <td style="text-align:center;"><span style="color:#4abfbf;font-weight:600;font-size:10px;background:rgba(74,191,191,.1);padding:2px 8px;border-radius:10px;">Pendiente</span></td>
-            </tr>
-            <tr style="background:rgba(42,138,138,.06);">
-              <td style="padding:6px;font-weight:600;">Autel (pago restante)</td>
-              <td style="text-align:right;">—</td><td style="text-align:right;font-weight:700;color:#2a8a8a;">$5.1M</td>
-              <td style="text-align:center;font-weight:600;color:#2a8a8a;">~12 Sep</td>
-              <td style="text-align:center;"><span style="color:#2a8a8a;font-weight:600;font-size:10px;background:rgba(42,138,138,.15);padding:2px 8px;border-radius:10px;">Proyectado</span></td>
-            </tr>
-          </tbody>
-          <tfoot><tr style="border-top:1px solid var(--border);font-weight:700;">
-            <td style="padding:6px;">Total</td><td style="text-align:right;color:var(--green);">Pagado: $93.5M</td>
-            <td style="text-align:right;color:#4abfbf;">Pend: $11.0M</td>
-            <td colspan="2" style="text-align:center;color:var(--text3);">Ago–Sep</td>
-          </tr></tfoot>
-        </table>
-        <div style="margin-top:16px;padding:10px;background:rgba(17,171,171,.08);border-radius:6px;font-size:11px;color:var(--text2);line-height:1.5;">
-          Pagos Autel pendientes: anticipo $5.9M (Ago) + pago restante $5.1M (Sep) = $11.0M. Cargadores pagados concentrados en May–Jul ($93.5M).
-        </div>
-      </div>
-    </div>
+    <!-- GENERAL VIEW -->
+    <div id="cashView-general">
 
-    <!-- Otros / Infraestructura -->
-    <div class="chart-card" style="padding:16px;margin-top:4px;">
-      <div style="font-weight:700;font-size:13px;color:var(--teal);margin-bottom:12px;display:flex;align-items:center;gap:6px;">
-        <span style="width:3px;height:14px;background:var(--teal);border-radius:2px;display:inline-block;"></span>Otros / Infraestructura</div>
-      <table style="width:100%;font-size:11px;border-collapse:collapse;">
-        <thead><tr style="color:var(--teal);border-bottom:1px solid var(--border);font-size:9px;text-transform:uppercase;letter-spacing:.5px;">
-          <th style="text-align:left;padding:6px;">Concepto</th>
-          <th style="text-align:left;padding:6px;">Entidad</th>
-          <th style="text-align:right;padding:6px;">Monto</th>
-          <th style="text-align:center;padding:6px;">Fecha</th>
-          <th style="text-align:center;padding:6px;">Status</th>
-        </tr></thead>
-        <tbody>
-          <tr style="border-bottom:1px solid rgba(255,255,255,.04);background:rgba(17,171,171,.04);">
-            <td style="padding:6px;font-weight:600;">Anchored Hub GDL<br><span style="font-weight:400;color:var(--text3);font-size:10px;">Depósito $264K + Rentas $529K</span></td>
-            <td style="text-align:left;color:var(--text2);">VCN</td>
-            <td style="text-align:right;font-weight:700;color:#4abfbf;">$0.8M</td>
-            <td style="text-align:center;font-weight:600;color:var(--teal);">24 Ago</td>
-            <td style="text-align:center;"><span style="color:#4abfbf;font-weight:600;font-size:10px;background:rgba(74,191,191,.1);padding:2px 8px;border-radius:10px;">Pendiente</span></td>
-          </tr>
-          <tr style="background:rgba(17,171,171,.04);">
-            <td style="padding:6px;font-weight:600;">Terreno TJ (1er Anchored Hub)<br><span style="font-weight:400;color:var(--text3);font-size:10px;">Pago inicial 4 meses · $88K USD</span></td>
-            <td style="text-align:left;color:var(--text2);">VCN</td>
-            <td style="text-align:right;font-weight:700;color:#4abfbf;">$1.5M</td>
-            <td style="text-align:center;font-weight:600;color:var(--teal);">24 Ago</td>
-            <td style="text-align:center;"><span style="color:#4abfbf;font-weight:600;font-size:10px;background:rgba(74,191,191,.1);padding:2px 8px;border-radius:10px;">Pendiente</span></td>
-          </tr>
-        </tbody>
-        <tfoot><tr style="border-top:1px solid var(--border);font-weight:700;">
-          <td style="padding:6px;" colspan="2">Total Pendiente</td>
-          <td style="text-align:right;color:#4abfbf;">$2.3M</td>
-          <td style="text-align:center;color:var(--text3);">24 Ago</td>
-          <td></td>
-        </tr></tfoot>
-      </table>
-    </div>
-
-    <!-- MONTHLY USE OF FUNDS TABLE -->
-    <div class="section-head-light" style="margin-top:12px;"><span>VEMO | Use of Funds</span>
-      <span style="font-size:10px;color:var(--text3);font-weight:400;">MXN$m (Investment) · USD$m (OPEX) · Verde = Actual · Gris = Proyectado</span>
+    <!-- CASH BALANCES BY ENTITY -->
+    <div class="section-head-light"><span>Saldo de Caja por Entidad</span>
+      <span style="font-size:10px;color:var(--text3);font-weight:400;">MXN$m · Saldo al inicio de cada semana</span>
     </div>
     <div class="chart-card" style="overflow-x:auto;padding:12px;">
-      <table style="width:100%;min-width:900px;font-size:11px;border-collapse:collapse;text-align:right;">
-        <thead>
-          <tr style="color:var(--teal);border-bottom:1px solid var(--border);font-size:9px;text-transform:uppercase;letter-spacing:.5px;">
-            <th style="text-align:left;padding:5px;min-width:60px;"></th>
-            <th style="text-align:left;padding:5px;min-width:130px;"></th>
-            <th style="padding:5px;">Mar</th><th style="padding:5px;">Abr</th><th style="padding:5px;">May</th>
-            <th style="padding:5px;">Jun</th><th style="padding:5px;">Jul</th>
-            <th style="padding:5px;background:rgba(17,171,171,.08);">Ago</th>
-            <th style="padding:5px;">Sep</th><th style="padding:5px;">Oct</th><th style="padding:5px;">Nov</th><th style="padding:5px;">Dic</th>
-          </tr>
-        </thead>
-        <tbody id="uofBody"></tbody>
-      </table>
+      <table id="cashBalTable" style="width:100%;min-width:1000px;font-size:11px;border-collapse:collapse;text-align:right;"></table>
     </div>
+
+    <!-- DELTA BY ENTITY -->
+    <div class="section-head-light" style="margin-top:8px;"><span>Variación Semanal (Delta)</span>
+      <span style="font-size:10px;color:var(--text3);font-weight:400;">MXN$m · Cambio vs semana anterior</span>
+    </div>
+    <div class="chart-card" style="overflow-x:auto;padding:12px;">
+      <table id="cashDeltaTable" style="width:100%;min-width:1000px;font-size:11px;border-collapse:collapse;text-align:right;"></table>
+    </div>
+
+    <!-- CASH TRAJECTORY CHART -->
+    <div class="chart-card" style="height:300px;margin-top:8px;">
+      <canvas id="cashTrajectoryChart"></canvas>
+    </div>
+    </div><!-- /cashView-general -->
+
+    <!-- ENTITY DETAIL VIEWS (hidden by default) -->
+    <div id="entityDetailContainer" style="display:none;"></div>
+
     <script>
-    (function(){
-      var tb=document.getElementById('uofBody');if(!tb)return;
-      // 0=Mar,1=Apr,...9=Dec — first 5 months (Mar-Jul) are actuals, rest projected
-      var act=[true,true,true,true,true,false,false,false,false,false];
-      var inv={
-        vehicles:[58.1,142.6,0,115.5,105.9,136.5,44.6,0,0,0],
-        chargers:[25.2,12.0,21.4,39.2,32.8,5.9,5.1,0,0,0],
-        otros:[0,0,0,0,0,2.3,0,0,0,0]
-      };
-      var opex={
-        argentina:[0.2,0.3,0.2,0.2,0.2,0.3,0.3,0.3,0.3,0.3],
-        nomina:[0.2,0.3,0.2,0.3,0.1,0.2,0.2,0.2,0.2,0.2],
-        fundraising:[0,0,0,0,0,0,0,0,0,0],
-        rent:[0.1,0.1,0.1,0.1,0.1,0.2,0.1,0.1,0.1,0.1],
-        consulting:[0.1,0,0,0.1,0,0.1,0.1,0.1,0.1,0.1],
-        software:[0,0,0,0.1,0,0,0,0,0,0],
-        fleet:[0,0,0,0,0,0,0,0,0,0],
-        others:[0,0,0,0,0,0,0,0,0,0],
-        operacion:[0,0,0,0,0,0,0,0,0,0],
-        marketing:[0,0,0,0,0,0,0,0,0,0]
-      };
-      var mxnTot=inv.vehicles.map(function(_,i){return +(inv.vehicles[i]+inv.chargers[i]+inv.otros[i]).toFixed(1);});
-      var usdTot=opex.argentina.map(function(_,i){
-        var s=0;for(var k in opex)s+=opex[k][i];return +s.toFixed(1);
+    // Entity detail data
+    var ENTITY_DATA={
+      HOLDCO:{name:'HoldCo',note:'Next Steps: Validar temporalidad de pagos; $$ adecuaciones FIMECO; ver si podemos mover seguros a la semana del 28-sep',
+        rows:[
+          {l:'BoP',v:[128.7,36.8,28.3,128.7],t:'bop'},
+          {l:'(-) Neto HoldCo (cap + opex)',v:[-91.8,-52.5,-100.5,-244.8],t:'out'},
+          {l:'   → a LTO',v:[69.3,1.3,39.7,110.3],t:'sub'},
+          {l:'   → a VCN',v:[2.0,45.2,34.2,81.4],t:'sub'},
+          {l:'   → a EMC',v:[7.9,4.0,20.4,32.3],t:'sub'},
+          {l:'   → a IP',v:[5.2,2.4,6.1,13.8],t:'sub'},
+          {l:'   → a PSM',v:[5.0,0.0,0.0,5.0],t:'sub'},
+          {l:'   → OPEX HoldCo',v:[0.6,0.0,0.0,0.6],t:'sub'},
+          {l:'   → FX',v:[1.8,-0.5,0.0,1.3],t:'sub'},
+          {l:'EoP',v:[36.8,28.3,327.8,null],t:'eop'}
+        ],monthly:['Ago','Sep','Oct','Total']},
+      LTO:{name:'LTO',
+        rows:[
+          {l:'BoP',v:[9.9,7.1,7.9,9.9],t:'bop'},
+          {l:'(+) Cobranza',v:[62.0,54.3,48.3,164.7],t:'in'},
+          {l:'(+) Inflows Intercos',v:[0.5,1.4,0.0,3.3],t:'in'},
+          {l:'(+) Capitalización',v:[69.3,0.1,22.2,110.3],t:'in'},
+          {l:'(-) OPEX',v:[-34.4,-30.3,-32.4,-111.3],t:'out'},
+          {l:'(-) CAPEX',v:[-76.4,-0.5,-21.0,-118.9],t:'out'},
+          {l:'(-) Outflow Interco',v:[-23.8,-24.2,-5.0,-58.0],t:'out'},
+          {l:'EoP',v:[7.1,7.9,20.0,0.0],t:'eop'}
+        ],monthly:['Ago','Sep','Oct','Total']},
+      DAE:{name:'DAE',
+        rows:[
+          {l:'BoP',v:[52.6,50.4,29.9,52.6],t:'bop'},
+          {l:'(+) Cobranza',v:[65.7,49.0,49.0,163.7],t:'in'},
+          {l:'(-) OPEX',v:[-46.4,-33.1,-31.8,-124.6],t:'out'},
+          {l:'(-) Outflow Interco',v:[-21.5,-36.4,-16.1,-75.4],t:'out'},
+          {l:'EoP',v:[50.4,29.9,31.0,16.3],t:'eop'}
+        ],monthly:['Ago','Sep','Oct','Total']},
+      VCN:{name:'VCN',
+        rows:[
+          {l:'BoP',v:[1.1,28.8,-8.8,1.1],t:'bop'},
+          {l:'(+) Cobranza',v:[19.5,7.8,15.0,42.3],t:'in'},
+          {l:'(+) Inflows Intercos',v:[17.1,4.3,4.3,25.7],t:'in'},
+          {l:'(+) Capitalización',v:[0.0,21.5,34.2,79.5],t:'in'},
+          {l:'(+) Debt',v:[84.0,0.0,0.0,84.0],t:'in'},
+          {l:'(-) OPEX',v:[-41.9,-21.9,-21.4,-88.1],t:'out'},
+          {l:'(-) CAPEX',v:[-13.4,-22.3,0.0,-38.8],t:'out'},
+          {l:'(-) Outflow Interco',v:[-37.7,-27.0,-23.0,-107.3],t:'out'},
+          {l:'EoP',v:[28.8,-8.8,0.3,-1.5],t:'eop'}
+        ],monthly:['Ago','Sep','Oct','Total']},
+      AuHaus:{name:'Au Haus',
+        rows:[
+          {l:'BoP',v:[0.4,0.2,1.7,0.4],t:'bop'},
+          {l:'(+) Cobranza',v:[13.1,7.9,4.2,25.1],t:'in'},
+          {l:'(+) Inflows Intercos',v:[27.3,21.0,15.0,66.8],t:'in'},
+          {l:'(-) OPEX',v:[-19.9,-8.6,-7.6,-37.6],t:'out'},
+          {l:'(-) CAPEX',v:[-18.2,-17.9,-2.0,-42.4],t:'out'},
+          {l:'(-) Outflow Interco',v:[-2.4,-0.9,0.0,-3.3],t:'out'},
+          {l:'EoP',v:[0.2,1.7,11.3,9.1],t:'eop'}
+        ],monthly:['Ago','Sep','Oct','Total']},
+      CF:{name:'CF',
+        rows:[
+          {l:'BoP',v:[6.5,5.8,0.2,6.5],t:'bop'},
+          {l:'(+) Cobranza',v:[0.2,0.7,0.7,1.5],t:'in'},
+          {l:'(+) Inflows Intercos',v:[0.5,0.0,0.0,0.6],t:'in'},
+          {l:'(-) OPEX',v:[0.2,-6.3,-0.7,-6.9],t:'out'},
+          {l:'(-) Outflow Interco',v:[-1.6,0.0,0.0,-1.6],t:'out'},
+          {l:'EoP',v:[5.8,0.2,0.2,0.1],t:'eop'}
+        ],monthly:['Ago','Sep','Oct','Total']},
+      Green:{name:'Green',
+        rows:[
+          {l:'BoP',v:[6.4,2.4,1.7,6.4],t:'bop'},
+          {l:'(+) Cobranza',v:[1.2,0.6,0.6,2.3],t:'in'},
+          {l:'(-) OPEX',v:[0.0,-1.3,-0.8,-2.3],t:'out'},
+          {l:'(-) Outflow Interco',v:[-5.2,0.0,0.0,-5.2],t:'out'},
+          {l:'EoP',v:[2.4,1.7,1.5,1.3],t:'eop'}
+        ],monthly:['Ago','Sep','Oct','Total']},
+      PSM:{name:'PSM',
+        rows:[
+          {l:'BoP',v:[0.4,2.7,21.4,0.4],t:'bop'},
+          {l:'(+) Inflows Intercos',v:[29.0,38.9,28.5,96.4],t:'in'},
+          {l:'(+) Capitalización',v:[5.0,11.8,0.0,16.8],t:'in'},
+          {l:'(-) OPEX',v:[-30.8,-32.0,-31.3,-94.2],t:'out'},
+          {l:'(-) Outflow Capitalización',v:[-0.8,0.0,0.0,-0.8],t:'out'},
+          {l:'EoP',v:[2.7,21.4,18.6,18.6],t:'eop'}
+        ],monthly:['Ago','Sep','Oct','Total']},
+      EMC:{name:'EMC',note:'NEXT STEPS: Ver si podemos hacer anticipos',
+        rows:[
+          {l:'BoP',v:[0.5,0.7,-0.1,0.5],t:'bop'},
+          {l:'(+) Inflows Intercos',v:[10.8,4.0,5.0,19.8],t:'in'},
+          {l:'(+) Capitalización',v:[7.9,7.9,20.4,36.2],t:'in'},
+          {l:'(-) OPEX',v:[-18.5,-12.0,-14.9,-45.4],t:'out'},
+          {l:'(-) CAPEX',v:[0.0,-0.7,-10.5,-11.2],t:'out'},
+          {l:'EoP',v:[0.7,-0.1,-0.1,-0.1],t:'eop'}
+        ],monthly:['Ago','Sep','Oct','Total']},
+      IP:{name:'IP',
+        rows:[
+          {l:'BoP',v:[0.3,0.6,0.1,0.3],t:'bop'},
+          {l:'(+) Inflows Intercos',v:[0.6,0.7,0.0,1.3],t:'in'},
+          {l:'(+) Capitalización',v:[5.2,2.4,6.1,13.8],t:'in'},
+          {l:'(-) OPEX',v:[-5.6,-3.5,-6.1,-15.2],t:'out'},
+          {l:'EoP',v:[0.6,0.1,0.1,0.1],t:'eop'}
+        ],monthly:['Ago','Sep','Oct','Total']},
+      MC:{name:'MC',
+        rows:[
+          {l:'BoP',v:[5.7,5.9,6.1,5.7],t:'bop'},
+          {l:'(+) Inflows Intercos',v:[0.3,0.4,0.3,1.0],t:'in'},
+          {l:'(-) OPEX',v:[-0.2,-0.1,-0.1,-0.4],t:'out'},
+          {l:'EoP',v:[5.9,6.1,6.3,6.3],t:'eop'}
+        ],monthly:['Ago','Sep','Oct','Total']}
+    };
+
+    function switchEntityView(val){
+      document.getElementById('cashView-general').style.display=val==='general'?'':'none';
+      var dc=document.getElementById('entityDetailContainer');
+      if(val==='general'){dc.style.display='none';dc.innerHTML='';return;}
+      var ent=ENTITY_DATA[val];if(!ent){dc.style.display='none';return;}
+      dc.style.display='';
+      var h='<div class="section-head-light"><span>'+ent.name+' — Detalle de Flujo</span><span style="font-size:10px;color:var(--text3);font-weight:400;">MXN$m · Ago–Oct 2026</span></div>';
+      h+='<div class="chart-card" style="padding:16px;">';
+      h+='<table style="width:100%;max-width:600px;font-size:12px;border-collapse:collapse;">';
+      h+='<thead><tr style="color:var(--teal);border-bottom:2px solid var(--border);font-size:10px;text-transform:uppercase;letter-spacing:.5px;">';
+      h+='<th style="text-align:left;padding:8px;">Concepto</th>';
+      ent.monthly.forEach(function(m){h+='<th style="text-align:right;padding:8px;">'+m+'</th>';});
+      h+='</tr></thead><tbody>';
+      ent.rows.forEach(function(r){
+        var isBold=r.t==='bop'||r.t==='eop';
+        var isSub=r.t==='sub';
+        var border=r.t==='eop'?'border-top:2px solid var(--border);':isSub?'':'border-bottom:1px solid rgba(0,0,0,.06);';
+        h+='<tr style="'+border+'">';
+        var lc=r.t==='in'?'var(--green)':r.t==='out'?'var(--red)':isSub?'var(--text3)':'var(--text)';
+        var fs=isSub?'10px':'12px';
+        h+='<td style="padding:'+(isSub?'2px 8px 2px 28px':'8px')+';font-weight:'+(isBold?700:400)+';color:'+lc+';white-space:nowrap;font-size:'+fs+';">'+r.l+'</td>';
+        r.v.forEach(function(v,i){
+          var clr=lc;
+          if(r.t==='eop'&&v!==null&&v<0)clr='var(--red)';
+          var fw=isBold||i===3?'700':'400';
+          h+='<td style="text-align:right;padding:'+(isSub?'2px 8px':'8px')+';font-weight:'+fw+';color:'+clr+';font-size:'+fs+';">'+(v===null?'—':v.toFixed(1))+'</td>';
+        });
+        h+='</tr>';
+        if(r.note){h+='<tr><td colspan="5" style="padding:2px 8px 6px 24px;font-size:10px;color:var(--text3);font-style:italic;">'+r.note+'</td></tr>';}
       });
-      function fmt(v,dec){return v===0?'0.0':v.toFixed(dec||1);}
-      function cell(v,isAct,opts){
-        opts=opts||{};
-        var c=isAct?(opts.color||'var(--green)'):'var(--text3)';
-        var fw=opts.bold?'700':'400';
-        var bg=opts.highlight?'rgba(17,171,171,.08)':'';
-        return '<td style="padding:5px;color:'+c+';font-weight:'+fw+';'+(bg?'background:'+bg:'')+'">'+(opts.prefix||'')+fmt(v,opts.dec)+'</td>';
+      h+='</tbody></table>';
+      // Summary cards
+      var totIn=0,totOut=0;
+      ent.rows.forEach(function(r){if(r.t==='in'){var t=r.v[3]||0;totIn+=t;}if(r.t==='out'){var t=r.v[3]||0;totOut+=t;}});
+      h+='<div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;">';
+      h+='<div style="flex:1;min-width:140px;padding:12px;background:rgba(34,197,94,.08);border-radius:8px;text-align:center;">';
+      h+='<div style="font-size:10px;color:var(--green);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Total Inflows</div>';
+      h+='<div style="font-size:20px;font-weight:700;color:var(--green);margin-top:4px;">$'+totIn.toFixed(1)+'M</div></div>';
+      h+='<div style="flex:1;min-width:140px;padding:12px;background:rgba(239,68,68,.08);border-radius:8px;text-align:center;">';
+      h+='<div style="font-size:10px;color:var(--red);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Total Outflows</div>';
+      h+='<div style="font-size:20px;font-weight:700;color:var(--red);margin-top:4px;">$'+totOut.toFixed(1)+'M</div></div>';
+      var net=totIn+totOut;
+      var nc=net>=0?'var(--teal)':'var(--red)';
+      h+='<div style="flex:1;min-width:140px;padding:12px;background:rgba(14,133,133,.08);border-radius:8px;text-align:center;">';
+      h+='<div style="font-size:10px;color:'+nc+';font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Neto</div>';
+      h+='<div style="font-size:20px;font-weight:700;color:'+nc+';margin-top:4px;">'+(net>=0?'+':'')+net.toFixed(1)+'M</div></div>';
+      h+='</div>';
+      if(ent.note){
+        h+='<div style="margin-top:12px;padding:10px 14px;background:rgba(245,158,11,.1);border-left:3px solid var(--amber);border-radius:0 6px 6px 0;font-size:11px;color:var(--text2);line-height:1.5;">';
+        h+='<strong style="color:var(--amber);">Nota:</strong> '+ent.note+'</div>';
       }
-      function section(label){
-        return '<tr><td colspan="12" style="padding:8px 5px 4px;font-weight:700;font-size:12px;color:var(--text);letter-spacing:.5px;">'+label+'</td></tr>';
-      }
-      function dataRow(cat,subcategory,data,opts){
-        opts=opts||{};
-        var h='<tr style="border-bottom:1px solid rgba(255,255,255,.03);">';
-        h+='<td style="padding:5px;color:var(--text3);font-size:10px;font-style:italic;">'+cat+'</td>';
-        h+='<td style="padding:5px;text-align:left;white-space:nowrap;">'+subcategory+'</td>';
-        for(var i=0;i<10;i++){
-          h+=cell(data[i],act[i],{color:opts.color,bold:opts.bold,prefix:opts.prefix,highlight:i===5,dec:opts.dec});
-        }
-        return h+'</tr>';
-      }
-      function totalRow(label,data,opts){
-        opts=opts||{};
-        var h='<tr style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);">';
-        h+='<td style="padding:5px;"></td>';
-        h+='<td style="padding:5px;text-align:left;font-weight:700;white-space:nowrap;">'+label+'</td>';
-        for(var i=0;i<10;i++){
-          h+=cell(data[i],act[i],{bold:true,color:opts.color,prefix:opts.prefix,highlight:i===5,dec:opts.dec});
-        }
-        return h+'</tr>';
-      }
-      var html='';
-      html+=section('INVESTMENT');
-      html+=dataRow('Investment','Vehicle Payments',inv.vehicles,{color:'#4abfbf'});
-      html+=dataRow('Investment','Charging Infra',inv.chargers,{color:'#4abfbf'});
-      html+=dataRow('Investment','Otros / Infra',inv.otros,{color:'#4abfbf'});
-      html+=totalRow('Outflows in MXN$m',mxnTot,{color:'var(--teal)',prefix:'$'});
-      html+='<tr><td colspan="12" style="padding:4px;"></td></tr>';
-      html+=section('OPEX');
-      html+=dataRow('Operations','Argentina (Opex)',opex.argentina);
-      html+=dataRow('Operations','Nómina y gastos al personal',opex.nomina);
-      html+=dataRow('Operations','Fundraising Expenses',opex.fundraising);
-      html+=dataRow('Operations','Rent & Lease Expense',opex.rent);
-      html+=dataRow('Operations','Consulting services',opex.consulting);
-      html+=dataRow('Operations','Software & Tech Services',opex.software);
-      html+=dataRow('Operations','Fleet Telematics Services',opex.fleet);
-      html+=dataRow('Operations','Others',opex.others);
-      html+=dataRow('Operations','Operación',opex.operacion);
-      html+=dataRow('Operations','Marketing',opex.marketing);
-      html+=totalRow('Outflows in USD$m',usdTot,{color:'var(--teal)',prefix:'$'});
-      tb.innerHTML=html;
-    })();
+      h+='</div>';
+      dc.innerHTML=h;
+    }
     </script>
 
-    <!-- WEEKLY CASH WATERFALL -->
-    <div class="section-head-light"><span>Proyección Semanal de Caja Operativa</span>
-      <span style="font-size:10px;color:var(--text3);font-weight:400;">MXN millones · Inflows $25M/sem · Debt Draw $84M (14-Ago) · Nómina $10.8M (Q15+fin) · Renta 1er sem · WK $35M/sem · Caja mín $40M</span>
-    </div>
-    <div class="chart-card" style="overflow-x:auto;">
-      <table id="waterfallTable" style="width:100%;min-width:800px;font-size:11px;border-collapse:collapse;text-align:right;">
-        <thead>
-          <tr style="color:var(--teal);border-bottom:1px solid var(--border);font-size:9px;text-transform:uppercase;letter-spacing:.5px;">
-            <th style="text-align:left;padding:6px;min-width:130px;"></th>
-            <th style="padding:6px;">17-Jul</th><th style="padding:6px;">20-Jul</th>
-            <th style="padding:6px;background:rgba(17,171,171,.08);">27-Jul</th>
-            <th style="padding:6px;">03-Ago</th><th style="padding:6px;">10-Ago</th>
-            <th style="padding:6px;">17-Ago</th><th style="padding:6px;">24-Ago</th>
-            <th style="padding:6px;">31-Ago</th><th style="padding:6px;">07-Sep</th>
-            <th style="padding:6px;">14-Sep</th><th style="padding:6px;">21-Sep</th>
-            <th style="padding:6px;">28-Sep</th>
-          </tr>
-        </thead>
-        <tbody id="waterfallBody"></tbody>
-      </table>
-    </div>
-    <div class="chart-card" style="height:280px;margin-top:4px;">
-      <canvas id="waterfallChart"></canvas>
-    </div>
+    <script>
+    (function(){
+      var dates=['03-Ago','10-Ago','17-Ago','24-Ago','31-Ago','07-Sep','14-Sep','21-Sep','28-Sep','05-Oct','12-Oct','19-Oct','26-Oct'];
+      var isAct=[true,true,true,true,true,true,true,true,false,false,false,false,false];
+      var entities=[
+        {n:'HOLDCO',v:[128.7,125.6,68.6,49.4,36.9,36.8,28.3,28.4,428.2,384.9,362.0,348.1,327.8]},
+        {n:'LTO',v:[9.9,5.1,6.6,5.1,1.0,3.1,9.2,10.6,null,null,null,null,null]},
+        {n:'VCN',v:[1.1,23.9,79.1,54.8,31.7,30.8,2.5,1.3,null,null,null,null,9.1]},
+        {n:'DAE',v:[52.6,41.8,45.8,44.9,46.9,50.4,25.8,26.6,17.7,23.3,27.6,19.7,12.1]},
+        {n:'Au Haus',v:[0.4,3.7,0.2,0.3,1.6,0.2,5.1,0.4,0.7,0.2,8.6,11.7,8.8]},
+        {n:'CF',v:[6.5,6.5,6.8,5.2,5.5,5.9,3.6,0.2,0.1,0.2,0.1,0.1,0.0]},
+        {n:'Green',v:[6.4,6.9,6.9,7.0,7.0,2.4,2.3,1.3,1.8,1.6,1.5,1.0,1.4]},
+        {n:'ZEE',v:[0.7,0.7,0.7,0.7,0.7,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6]},
+        {n:'EMC',v:[0.5,1.8,0.3,0.5,0.4,0.8,0.2,0.7,null,null,null,null,null]},
+        {n:'IP',v:[0.3,0.7,0.3,0.4,0.6,0.4,0.3,0.5,null,null,null,null,null]},
+        {n:'MC',v:[5.7,5.7,5.6,5.6,5.9,5.9,5.9,5.9,6.2,6.2,6.2,6.1,6.4]},
+        {n:'PSM',v:[0.4,0.6,0.6,0.8,0.6,2.8,2.0,0.4,11.5,21.4,11.8,13.6,11.6]}
+      ];
+      var bop=[213.3,223.1,221.6,174.6,138.7,140.2,85.7,76.9,466.7,438.5,418.3,400.8,377.8];
+
+      var deltas=[
+        {n:'HOLDCO',v:[null,-3.0,-57.0,-19.2,-12.5,-0.1,-8.6,0.2,399.8,-43.3,-22.9,-14.0,-20.3]},
+        {n:'LTO',v:[null,-4.8,1.6,-1.5,-4.1,2.1,6.0,1.4,0.0,0.0,0.0,0.0,0.0]},
+        {n:'VCN',v:[null,22.8,55.2,-24.3,-23.1,-0.9,-28.3,-1.2,0.0,0.0,0.0,0.0,9.1]},
+        {n:'DAE',v:[null,-10.8,4.1,-1.0,2.1,3.5,-24.6,0.9,-9.0,5.6,4.3,-7.9,-7.6]},
+        {n:'Au Haus',v:[null,3.3,-3.5,0.1,1.3,-1.4,4.8,-4.7,0.3,-0.5,8.3,3.2,-2.9]},
+        {n:'CF',v:[null,0.0,0.2,-1.5,0.2,0.4,-2.2,-3.4,-0.1,0.1,-0.1,0.0,-0.1]},
+        {n:'Green',v:[null,0.5,0.0,0.0,0.0,-4.5,-0.1,-1.0,0.4,-0.1,-0.1,-0.5,0.4]},
+        {n:'ZEE',v:[null,0.0,0.0,0.0,0.0,-0.1,-0.1,0.0,0.0,0.0,0.0,0.0,0.0]},
+        {n:'EMC',v:[null,1.3,-1.5,0.2,-0.1,0.4,-0.6,0.5,0.0,0.0,0.0,0.0,0.0]},
+        {n:'IP',v:[null,0.4,-0.4,0.1,0.2,-0.2,-0.1,0.2,0.0,0.0,0.0,0.0,0.0]},
+        {n:'MC',v:[null,0.0,0.0,0.0,0.3,0.0,0.0,0.0,0.3,0.0,0.0,0.0,0.3]},
+        {n:'PSM',v:[null,0.2,0.0,0.2,-0.2,2.2,-0.8,-1.6,11.1,10.0,-9.6,1.8,-1.9]}
+      ];
+      var totalDelta=[0.0,9.8,-1.5,-47.0,-35.9,1.5,-54.5,-8.8,402.9,-28.2,-20.2,-17.5,-23.0];
+
+      function fmt(v){if(v===null||v===undefined)return'—';return v.toFixed(1);}
+      function fmtD(v){if(v===null||v===undefined)return'—';var s=v.toFixed(1);return v>0?'+'+s:s;}
+
+      // Build Cash Balances table
+      var tb1=document.getElementById('cashBalTable');
+      var h='<thead><tr style="color:var(--teal);border-bottom:2px solid var(--border);font-size:9px;text-transform:uppercase;letter-spacing:.5px;">';
+      h+='<th style="text-align:left;padding:5px;min-width:70px;">Entidad</th>';
+      for(var i=0;i<dates.length;i++){
+        var bg=isAct[i]?'':'background:rgba(0,0,0,.03);';
+        h+='<th style="padding:5px;'+bg+'">'+dates[i]+'</th>';
+      }
+      h+='</tr></thead><tbody>';
+      for(var e=0;e<entities.length;e++){
+        var ent=entities[e];
+        h+='<tr style="border-bottom:1px solid rgba(0,0,0,.06);">';
+        h+='<td style="padding:5px;text-align:left;font-weight:600;white-space:nowrap;">'+ent.n+'</td>';
+        for(var i=0;i<dates.length;i++){
+          var c=isAct[i]?'var(--green)':'var(--text3)';
+          var bg=isAct[i]?'':'background:rgba(0,0,0,.03);';
+          h+='<td style="padding:5px;color:'+c+';'+bg+'">'+fmt(ent.v[i])+'</td>';
+        }
+        h+='</tr>';
+      }
+      // BoP total row
+      h+='<tr style="border-top:2px solid var(--border);font-weight:700;">';
+      h+='<td style="padding:5px;text-align:left;">Total</td>';
+      for(var i=0;i<dates.length;i++){
+        var c=isAct[i]?'var(--teal)':'var(--text3)';
+        var bg=isAct[i]?'':'background:rgba(0,0,0,.03);';
+        h+='<td style="padding:5px;color:'+c+';'+bg+'">'+fmt(bop[i])+'</td>';
+      }
+      h+='</tr></tbody>';
+      tb1.innerHTML=h;
+
+      // Build Delta table
+      var tb2=document.getElementById('cashDeltaTable');
+      h='<thead><tr style="color:var(--teal);border-bottom:2px solid var(--border);font-size:9px;text-transform:uppercase;letter-spacing:.5px;">';
+      h+='<th style="text-align:left;padding:5px;min-width:70px;">Entidad</th>';
+      for(var i=0;i<dates.length;i++){
+        var bg=isAct[i]?'':'background:rgba(0,0,0,.03);';
+        h+='<th style="padding:5px;'+bg+'">'+dates[i]+'</th>';
+      }
+      h+='</tr></thead><tbody>';
+      for(var e=0;e<deltas.length;e++){
+        var ent=deltas[e];
+        h+='<tr style="border-bottom:1px solid rgba(0,0,0,.06);">';
+        h+='<td style="padding:5px;text-align:left;font-weight:600;white-space:nowrap;">'+ent.n+'</td>';
+        for(var i=0;i<dates.length;i++){
+          var v=ent.v[i];
+          var isA=isAct[i];
+          var clr='var(--text3)';
+          if(v!==null&&isA){clr=v>0?'var(--green)':v<0?'var(--red)':'var(--text3)';}
+          else if(v!==null&&!isA){clr=v>0?'rgba(34,197,94,.5)':v<0?'rgba(239,68,68,.5)':'var(--text3)';}
+          var bg=isA?'':'background:rgba(0,0,0,.03);';
+          h+='<td style="padding:5px;color:'+clr+';'+bg+'">'+fmtD(v)+'</td>';
+        }
+        h+='</tr>';
+      }
+      // Total row
+      h+='<tr style="border-top:2px solid var(--border);font-weight:700;">';
+      h+='<td style="padding:5px;text-align:left;">Total</td>';
+      for(var i=0;i<dates.length;i++){
+        var v=totalDelta[i];
+        var isA=isAct[i];
+        var clr='var(--text3)';
+        if(v!==null&&isA){clr=v>0?'var(--green)':v<0?'var(--red)':'var(--text3)';}
+        var bg=isA?'':'background:rgba(0,0,0,.03);';
+        h+='<td style="padding:5px;color:'+clr+';'+bg+'">'+fmtD(v)+'</td>';
+      }
+      h+='</tr></tbody>';
+      tb2.innerHTML=h;
+
+      // Cash Trajectory Chart
+      var ctx=document.getElementById('cashTrajectoryChart');
+      if(ctx&&typeof Chart!=='undefined'){
+        var actualData=bop.map(function(v,i){return isAct[i]?v:null;});
+        var projData=bop.map(function(v,i){return(!isAct[i]||i===5)?v:null;});
+        new Chart(ctx,{type:'line',data:{
+          labels:dates,
+          datasets:[
+            {label:'Actual',data:actualData,borderColor:'#0E8585',backgroundColor:'rgba(14,133,133,.15)',fill:true,tension:.3,pointRadius:4,pointBackgroundColor:'#0E8585',borderWidth:2},
+            {label:'Proyección',data:projData,borderColor:'#9CA3AF',backgroundColor:'rgba(156,163,175,.1)',fill:true,tension:.3,pointRadius:3,pointBackgroundColor:'#9CA3AF',borderWidth:2,borderDash:[5,3]}
+          ]
+        },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10},usePointStyle:true,boxWidth:8}},title:{display:true,text:'Caja Total Semanal (MXN$m)',font:{size:13,weight:'700'},color:'#1F5556',padding:{bottom:12}}},scales:{y:{beginAtZero:true,ticks:{callback:function(v){return '$'+v+'M';},font:{size:10}},grid:{color:'rgba(0,0,0,.06)'}},x:{ticks:{font:{size:9}},grid:{display:false}}}}});
+      }
+    })();
+    </script>
   </div>
 
   <!-- ═══════════════════════════════════════════════════════════════ -->
@@ -1022,7 +1046,7 @@ function showSection(key){
 }
 
 // DATA
-const FX=17.40;
+var FX=17.40;
 
 // Monthly labels from Jan 2022 to Dec 2026
 const M_LABELS=[
@@ -1032,7 +1056,7 @@ const M_LABELS=[
   'Ene25','Feb25','Mar25','Abr25','May25','Jun25','Jul25','Ago25','Sep25','Oct25','Nov25','Dic25',
   'Ene26','Feb26','Mar26','Abr26','May26','Jun26','Jul26','Ago26','Sep26','Oct26','Nov26','Dic26'
 ];
-const PROJ_START=54; // último mes con data real
+const PROJ_START=55; // último mes con data real
 
 // TIIE 28d monthly
 const TIIE_M=[
@@ -1040,14 +1064,14 @@ const TIIE_M=[
   10.82,11.27,11.43,11.54,11.51,11.49,11.51,11.51,11.50,11.50,11.50,11.50,
   11.50,11.49,11.25,11.24,11.24,11.24,11.24,11.00,10.74,10.72,10.48,10.24,
   10.28,9.75,9.26,9.30,8.77,8.28,8.23,8.03,7.88,7.78,7.61,7.35,
-  7.30,7.31,7.03,7.01,6.76,6.76,6.75,null,null,null,null,null
+  7.30,7.31,7.03,7.01,6.76,6.76,6.75,6.77,null,null,null,null
 ];
 const TIIE_PROJ=[
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
-  null,null,null,null,null,null,6.75,6.50,6.50,6.50,6.50,6.50
+  null,null,null,null,null,null,null,6.77,6.50,6.50,6.50,6.50
 ];
 
 // Fed Funds Rate monthly (upper bound)
@@ -1056,14 +1080,14 @@ const FED_M=[
   4.50,4.75,5.00,5.00,5.25,5.25,5.50,5.50,5.50,5.50,5.50,5.50,
   5.50,5.50,5.50,5.50,5.50,5.50,5.50,5.50,5.00,5.00,4.75,4.50,
   4.50,4.50,4.50,4.50,4.50,4.50,4.50,4.50,4.25,4.00,4.00,3.75,
-  3.75,3.75,3.75,3.75,3.75,3.75,3.75,null,null,null,null,null
+  3.75,3.75,3.75,3.75,3.75,3.75,3.75,3.75,null,null,null,null
 ];
 const FED_PROJ=[
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
-  null,null,null,null,null,null,3.75,3.75,3.75,3.75,3.80,3.80
+  null,null,null,null,null,null,null,3.75,3.75,3.75,3.80,3.80
 ];
 
 // FX monthly
@@ -1072,62 +1096,163 @@ const FX_M=[
   18.80,18.34,18.02,18.00,17.75,17.14,16.72,16.88,17.41,18.05,17.38,16.90,
   17.18,17.06,16.56,17.06,16.99,18.26,18.60,19.66,19.69,20.03,20.31,20.86,
   20.63,20.53,20.46,19.59,19.39,18.83,18.80,18.64,18.34,18.55,18.29,18.01,
-  17.35,17.22,18.03,17.52,17.35,17.45,17.32,null,null,null,null,null
+  17.35,17.22,18.03,17.52,17.35,17.45,17.32,17.01,null,null,null,null
 ];
 const FX_PROJ=[
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
   null,null,null,null,null,null,null,null,null,null,null,null,
-  null,null,null,null,null,null,17.32,17.40,17.50,17.60,17.70,17.92
+  null,null,null,null,null,null,null,17.01,17.50,17.60,17.70,17.92
 ];
 // 2026 Monthly data for Actuals vs Budget zoom-in
 const MO26=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 const TIIE_26=[
-  7.30,7.31,7.03,7.01,6.76,6.76,6.75,null,null,null,null,null
+  7.30,7.31,7.03,7.01,6.76,6.76,6.75,6.77,null,null,null,null
 ];
 const FED_26=[
-  3.75,3.75,3.75,3.75,3.75,3.75,3.75,null,null,null,null,null
+  3.75,3.75,3.75,3.75,3.75,3.75,3.75,3.75,null,null,null,null
 ];
 const FX_26=[
-  17.35,17.22,18.03,17.52,17.35,17.45,17.32,null,null,null,null,null
+  17.35,17.22,18.03,17.52,17.35,17.45,17.32,17.01,null,null,null,null
 ];
 const TIIE_BDG=MO26.map(()=>6.50);
 const FED_BDG=MO26.map(()=>3.00);
 const FX_BDG=[17.99,18.01,18.04,18.06,18.08,18.10,18.12,18.14,18.17,18.19,18.21,18.23];
 
-const BANKS=[
-  {name:'BX+',mxn:0,usd:16255963,rateMXN:null,rateUSD:0.0323,color:'#11ABAB'},
-  {name:'Monex',mxn:27796061,usd:11810586,rateMXN:0.0605,rateUSD:0.0275,color:'#2a8a8a'},
-  {name:'BASE',mxn:22253737,usd:0,rateMXN:0.0605,rateUSD:null,color:'#4abfbf'},
-  {name:'BBVA',mxn:15341000,usd:0,rateMXN:0.0605,rateUSD:0.0315,color:'#1F5556'},
-];
-BANKS.forEach(b=>{b.totalMXN=b.mxn+(b.usd*FX);b.monthlyYield=(b.mxn*(b.rateMXN||0)+(b.usd*FX)*(b.rateUSD||0))/12;});
-const TOTAL_MXN_EQ=BANKS.reduce((s,b)=>s+b.totalMXN,0);
-const TOTAL_MXN_DIRECT=BANKS.reduce((s,b)=>s+b.mxn,0);
-const TOTAL_USD=BANKS.reduce((s,b)=>s+b.usd,0);
-const TOTAL_USD_MXN=TOTAL_USD*FX;
+var CASH_DATES={
+  '2026-05-29':{label:'29 May 2026',fx:17.35,total:922260529,mxn:93219985,usd_eq:829040544,restricted:304812662,
+    banks:[{n:'BBVA',mxn:36259000,usd_eq:523647746,total:559906746,c:'#1F5556'},{n:'BX+',mxn:0,usd_eq:298109602,total:298109602,c:'#9333EA'},{n:'MONEX',mxn:34924001,usd_eq:7283197,total:42207198,c:'#2a8a8a'},{n:'BASE',mxn:22005444,usd_eq:0,total:22005444,c:'#4abfbf'},{n:'KAPITAL',mxn:31540,usd_eq:0,total:31540,c:'#6B7280'}],
+    entities:[{n:'HOLDCO',v:548088746},{n:'MC',v:304812662},{n:'DAE',v:53427871},{n:'LTO',v:5842000},{n:'Green',v:5049745},{n:'CF',v:2446190},{n:'Au Haus',v:1103993},{n:'VCN',v:594000},{n:'IP',v:309144},{n:'PSM',v:285178},{n:'EMC',v:280000},{n:'ZEE',v:21000}]},
+  '2026-06-30':{label:'30 Jun 2026',fx:17.45,total:758913126,mxn:148124311,usd_eq:610788815,restricted:289967842,
+    banks:[{n:'BBVA',mxn:66546503,usd_eq:321064973,total:387611476,c:'#1F5556'},{n:'BX+',mxn:0,usd_eq:283666548,total:283666548,c:'#9333EA'},{n:'MONEX',mxn:32403103,usd_eq:6057294,total:38460397,c:'#2a8a8a'},{n:'ACTINVER',mxn:21918874,usd_eq:0,total:21918874,c:'#8B5CF6'},{n:'BASE',mxn:20723768,usd_eq:0,total:20723768,c:'#4abfbf'},{n:'INVEX',mxn:3502088,usd_eq:0,total:3502088,c:'#EC4899'},{n:'COVALTO',mxn:2998358,usd_eq:0,total:2998358,c:'#3B82F6'},{n:'KAPITAL',mxn:31618,usd_eq:0,total:31618,c:'#6B7280'}],
+    entities:[{n:'HOLDCO',v:324024973},{n:'MC',v:289967842},{n:'DAE',v:70907355},{n:'LTO',v:42459978},{n:'Green',v:10382481},{n:'CF',v:10139000},{n:'VCN',v:5988944},{n:'PSM',v:2297146},{n:'Au Haus',v:1179407},{n:'ZEE',v:894000},{n:'EMC',v:385000},{n:'IP',v:287000}]},
+  '2026-07-27':{label:'27 Jul 2026',fx:17.444,total:554983666,mxn:65390798,usd_eq:489592867,restricted:289322969,
+    banks:[{n:'BX+',mxn:0,usd_eq:283569012,total:283569012,c:'#9333EA'},{n:'BBVA',mxn:16792000,usd_eq:200657899,total:217449899,c:'#1F5556'},{n:'MONEX',mxn:27796061,usd_eq:5365957,total:33162018,c:'#2a8a8a'},{n:'BASE',mxn:20802737,usd_eq:0,total:20802737,c:'#4abfbf'}],
+    entities:[{n:'MC',v:289322969},{n:'HOLDCO',v:202108899},{n:'DAE',v:47082919},{n:'CF',v:6518000},{n:'Green',v:6297307},{n:'LTO',v:2513661},{n:'ZEE',v:695000},{n:'Au Haus',v:247000},{n:'PSM',v:197911}]},
+  '2026-08-03':{label:'03 Ago 2026',fx:17.2717,total:588068330,mxn:78679076,usd_eq:509389254,restricted:374795890,
+    banks:[{n:'BX+',mxn:0,usd_eq:281528710,total:281528710,c:'#9333EA'},{n:'BBVA',mxn:27020224,usd_eq:128699040,total:155719264,c:'#1F5556'},{n:'MONEX',mxn:27823972,usd_eq:99094962,total:126918935,c:'#2a8a8a'},{n:'BASE',mxn:23628279,usd_eq:6834,total:23635113,c:'#4abfbf'},{n:'SANTANDER',mxn:174897,usd_eq:59708,total:234604,c:'#F59E0B'},{n:'KAPITAL',mxn:31703,usd_eq:0,total:31703,c:'#6B7280'}],
+    entities:[{n:'MC',v:380522783},{n:'HOLDCO',v:128662009},{n:'DAE',v:52601656},{n:'LTO',v:9885834},{n:'CF',v:6478100},{n:'Green',v:6419452},{n:'VCN',v:1136135},{n:'ZEE',v:695234},{n:'EMC',v:510639},{n:'PSM',v:429873},{n:'Au Haus',v:425629},{n:'IP',v:300987}]},
+  '2026-08-10':{label:'10 Ago 2026',fx:17.1386,total:595009329,mxn:91606732,usd_eq:503402597,restricted:371907620,
+    banks:[{n:'BX+',mxn:0,usd_eq:279359180,total:279359180,c:'#9333EA'},{n:'BBVA',mxn:55969137,usd_eq:108512021,total:164481158,c:'#1F5556'},{n:'MONEX',mxn:23327306,usd_eq:98322142,total:121649448,c:'#2a8a8a'},{n:'Morgan Stanley',mxn:0,usd_eq:17138600,total:17138600,c:'#11ABAB'},{n:'BASE',mxn:8458365,usd_eq:11407,total:8469772,c:'#4abfbf'},{n:'SANTANDER',mxn:3820205,usd_eq:59247,total:3879453,c:'#F59E0B'},{n:'KAPITAL',mxn:31719,usd_eq:0,total:31719,c:'#6B7280'}],
+    entities:[{n:'MC',v:377595561},{n:'HOLDCO',v:125642188},{n:'DAE',v:41766235},{n:'VCN',v:23932407},{n:'Green',v:6936899},{n:'CF',v:6515597},{n:'LTO',v:5095869},{n:'Au Haus',v:3703707},{n:'EMC',v:1829848},{n:'ZEE',v:695900},{n:'IP',v:664672},{n:'PSM',v:630445}]},
+  '2026-08-17':{label:'17 Ago 2026',fx:17.0218,total:591006232,mxn:147339264,usd_eq:443666968,restricted:369373060,
+    banks:[{n:'BX+',mxn:0,usd_eq:277455340,total:277455340,c:'#9333EA'},{n:'BBVA',mxn:111382834,usd_eq:51600853,total:162983688,c:'#1F5556'},{n:'MONEX',mxn:23350730,usd_eq:97518802,total:120869532,c:'#2a8a8a'},{n:'Morgan Stanley',mxn:0,usd_eq:17021800,total:17021800,c:'#11ABAB'},{n:'BASE',mxn:8466858,usd_eq:11329,total:8478187,c:'#4abfbf'},{n:'SANTANDER',mxn:4107105,usd_eq:58844,total:4165948,c:'#F59E0B'},{n:'KAPITAL',mxn:31737,usd_eq:0,total:31737,c:'#6B7280'}],
+    entities:[{n:'MC',v:375011170},{n:'VCN',v:79121295},{n:'HOLDCO',v:68614291},{n:'DAE',v:45835822},{n:'Green',v:6943552},{n:'CF',v:6765583},{n:'LTO',v:6647877},{n:'ZEE',v:696568},{n:'PSM',v:599808},{n:'EMC',v:298604},{n:'IP',v:259085},{n:'Au Haus',v:212576}]},
+  '2026-08-24':{label:'24 Ago 2026',fx:16.9018,total:541379381,mxn:121115438,usd_eq:420263943,restricted:366769060,
+    banks:[{n:'BX+',mxn:0,usd_eq:275499340,total:275499340,c:'#9333EA'},{n:'MONEX',mxn:76748355,usd_eq:96827299,total:173575654,c:'#2a8a8a'},{n:'BBVA',mxn:31776625,usd_eq:30967011,total:62743636,c:'#1F5556'},{n:'Morgan Stanley',mxn:0,usd_eq:16901800,total:16901800,c:'#11ABAB'},{n:'BASE',mxn:8475360,usd_eq:10064,total:8485424,c:'#4abfbf'},{n:'SANTANDER',mxn:4083351,usd_eq:58429,total:4141780,c:'#F59E0B'},{n:'KAPITAL',mxn:31747,usd_eq:0,total:31747,c:'#6B7280'}],
+    entities:[{n:'MC',v:372366699},{n:'VCN',v:54798226},{n:'HOLDCO',v:49421177},{n:'DAE',v:44861108},{n:'Green',v:6950206},{n:'CF',v:5231339},{n:'LTO',v:5139369},{n:'PSM',v:778006},{n:'ZEE',v:697237},{n:'EMC',v:459293},{n:'IP',v:390241},{n:'Au Haus',v:286480}]},
+  '2026-08-31':{label:'31 Ago 2026',fx:16.993,total:507453835,mxn:98601157,usd_eq:408852677,restricted:368748100,
+    banks:[{n:'BX+',mxn:0,usd_eq:276985900,total:276985900,c:'#9333EA'},{n:'MONEX',mxn:57187216,usd_eq:97516420,total:154703636,c:'#2a8a8a'},{n:'BBVA',mxn:28833698,usd_eq:17291434,total:46125132,c:'#1F5556'},{n:'Morgan Stanley',mxn:0,usd_eq:16993000,total:16993000,c:'#11ABAB'},{n:'BASE',mxn:8483870,usd_eq:7179,total:8491049,c:'#4abfbf'},{n:'SANTANDER',mxn:4064608,usd_eq:58744,total:4123352,c:'#F59E0B'},{n:'KAPITAL',mxn:31765,usd_eq:0,total:31765,c:'#6B7280'}],
+    entities:[{n:'MC',v:374634467},{n:'DAE',v:46925560},{n:'HOLDCO',v:36897056},{n:'VCN',v:31664334},{n:'Green',v:6957223},{n:'CF',v:5462646},{n:'Au Haus',v:1621809},{n:'LTO',v:992897},{n:'ZEE',v:697922},{n:'IP',v:627939},{n:'PSM',v:571330},{n:'EMC',v:400651}]},
+  '2026-09-07':{label:'07 Sep 2026',fx:16.9237,total:507402015,mxn:100317965,usd_eq:407084050,restricted:367244290,
+    banks:[{n:'BX+',mxn:0,usd_eq:275856310,total:275856310,c:'#9333EA'},{n:'MONEX',mxn:52416919,usd_eq:96894434,total:149311352,c:'#2a8a8a'},{n:'BBVA',mxn:35299260,usd_eq:17344272,total:52643532,c:'#1F5556'},{n:'Morgan Stanley',mxn:0,usd_eq:16923700,total:16923700,c:'#11ABAB'},{n:'BASE',mxn:8492390,usd_eq:6830,total:8499219,c:'#4abfbf'},{n:'SANTANDER',mxn:4077627,usd_eq:58505,total:4136132,c:'#F59E0B'},{n:'KAPITAL',mxn:31770,usd_eq:0,total:31770,c:'#6B7280'}],
+    entities:[{n:'MC',v:373111666},{n:'DAE',v:50411565},{n:'HOLDCO',v:36835812},{n:'VCN',v:30812297},{n:'CF',v:5858840},{n:'LTO',v:3123520},{n:'PSM',v:2764273},{n:'Green',v:2448403},{n:'EMC',v:780247},{n:'ZEE',v:605716},{n:'IP',v:409834},{n:'Au Haus',v:239841}]},
+  '2026-09-14':{label:'14 Sep 2026',fx:17.1277,total:457366149,mxn:47485229,usd_eq:409880920,restricted:371671090,
+    banks:[{n:'BX+',mxn:0,usd_eq:279181510,total:279181510,c:'#9333EA'},{n:'MONEX',mxn:18425505,usd_eq:98440993,total:116866499,c:'#2a8a8a'},{n:'BBVA',mxn:20289642,usd_eq:15064252,total:35353894,c:'#1F5556'},{n:'Morgan Stanley',mxn:0,usd_eq:17127700,total:17127700,c:'#11ABAB'},{n:'BASE',mxn:8502446,usd_eq:7254,total:8509701,c:'#4abfbf'},{n:'SANTANDER',mxn:235866,usd_eq:59210,total:295075,c:'#F59E0B'},{n:'KAPITAL',mxn:31770,usd_eq:0,total:31770,c:'#6B7280'}],
+    entities:[{n:'MC',v:377588074},{n:'HOLDCO',v:28267624},{n:'DAE',v:25779744},{n:'LTO',v:9170776},{n:'Au Haus',v:5066307},{n:'CF',v:3647422},{n:'VCN',v:2488892},{n:'Green',v:2305591},{n:'PSM',v:1995629},{n:'ZEE',v:552098},{n:'IP',v:346134},{n:'EMC',v:157858}]},
+  '2026-09-21':{label:'21 Sep 2026',fx:17.22,total:450531985,mxn:43273841,usd_eq:407257560,restricted:373674000,
+    banks:[{n:'BX+',mxn:0,usd_eq:280686000,total:280686000,c:'#9333EA'},{n:'MONEX',mxn:7436262,usd_eq:98538157,total:105974419,c:'#2a8a8a'},{n:'BBVA',mxn:27071763,usd_eq:10746587,total:37818350,c:'#1F5556'},{n:'Morgan Stanley',mxn:0,usd_eq:17220000,total:17220000,c:'#11ABAB'},{n:'BASE',mxn:8510982,usd_eq:7287,total:8518269,c:'#4abfbf'},{n:'SANTANDER',mxn:223064,usd_eq:59529,total:282593,c:'#F59E0B'},{n:'KAPITAL',mxn:31770,usd_eq:0,total:31770,c:'#6B7280'}],
+    entities:[{n:'MC',v:379600769},{n:'HOLDCO',v:28417770},{n:'DAE',v:26639213},{n:'LTO',v:10575193},{n:'Green',v:1307374},{n:'VCN',v:1255036},{n:'EMC',v:704418},{n:'ZEE',v:552638},{n:'IP',v:515612},{n:'PSM',v:397709},{n:'Au Haus',v:367513},{n:'CF',v:198741}]},
+};
+var CASH_DATE_KEYS=Object.keys(CASH_DATES).sort().reverse();
+var currentCashDate=CASH_DATE_KEYS[0];
+// Chart instances for destroy/rebuild
+var bankChartInstance=null,currChartInstance=null,entityChartInstance=null;
+
+function getCashSnap(){return CASH_DATES[currentCashDate];}
+
+function updateCashView(dateKey){
+  currentCashDate=dateKey;
+  var snap=getCashSnap();
+  // Update label
+  var lbl=document.getElementById('saldos-label');
+  if(lbl)lbl.textContent='Saldos al '+snap.label;
+  // KPI cards
+  document.getElementById('kpi-total').textContent=fmt(snap.total);
+  document.getElementById('kpi-total-sub').textContent='MXN '+fmt(snap.mxn)+' + USD '+fmt(snap.usd_eq)+' (MXN eq.)';
+  var op=snap.total-snap.restricted;
+  var opPct=(op/snap.total*100).toFixed(1);
+  document.getElementById('kpi-op').textContent=fmt(op);
+  document.getElementById('kpi-op-sub').innerHTML='<span style="color:var(--amber);font-weight:600;">● '+opPct+'%</span> del total';
+  var rPct=(snap.restricted/snap.total*100).toFixed(1);
+  document.getElementById('kpi-restricted').textContent=fmt(snap.restricted);
+  document.getElementById('kpi-restricted-sub').innerHTML='<span style="color:var(--text3);">● '+rPct+'%</span> MORELCAMP';
+  document.getElementById('kpi-usd').textContent=fmt(snap.usd_eq);
+  var usdPct=(snap.usd_eq/snap.total*100).toFixed(1);
+  document.getElementById('kpi-usd-sub').textContent='@ $'+snap.fx.toFixed(2)+' · '+usdPct+'% del cash';
+  // Update BANKS/ENTITIES globals + totalMXNeq
+  BANKS.length=0;
+  snap.banks.forEach(function(b){BANKS.push({name:b.n,mxn:b.mxn,usd:Math.round(b.usd_eq/snap.fx),totalMXN:b.total,color:b.c});});
+  TOTAL_MXN_EQ=snap.total;
+  TOTAL_MXN_DIRECT=snap.mxn;
+  TOTAL_USD=Math.round(snap.usd_eq/snap.fx);
+  TOTAL_USD_MXN=snap.usd_eq;
+  FX=snap.fx;
+  document.getElementById('totalMXNeq').textContent=fmtFull(TOTAL_MXN_EQ);
+  ENTITIES.length=0;
+  snap.entities.forEach(function(e){ENTITIES.push({name:e.n,mxn:e.v,usd:0,total:e.v});});
+  // Rebuild charts
+  rebuildBankChart();
+  rebuildCurrChart();
+  rebuildEntityChart();
+}
+
+function rebuildBankChart(){
+  if(bankChartInstance)bankChartInstance.destroy();
+  var ctx=document.getElementById('bankChart').getContext('2d');
+  bankChartInstance=new Chart(ctx,{type:'doughnut',data:{labels:BANKS.map(function(b){return b.name;}),datasets:[{data:BANKS.map(function(b){return b.totalMXN;}),backgroundColor:BANKS.map(function(b){return b.color;}),borderWidth:2,borderColor:'#FFFFFF'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{...tooltipStyle,callbacks:{label:function(i){return' '+i.label+': '+fmt(i.raw)+' ('+pct(i.raw,TOTAL_MXN_EQ)+')';}}}}}});
+  var rows=document.getElementById('bank-rows');
+  rows.innerHTML='';
+  BANKS.forEach(function(b){var r=document.createElement('div');r.className='stat-row';r.innerHTML='<span class="stat-name"><span class="stat-dot" style="background:'+b.color+'"></span>'+b.name+'</span><span class="stat-count">'+fmt(b.totalMXN)+' <span style="font-size:10px;color:var(--text3);margin-left:4px;">'+pct(b.totalMXN,TOTAL_MXN_EQ)+'</span></span>';rows.appendChild(r);});
+}
+
+function rebuildCurrChart(){
+  if(currChartInstance)currChartInstance.destroy();
+  var ctx=document.getElementById('currChart').getContext('2d');
+  currChartInstance=new Chart(ctx,{type:'doughnut',data:{labels:['MXN Directo','USD (MXN equiv.)'],datasets:[{data:[TOTAL_MXN_DIRECT,TOTAL_USD_MXN],backgroundColor:['#1A5C5C','#11ABAB'],borderWidth:2,borderColor:'#FFFFFF'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{...tooltipStyle,callbacks:{label:function(i){return' '+i.label+': '+fmt(i.raw)+' ('+pct(i.raw,TOTAL_MXN_EQ)+')';}}}}}});
+  var rows=document.getElementById('curr-rows');
+  rows.innerHTML='';
+  [{n:'MXN Directo',v:TOTAL_MXN_DIRECT,c:'#1A5C5C'},{n:'USD (MXN equiv.)',v:TOTAL_USD_MXN,c:'#11ABAB'}].forEach(function(d){var r=document.createElement('div');r.className='stat-row';r.innerHTML='<span class="stat-name"><span class="stat-dot" style="background:'+d.c+'"></span>'+d.n+'</span><span class="stat-count">'+fmt(d.v)+' <span style="font-size:10px;color:var(--text3);margin-left:4px;">'+pct(d.v,TOTAL_MXN_EQ)+'</span></span>';rows.appendChild(r);});
+}
+
+function rebuildEntityChart(){
+  if(entityChartInstance)entityChartInstance.destroy();
+  var sorted=[...ENTITIES].sort(function(a,b){return b.total-a.total;});
+  var ctx=document.getElementById('entityChart').getContext('2d');
+  entityChartInstance=new Chart(ctx,{type:'bar',data:{labels:sorted.map(function(e){return e.name;}),datasets:[{label:'MXN eq.',data:sorted.map(function(e){return e.total;}),backgroundColor:'#11ABAB',borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',scales:{x:{stacked:true,grid:{color:'rgba(0,0,0,.06)'},ticks:{font:{size:9},callback:function(v){return fmt(v);}}},y:{stacked:true,grid:{display:false},ticks:{font:{size:10,weight:'600'}}}},plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:12}},tooltip:{...tooltipStyle,callbacks:{label:function(i){return' '+i.dataset.label+': '+fmt(i.raw);}}}}}});
+}
+
+// Populate date selector
+(function(){
+  var sel=document.getElementById('cashDateSelect');
+  if(!sel)return;
+  CASH_DATE_KEYS.forEach(function(dk){
+    var opt=document.createElement('option');
+    opt.value=dk;
+    opt.textContent=CASH_DATES[dk].label;
+    sel.appendChild(opt);
+  });
+  sel.addEventListener('change',function(){updateCashView(this.value);});
+})();
+
+var BANKS=getCashSnap().banks.map(function(b){return{name:b.n,mxn:b.mxn,usd:Math.round(b.usd_eq/getCashSnap().fx),totalMXN:b.total,color:b.c};});
+var TOTAL_MXN_EQ=getCashSnap().total;
+var TOTAL_MXN_DIRECT=getCashSnap().mxn;
+var TOTAL_USD=Math.round(getCashSnap().usd_eq/getCashSnap().fx);
+var TOTAL_USD_MXN=getCashSnap().usd_eq;
 document.getElementById('totalMXNeq').textContent=fmtFull(TOTAL_MXN_EQ);
 
-const ENTITIES=[
-  {name:'MORELCAMP',mxn:388000,usd:16563573,total:288511354},
-  {name:'HOLDCO',mxn:1451000,usd:11502975,total:201545253},
-  {name:'DAE',mxn:46922919,usd:0,total:46922919},
-  {name:'FLEETS',mxn:6518000,usd:0,total:6518000},
-  {name:'GREEN',mxn:6297307,usd:0,total:6297307},
-  {name:'FIMECO',mxn:2513661,usd:0,total:2513661},
-  {name:'Otros',mxn:1102000,usd:0,total:1102000},
-  {name:'PSM',mxn:197911,usd:0,total:197911},
-];
+var ENTITIES=getCashSnap().entities.map(function(e){return{name:e.n,mxn:e.v,usd:0,total:e.v};});
 
 function fmt(n){if(Math.abs(n)>=1e9)return'$'+(n/1e9).toFixed(1)+'B';if(Math.abs(n)>=1e6)return'$'+(n/1e6).toFixed(1)+'M';if(Math.abs(n)>=1e3)return'$'+(n/1e3).toFixed(0)+'K';return'$'+n.toFixed(0);}
 function fmtFull(n){return'$'+Math.round(n).toLocaleString('en-US');}
 function pct(n,t){return t>0?(n/t*100).toFixed(1)+'%':'—';}
 Chart.defaults.color='#9CA3AF';
 const chartDefs={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false,labels:{color:'#9CA3AF'}}},interaction:{mode:'index',intersect:false}};
-const tooltipStyle={backgroundColor:'rgba(22,25,33,.95)',titleColor:'#E8EAF0',bodyColor:'rgba(232,234,240,.85)',borderColor:'rgba(17,171,171,.4)',borderWidth:1,padding:10};
+const tooltipStyle={backgroundColor:'rgba(255,255,255,.95)',titleColor:'#1A1D23',bodyColor:'rgba(26,29,35,.75)',borderColor:'rgba(17,171,171,.4)',borderWidth:1,padding:10};
 function gradient(ctx,c1,c2){const g=ctx.createLinearGradient(0,0,0,280);g.addColorStop(0,c1);g.addColorStop(1,'transparent');return g;}
-const minAxis={x:{grid:{display:false},border:{display:false},ticks:{font:{size:9,weight:'500'},color:'#6B7280',padding:2,maxRotation:45}},y:{grid:{drawTicks:false,color:'rgba(255,255,255,.04)'},border:{display:false},ticks:{font:{size:9},color:'#6B7280',padding:6}}};
+const minAxis={x:{grid:{display:false},border:{display:false},ticks:{font:{size:9,weight:'500'},color:'#6B7280',padding:2,maxRotation:45}},y:{grid:{drawTicks:false,color:'rgba(0,0,0,.06)'},border:{display:false},ticks:{font:{size:9},color:'#6B7280',padding:6}}};
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SECTION 1 CHARTS — Rates + FX from 2022
@@ -1218,7 +1343,7 @@ const minAxis={x:{grid:{display:false},border:{display:false},ticks:{font:{size:
     plugins:{legend:{display:true,position:'bottom',labels:{font:{size:9},boxWidth:12,padding:8}},
       tooltip:{...tooltipStyle,callbacks:{label:i=>{const v=i.raw;return v!=null?' '+i.dataset.label+': '+v.toFixed(2)+'%':'';}}}},
     scales:{x:{grid:{display:false},border:{display:false},ticks:{font:{size:10,weight:'500'},color:'#9CA3AF'}},
-      y:{min:2.5,max:8,grid:{color:'rgba(255,255,255,.04)'},border:{display:false},ticks:{font:{size:9},color:'#6B7280',callback:v=>v.toFixed(1)+'%'}}}}});
+      y:{min:2.5,max:8,grid:{color:'rgba(0,0,0,.06)'},border:{display:false},ticks:{font:{size:9},color:'#6B7280',callback:v=>v.toFixed(1)+'%'}}}}});
 })();
 
 // FX: Actual vs Budget
@@ -1232,7 +1357,7 @@ const minAxis={x:{grid:{display:false},border:{display:false},ticks:{font:{size:
     plugins:{legend:{display:true,position:'bottom',labels:{font:{size:9},boxWidth:12,padding:8}},
       tooltip:{...tooltipStyle,callbacks:{label:i=>{const v=i.raw;return v!=null?' '+i.dataset.label+': $'+v.toFixed(2):'';}}}},
     scales:{x:{grid:{display:false},border:{display:false},ticks:{font:{size:10,weight:'500'},color:'#9CA3AF'}},
-      y:{grid:{color:'rgba(255,255,255,.04)'},border:{display:false},ticks:{font:{size:9},color:'#6B7280',callback:v=>'$'+v.toFixed(2)}}}}});
+      y:{grid:{color:'rgba(0,0,0,.06)'},border:{display:false},ticks:{font:{size:9},color:'#6B7280',callback:v=>'$'+v.toFixed(2)}}}}});
 })();
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -1240,18 +1365,18 @@ const minAxis={x:{grid:{display:false},border:{display:false},ticks:{font:{size:
 // ═══════════════════════════════════════════════════════════════════════════════
 
 // Bank distribution donut
-new Chart(document.getElementById('bankChart').getContext('2d'),{type:'doughnut',data:{labels:BANKS.map(b=>b.name),datasets:[{data:BANKS.map(b=>b.totalMXN),backgroundColor:BANKS.map(b=>b.color),borderWidth:2,borderColor:'#161921'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{...tooltipStyle,callbacks:{label:i=>` ${i.label}: ${fmt(i.raw)} (${pct(i.raw,TOTAL_MXN_EQ)})`}}}}});
+bankChartInstance=new Chart(document.getElementById('bankChart').getContext('2d'),{type:'doughnut',data:{labels:BANKS.map(b=>b.name),datasets:[{data:BANKS.map(b=>b.totalMXN),backgroundColor:BANKS.map(b=>b.color),borderWidth:2,borderColor:'#FFFFFF'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{...tooltipStyle,callbacks:{label:i=>` ${i.label}: ${fmt(i.raw)} (${pct(i.raw,TOTAL_MXN_EQ)})`}}}}});
 const bankRows=document.getElementById('bank-rows');
 BANKS.forEach(b=>{const r=document.createElement('div');r.className='stat-row';r.innerHTML=`<span class="stat-name"><span class="stat-dot" style="background:${b.color}"></span>${b.name}</span><span class="stat-count">${fmt(b.totalMXN)} <span style="font-size:10px;color:var(--text3);margin-left:4px;">${pct(b.totalMXN,TOTAL_MXN_EQ)}</span></span>`;bankRows.appendChild(r);});
 
 // Currency distribution donut
-new Chart(document.getElementById('currChart').getContext('2d'),{type:'doughnut',data:{labels:['MXN Directo','USD (MXN equiv.)'],datasets:[{data:[TOTAL_MXN_DIRECT,TOTAL_USD_MXN],backgroundColor:['#1F5556','#11ABAB'],borderWidth:2,borderColor:'#161921'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{...tooltipStyle,callbacks:{label:i=>` ${i.label}: ${fmt(i.raw)} (${pct(i.raw,TOTAL_MXN_EQ)})`}}}}});
+currChartInstance=new Chart(document.getElementById('currChart').getContext('2d'),{type:'doughnut',data:{labels:['MXN Directo','USD (MXN equiv.)'],datasets:[{data:[TOTAL_MXN_DIRECT,TOTAL_USD_MXN],backgroundColor:['#1A5C5C','#11ABAB'],borderWidth:2,borderColor:'#FFFFFF'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{...tooltipStyle,callbacks:{label:i=>` ${i.label}: ${fmt(i.raw)} (${pct(i.raw,TOTAL_MXN_EQ)})`}}}}});
 const currRows=document.getElementById('curr-rows');
-[{n:'MXN Directo',v:TOTAL_MXN_DIRECT,c:'#1F5556'},{n:'USD (MXN equiv.)',v:TOTAL_USD_MXN,c:'#11ABAB'}].forEach(d=>{const r=document.createElement('div');r.className='stat-row';r.innerHTML=`<span class="stat-name"><span class="stat-dot" style="background:${d.c}"></span>${d.n}</span><span class="stat-count">${fmt(d.v)} <span style="font-size:10px;color:var(--text3);margin-left:4px;">${pct(d.v,TOTAL_MXN_EQ)}</span></span>`;currRows.appendChild(r);});
+[{n:'MXN Directo',v:TOTAL_MXN_DIRECT,c:'#1A5C5C'},{n:'USD (MXN equiv.)',v:TOTAL_USD_MXN,c:'#11ABAB'}].forEach(d=>{const r=document.createElement('div');r.className='stat-row';r.innerHTML=`<span class="stat-name"><span class="stat-dot" style="background:${d.c}"></span>${d.n}</span><span class="stat-count">${fmt(d.v)} <span style="font-size:10px;color:var(--text3);margin-left:4px;">${pct(d.v,TOTAL_MXN_EQ)}</span></span>`;currRows.appendChild(r);});
 
 // Entity stacked bar chart
 const sortedEnt=[...ENTITIES].sort((a,b)=>b.total-a.total);
-new Chart(document.getElementById('entityChart').getContext('2d'),{type:'bar',data:{labels:sortedEnt.map(e=>e.name),datasets:[{label:'MXN',data:sortedEnt.map(e=>e.mxn),backgroundColor:'#1F5556',borderRadius:2},{label:'USD (MXN eq.)',data:sortedEnt.map(e=>e.usd*FX),backgroundColor:'#11ABAB',borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',scales:{x:{stacked:true,grid:{color:'rgba(255,255,255,.04)'},ticks:{font:{size:9},callback:v=>fmt(v)}},y:{stacked:true,grid:{display:false},ticks:{font:{size:10,weight:'600'}}}},plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:12}},tooltip:{...tooltipStyle,callbacks:{label:i=>` ${i.dataset.label}: ${fmt(i.raw)}`}}}}});
+entityChartInstance=new Chart(document.getElementById('entityChart').getContext('2d'),{type:'bar',data:{labels:sortedEnt.map(e=>e.name),datasets:[{label:'MXN',data:sortedEnt.map(e=>e.mxn),backgroundColor:'#1F5556',borderRadius:2},{label:'USD (MXN eq.)',data:sortedEnt.map(e=>e.usd*FX),backgroundColor:'#11ABAB',borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',scales:{x:{stacked:true,grid:{color:'rgba(0,0,0,.06)'},ticks:{font:{size:9},callback:v=>fmt(v)}},y:{stacked:true,grid:{display:false},ticks:{font:{size:10,weight:'600'}}}},plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:12}},tooltip:{...tooltipStyle,callbacks:{label:i=>` ${i.dataset.label}: ${fmt(i.raw)}`}}}}});
 
 
 // Maturity profile — horizontal bars with target markers
@@ -1339,7 +1464,7 @@ updateFX();
   new Chart(ctx,{type:'line',data:{labels:fxRange.map(v=>'$'+v.toFixed(1)),datasets:[
     {label:'Total MXN Eq.',data:totals,borderColor:'#1F5556',backgroundColor:'transparent',borderWidth:2.5,pointRadius:2,tension:.3,yAxisID:'y'},
     {label:'Yield Mensual',data:yields,borderColor:'#11ABAB',backgroundColor:'transparent',borderWidth:2,borderDash:[5,3],pointRadius:2,tension:.3,yAxisID:'y1'}
-  ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:12}},tooltip:{...tooltipStyle,callbacks:{label:i=>` ${i.dataset.label}: ${fmt(i.raw)}`}}},scales:{x:{grid:{display:false},ticks:{font:{size:9},color:'#6B7280'}},y:{position:'left',grid:{color:'rgba(255,255,255,.04)'},ticks:{font:{size:9},color:'#6B7280',callback:v=>fmt(v)}},y1:{position:'right',grid:{display:false},ticks:{font:{size:9},color:'#11ABAB',callback:v=>fmt(v)}}}}});
+  ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:12}},tooltip:{...tooltipStyle,callbacks:{label:i=>` ${i.dataset.label}: ${fmt(i.raw)}`}}},scales:{x:{grid:{display:false},ticks:{font:{size:9},color:'#6B7280'}},y:{position:'left',grid:{color:'rgba(0,0,0,.06)'},ticks:{font:{size:9},color:'#6B7280',callback:v=>fmt(v)}},y1:{position:'right',grid:{display:false},ticks:{font:{size:9},color:'#11ABAB',callback:v=>fmt(v)}}}}});
 })();
 
 function updateRates(){
@@ -1384,7 +1509,7 @@ function updateAlloc(){
   if(allocChart)allocChart.destroy();
   allocChart=new Chart(ctx,{type:'line',data:{labels:pts.map(p=>p.x+'%'),datasets:[
     {label:'Yield Anual',data:pts.map(p=>p.y),borderColor:'#11ABAB',backgroundColor:gradient(ctx,'rgba(17,171,171,.15)','rgba(17,171,171,0)'),borderWidth:2.5,pointRadius:0,tension:.3,fill:true}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...tooltipStyle,callbacks:{label:i=>' Yield: '+fmt(i.raw)+' ('+((i.raw/TOTAL_MXN_EQ)*100).toFixed(2)+'%)'}}},scales:{x:{title:{display:true,text:'% en MXN',font:{size:10}},grid:{display:false},ticks:{font:{size:9},color:'#6B7280'}},y:{grid:{color:'rgba(255,255,255,.04)'},ticks:{font:{size:9},color:'#6B7280',callback:v=>fmt(v)}}}}});
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...tooltipStyle,callbacks:{label:i=>' Yield: '+fmt(i.raw)+' ('+((i.raw/TOTAL_MXN_EQ)*100).toFixed(2)+'%)'}}},scales:{x:{title:{display:true,text:'% en MXN',font:{size:10}},grid:{display:false},ticks:{font:{size:9},color:'#6B7280'}},y:{grid:{color:'rgba(0,0,0,.06)'},ticks:{font:{size:9},color:'#6B7280',callback:v=>fmt(v)}}}}});
 }
 document.getElementById('allocSlider').addEventListener('input',updateAlloc);
 updateAlloc();
@@ -1442,16 +1567,16 @@ function updateYieldChart(){
   var ctx=document.getElementById('yieldChart').getContext('2d');
   yieldChartInstance=new Chart(ctx,{type:'bar',data:{labels:YIELD_MONTHS,datasets:[
     {label:'Intereses MXN',data:data.interest,backgroundColor:'rgba(17,171,171,.55)',borderColor:'#11ABAB',borderWidth:1,borderRadius:4,yAxisID:'y',order:2},
-    {label:'Yield Anualizado %',data:data.yield,type:'line',borderColor:'#F59E0B',backgroundColor:'transparent',borderWidth:2.5,pointRadius:5,pointBackgroundColor:'#F59E0B',pointBorderColor:'#161921',pointBorderWidth:2,tension:.3,yAxisID:'y1',order:1}
+    {label:'Yield Anualizado %',data:data.yield,type:'line',borderColor:'#F59E0B',backgroundColor:'transparent',borderWidth:2.5,pointRadius:5,pointBackgroundColor:'#F59E0B',pointBorderColor:'#FFFFFF',pointBorderWidth:2,tension:.3,yAxisID:'y1',order:1}
   ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-    plugins:{legend:{display:true,position:'bottom',labels:{font:{size:10},boxWidth:12,padding:10}},
+    plugins:{legend:{display:true,position:'bottom',labels:{font:{size:10},boxWidth:12,padding:10,color:'#4B5563'}},
       tooltip:{...tooltipStyle,callbacks:{label:function(i){
         if(i.datasetIndex===0)return' Intereses: $'+Math.round(i.raw).toLocaleString('en-US')+' MXN';
         return' Yield: '+i.raw.toFixed(2)+'%';
       }}}},
     scales:{
       x:{grid:{display:false},border:{display:false},ticks:{font:{size:11,weight:'600'},color:'#9CA3AF'}},
-      y:{position:'left',grid:{color:'rgba(255,255,255,.04)'},border:{display:false},
+      y:{position:'left',grid:{color:'rgba(0,0,0,.06)'},border:{display:false},
         ticks:{font:{size:9},color:'#6B7280',callback:function(v){if(Math.abs(v)>=1e6)return'$'+(v/1e6).toFixed(1)+'M';if(Math.abs(v)>=1e3)return'$'+(v/1e3).toFixed(0)+'K';return'$'+v;}},
         title:{display:true,text:'Intereses MXN',font:{size:10,weight:'600'},color:'#9CA3AF'}},
       y1:{position:'right',grid:{display:false},border:{display:false},
@@ -1494,98 +1619,8 @@ updateYieldChart();
 })();
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SECTION 4 — WEEKLY CASH WATERFALL (USE OF FUNDS)
+// (Section 4 waterfall removed — replaced by inline Cash Flow tables)
 // ═══════════════════════════════════════════════════════════════════════════════
-(function(){
-  var weeks=[
-    {label:'17-Jul',bop:390.3,inflows:0,debt:0,vehicles:0,chargers:0,otros:0,nomina:0,renta:0,wk:0,actual:true},
-    {label:'20-Jul',bop:390.3,inflows:25.0,debt:0,vehicles:42.7,chargers:0,otros:0,nomina:0,renta:0,wk:40.0,actual:true},
-    {label:'27-Jul',bop:332.7,inflows:25.0,debt:0,vehicles:63.2,chargers:0,otros:0,nomina:10.8,renta:0,wk:29.2,actual:true,current:true},
-    {label:'03-Ago',bop:0,inflows:25.0,debt:0,vehicles:0,chargers:5.9,otros:0,nomina:0,renta:3.5,wk:35.0},
-    {label:'10-Ago',bop:0,inflows:25.0,debt:84.0,vehicles:129.0,chargers:0,otros:0,nomina:10.8,renta:0,wk:35.0},
-    {label:'17-Ago',bop:0,inflows:25.0,debt:0,vehicles:0,chargers:0,otros:0,nomina:0,renta:0,wk:35.0},
-    {label:'24-Ago',bop:0,inflows:25.0,debt:0,vehicles:7.5,chargers:0,otros:2.3,nomina:0,renta:0,wk:35.0},
-    {label:'31-Ago',bop:0,inflows:25.0,debt:0,vehicles:0,chargers:0,otros:0,nomina:10.8,renta:0,wk:35.0},
-    {label:'07-Sep',bop:0,inflows:25.0,debt:0,vehicles:22.3,chargers:0,otros:0,nomina:0,renta:1.7,wk:35.0},
-    {label:'14-Sep',bop:0,inflows:25.0,debt:0,vehicles:22.3,chargers:5.1,otros:0,nomina:10.8,renta:0,wk:35.0},
-    {label:'21-Sep',bop:0,inflows:25.0,debt:0,vehicles:0,chargers:0,otros:0,nomina:0,renta:0,wk:35.0},
-    {label:'28-Sep',bop:0,inflows:25.0,debt:0,vehicles:0,chargers:0,otros:0,nomina:10.8,renta:0,wk:35.0},
-  ];
-  var FX=17.3;
-  weeks.forEach(function(w,i){
-    if(i>0&&!w.actual)w.bop=+(weeks[i-1].eop.toFixed(1));
-    w.eop=w.bop+w.inflows+(w.debt||0)-w.vehicles-w.chargers-w.otros-w.nomina-w.renta-w.wk;
-    w.usd=+(w.eop/FX).toFixed(1);
-  });
-  var MIN=40;
-  // Build table
-  var tb=document.getElementById('waterfallBody');
-  if(!tb)return;
-  function row(label,vals,opts){
-    opts=opts||{};
-    var tr=document.createElement('tr');
-    if(opts.border)tr.style.borderTop='1px solid var(--border)';
-    if(opts.bold)tr.style.fontWeight='700';
-    var td0=document.createElement('td');
-    td0.style.cssText='text-align:left;padding:6px;white-space:nowrap;color:'+(opts.color||'var(--text)')+';';
-    td0.textContent=label;
-    tr.appendChild(td0);
-    vals.forEach(function(v,i){
-      var td=document.createElement('td');
-      td.style.cssText='padding:6px;font-variant-numeric:tabular-nums;';
-      if(weeks[i].current)td.style.background='rgba(17,171,171,.08)';
-      if(opts.alert&&typeof v==='number'&&v<MIN)td.style.color='var(--red)';
-      if(typeof v==='number'){
-        if(opts.prefix)td.textContent=(v<0?'-':'')+opts.prefix+Math.abs(v).toFixed(1);
-        else td.textContent=v.toFixed(1);
-      }else td.textContent=v||'—';
-      tr.appendChild(td);
-    });
-    tb.appendChild(tr);
-  }
-  row('Cash BoP',weeks.map(function(w){return w.bop;}),{bold:true,prefix:'$',color:'var(--text)'});
-  row('(+) Inflows',weeks.map(function(w){return w.inflows||null;}),{color:'var(--teal)',prefix:'$'});
-  row('(+) Debt Draw',weeks.map(function(w){return w.debt?w.debt:null;}),{color:'#3B82F6',prefix:'$'});
-  row('(−) Vehículos',weeks.map(function(w){return w.vehicles?-w.vehicles:null;}),{color:'#1F5556',prefix:'$'});
-  row('(−) Cargadores',weeks.map(function(w){return w.chargers?-w.chargers:null;}),{color:'#0E8585',prefix:'$'});
-  row('(−) Otros/Infra',weeks.map(function(w){return w.otros?-w.otros:null;}),{color:'#3d9e9e',prefix:'$'});
-  row('(−) Nómina',weeks.map(function(w){return w.nomina?-w.nomina:null;}),{color:'#e67e22',prefix:'$'});
-  row('(−) Renta',weeks.map(function(w){return w.renta?-w.renta:null;}),{color:'#9b59b6',prefix:'$'});
-  row('(−) Working Capital',weeks.map(function(w){return w.wk?-w.wk:null;}),{color:'#2a8a8a',prefix:'$'});
-  row('Cash EoP (MXNm)',weeks.map(function(w){return w.eop;}),{bold:true,border:true,alert:true,prefix:'$',color:'var(--green)'});
-  row('Cash EoP (USDm)',weeks.map(function(w){return w.usd;}),{color:'var(--text3)',prefix:'$'});
-  // Chart
-  var ctx=document.getElementById('waterfallChart');
-  if(!ctx)return;
-  var labels=weeks.map(function(w){return w.label;});
-  var eopData=weeks.map(function(w){return w.eop;});
-  var vehData=weeks.map(function(w){return w.vehicles;});
-  var chgData=weeks.map(function(w){return w.chargers;});
-  var otrosData=weeks.map(function(w){return w.otros;});
-  var nomData=weeks.map(function(w){return w.nomina;});
-  var rentData=weeks.map(function(w){return w.renta;});
-  var debtData=weeks.map(function(w){return w.debt||0;});
-  var wkData=weeks.map(function(w){return w.wk;});
-  var inflowData=weeks.map(function(w){return w.inflows;});
-  new Chart(ctx,{type:'bar',data:{labels:labels,datasets:[
-    {label:'Inflows',data:inflowData,backgroundColor:'rgba(17,171,171,.45)',borderColor:'#11ABAB',borderWidth:1,borderRadius:3,stack:'flow'},
-    {label:'Debt Draw',data:debtData,backgroundColor:'rgba(59,130,246,.5)',borderColor:'#3B82F6',borderWidth:1,borderRadius:3,stack:'flow'},
-    {label:'Vehículos',data:vehData.map(function(v){return -v;}),backgroundColor:'rgba(31,85,86,.7)',borderColor:'#1F5556',borderWidth:1,borderRadius:3,stack:'flow'},
-    {label:'Cargadores',data:chgData.map(function(v){return -v;}),backgroundColor:'rgba(14,133,133,.55)',borderColor:'#0E8585',borderWidth:1,borderRadius:3,stack:'flow'},
-    {label:'Otros/Infra',data:otrosData.map(function(v){return -v;}),backgroundColor:'rgba(61,158,158,.5)',borderColor:'#3d9e9e',borderWidth:1,borderRadius:3,stack:'flow'},
-    {label:'Nómina',data:nomData.map(function(v){return -v;}),backgroundColor:'rgba(230,126,34,.55)',borderColor:'#e67e22',borderWidth:1,borderRadius:3,stack:'flow'},
-    {label:'Renta',data:rentData.map(function(v){return -v;}),backgroundColor:'rgba(155,89,182,.5)',borderColor:'#9b59b6',borderWidth:1,borderRadius:3,stack:'flow'},
-    {label:'Working Capital',data:wkData.map(function(v){return -v;}),backgroundColor:'rgba(42,138,138,.4)',borderColor:'#2a8a8a',borderWidth:1,borderRadius:3,stack:'flow'},
-    {label:'Cash EoP',data:eopData,type:'line',borderColor:'#00C896',backgroundColor:'transparent',borderWidth:2.5,pointRadius:5,pointBackgroundColor:eopData.map(function(v){return v<MIN?'#EF4444':'#00C896';}),pointBorderColor:'#161921',pointBorderWidth:2,tension:.3,order:0}
-  ]},plugins:[{id:'minLine',afterDraw:function(chart){var yScale=chart.scales.y;var yy=yScale.getPixelForValue(MIN);var c2=chart.ctx;c2.save();c2.beginPath();c2.setLineDash([6,4]);c2.strokeStyle='rgba(239,68,68,.6)';c2.lineWidth=2;c2.moveTo(chart.chartArea.left,yy);c2.lineTo(chart.chartArea.right,yy);c2.stroke();c2.fillStyle='#EF4444';c2.font='600 9px "Space Grotesk"';c2.fillText('Caja Mín $40M',chart.chartArea.left+4,yy-6);c2.restore();}}],options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-    plugins:{legend:{display:true,position:'bottom',labels:{font:{size:10},boxWidth:12,padding:10}},
-      tooltip:{...tooltipStyle,callbacks:{label:function(i){return' '+i.dataset.label+': $'+Math.abs(i.raw).toFixed(1)+'M';}}},
-    },
-    scales:{
-      x:{stacked:true,grid:{display:false},border:{display:false},ticks:{font:{size:9,weight:'500'},color:'#6B7280'}},
-      y:{stacked:true,grid:{color:'rgba(255,255,255,.04)'},border:{display:false},ticks:{font:{size:9},color:'#6B7280',callback:function(v){return'$'+v+'M';}}}
-    }}});
-})();
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SECTION 5 — AUTHORIZED INVESTMENTS CHART
@@ -1600,10 +1635,13 @@ updateYieldChart();
     options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},tooltip:{...tooltipStyle,callbacks:{label:function(i){return' '+i.raw.toFixed(2)+'% anual';}}}},
       scales:{
-        x:{grid:{color:'rgba(255,255,255,.04)'},border:{display:false},ticks:{font:{size:9},color:'#6B7280',callback:function(v){return v+'%';}},title:{display:true,text:'Rendimiento Anual (%)',font:{size:10,weight:'600'},color:'#9CA3AF'}},
-        y:{grid:{display:false},border:{display:false},ticks:{font:{size:10},color:'#D1D5DB'}}
+        x:{grid:{color:'rgba(0,0,0,.06)'},border:{display:false},ticks:{font:{size:9},color:'#6B7280',callback:function(v){return v+'%';}},title:{display:true,text:'Rendimiento Anual (%)',font:{size:10,weight:'600'},color:'#9CA3AF'}},
+        y:{grid:{display:false},border:{display:false},ticks:{font:{size:10},color:'#4B5563'}}
       }}});
 })();
+
+// Initialize KPIs from latest snapshot
+updateCashView(currentCashDate);
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // LIVE FX — Tipo de cambio en tiempo real

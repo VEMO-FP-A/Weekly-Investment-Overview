@@ -164,15 +164,19 @@ PROJ_FX = {
 }
 
 
+TOKEN_DIR = os.path.join(SCRIPT_DIR, "HTML", "Token")
+
+
 def get_api_key(filenames):
-    """Lee API key del primer archivo encontrado en SCRIPT_DIR."""
+    """Lee API key del primer archivo encontrado en TOKEN_DIR o SCRIPT_DIR."""
     for fn in filenames:
-        path = os.path.join(SCRIPT_DIR, fn)
-        if os.path.exists(path):
-            with open(path, "r", encoding="utf-8") as f:
-                key = f.read().strip()
-            if key:
-                return key
+        for folder in [TOKEN_DIR, SCRIPT_DIR]:
+            path = os.path.join(folder, fn)
+            if os.path.exists(path):
+                with open(path, "r", encoding="utf-8") as f:
+                    key = f.read().strip()
+                if key:
+                    return key
     return None
 
 
@@ -464,12 +468,15 @@ def get_token() -> str:
             token = f.read().strip()
         if token:
             return token
-    # 2. Primera vez: leer del archivo 'token' o 'token.txt' y guardarlo en config
+    # 2. Primera vez: leer del archivo 'token' o 'token.txt' (busca en TOKEN_DIR y SCRIPT_DIR)
     token_file = None
     for name in ["token", "token.txt"]:
-        candidate = os.path.join(SCRIPT_DIR, name)
-        if os.path.exists(candidate):
-            token_file = candidate
+        for folder in [TOKEN_DIR, SCRIPT_DIR]:
+            candidate = os.path.join(folder, name)
+            if os.path.exists(candidate):
+                token_file = candidate
+                break
+        if token_file:
             break
     if token_file:
         with open(token_file, "r", encoding="utf-8") as f:
@@ -639,13 +646,16 @@ def main():
         if args.dry_run:
             print("  [DRY RUN] No se escribieron cambios.")
         else:
-            backup = args.html + ".bak"
-            with open(args.html, "r", encoding="utf-8") as f:
-                with open(backup, "w", encoding="utf-8") as b:
-                    b.write(f.read())
+            import tempfile, shutil
+            backup = os.path.join(tempfile.gettempdir(), os.path.basename(args.html) + ".bak")
+            try:
+                shutil.copy2(args.html, backup)
+            except Exception:
+                backup = None  # OneDrive may block .bak — skip backup
             with open(args.html, "w", encoding="utf-8") as f:
                 f.write(updated_html)
-            print(f"  ✓ HTML actualizado (backup: {os.path.basename(backup)})")
+            bk_msg = f" (backup: {os.path.basename(backup)})" if backup else ""
+            print(f"  ✓ HTML actualizado{bk_msg}")
 
     # ── Paso 2: Push a GitHub ───────────────────────────────────────
     if not args.update_only:

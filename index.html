@@ -34,6 +34,10 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .section.active{display:block;}
 .section-head{background:var(--forest);border:1px solid var(--forest);color:#FFFFFF;font-size:13px;font-weight:700;padding:10px 18px;border-radius:5px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
 .section-head-light{border-left:4px solid var(--teal);padding:8px 14px;font-size:12px;font-weight:700;color:var(--teal);margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.ent-chip{padding:6px 14px;border:1px solid var(--border);border-radius:20px;font-size:11px;font-family:inherit;font-weight:600;color:var(--text2);background:var(--card);cursor:pointer;transition:all .15s;white-space:nowrap;}
+.ent-chip:hover{border-color:var(--teal);color:var(--teal);background:rgba(17,171,171,.06);}
+.ent-chip-active{border-color:var(--teal);color:#fff;background:var(--teal);}
+.ent-chip-active:hover{color:#fff;background:var(--teal);}
 .section-note{font-size:10px;color:rgba(255,255,255,.7);font-weight:400;}
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:16px;}
 .kpi-card{background:var(--surface);padding:18px 16px;border-right:1px solid var(--border);transition:background .15s;}
@@ -115,8 +119,8 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
 <nav class="nav-bar">
   <div class="nav-tab active" onclick="showSection('overview')"><span class="nav-num">1</span>Vista General</div>
   <div class="nav-tab" onclick="showSection('investments')"><span class="nav-num">2</span>Inversiones</div>
-  <div class="nav-tab" onclick="showSection('analytics')"><span class="nav-num">3</span>Análisis & Escenarios</div>
-  <div class="nav-tab" onclick="showSection('capital')"><span class="nav-num">4</span>Cash Flow</div>
+  <div class="nav-tab" onclick="showSection('capital')"><span class="nav-num">3</span>Use of Funds</div>
+  <div class="nav-tab" onclick="showSection('analytics')"><span class="nav-num">4</span>Análisis & Escenarios</div>
   <div class="nav-tab" onclick="showSection('authorized')"><span class="nav-num">5</span>Authorized Investments</div>
 </nav>
 
@@ -141,7 +145,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     <div class="section-head">
       <span>Vista General</span>
       <span style="display:flex;align-items:center;gap:10px;">
-        <span class="section-note" id="saldos-label">Saldos al 14 Sep 2026</span>
+        <span class="section-note" id="saldos-label">Saldos al 21 Sep 2026</span>
         <select id="cashDateSelect" style="background:#fff;color:#1A1D23;border:1px solid rgba(255,255,255,.3);border-radius:4px;padding:4px 8px;font-size:10px;font-family:'Space Grotesk',sans-serif;font-weight:600;cursor:pointer;outline:none;"></select>
       </span>
     </div>
@@ -166,7 +170,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       <div class="kpi-card">
         <div class="kpi-label">Exposición a USD</div>
         <div class="kpi-value" style="font-size:24px;color:var(--amber);" id="kpi-usd">$488.2M</div>
-        <div class="kpi-sub" id="kpi-usd-sub">@ $17.40 · 88.2% del cash</div>
+        <div class="kpi-sub" id="kpi-usd-sub">@ $17.22 · 88.2% del cash</div>
       </div>
     </div>
 
@@ -174,18 +178,18 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     <div class="kpi-grid" style="grid-template-columns:repeat(5,minmax(0,1fr));margin-top:-8px;">
       <div class="kpi-card" style="border:1px solid var(--teal);">
         <div class="kpi-label">Runway <span style="font-weight:400;text-transform:none;letter-spacing:0;">(post-capitalización)</span></div>
-        <div class="kpi-value" style="font-size:24px;color:var(--teal);">~23 <span style="font-size:14px;color:var(--text3);">semanas</span></div>
-        <div class="kpi-sub">Actual 07-Sep: $140M · Capitalización +$403M (28-Sep)<br>EoP Oct: $378M · Burn ~$22M/sem<br><span style="color:var(--teal);font-weight:600;">Agotamiento: ~Mar 2027</span></div>
+        <div class="kpi-value" style="font-size:24px;color:var(--teal);">~19 <span style="font-size:14px;color:var(--text3);">semanas</span></div>
+        <div class="kpi-sub">Actual 21-Sep: $76.9M op. · Cap. +$403M (28-Sep) → $466.7M<br>RR ~$22.2M/sem · Piso mínimo: $40M<br><span style="color:var(--teal);font-weight:600;">Agotamiento: ~Sem 2 Feb 2027</span></div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">TIIE Overnight MXN <span style="font-weight:400;text-transform:none;letter-spacing:0;">(1 día)</span></div>
         <div class="kpi-value" style="font-size:24px;color:var(--teal);">6.50%</div>
-        <div class="kpi-sub">Disposición diaria · Banxico 7 may'26 · <span style="color:var(--text3);">TIIE 28d: 6.76%</span></div>
+        <div class="kpi-sub">Disposición diaria · Banxico pausa may'26 · <span style="color:var(--text3);">TIIE 28d: 6.7458%</span></div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">Tasa de Referencia USD</div>
-        <div class="kpi-value" style="font-size:24px;">3.50–3.75%</div>
-        <div class="kpi-sub">Fed Funds Rate · hold 99.6%</div>
+        <div class="kpi-value" style="font-size:24px;">3.75–4.00%</div>
+        <div class="kpi-sub">Fed Funds Rate · Subida +25pb 16-Sep'26</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">Tasa Financiamiento Blended</div>
@@ -194,19 +198,19 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       </div>
       <div class="kpi-card">
         <div class="kpi-label">FX (MXN/USD) <span id="fxLiveBadge" style="display:none;font-size:8px;font-weight:400;text-transform:none;letter-spacing:0;background:rgba(17,171,171,.15);color:var(--teal);padding:2px 6px;border-radius:3px;margin-left:4px;">LIVE</span></div>
-        <div class="kpi-value" style="font-size:24px;" id="fxLiveValue">17.40</div>
-        <div class="kpi-sub" id="fxLiveSub">27 Jul 2026 · <span style="font-size:9px;color:var(--text3);">Fuente: Banxico FIX / DOF</span></div>
+        <div class="kpi-value" style="font-size:24px;" id="fxLiveValue">17.22</div>
+        <div class="kpi-sub" id="fxLiveSub">21 Sep 2026 · <span style="font-size:9px;color:var(--text3);">Fuente: Banxico FIX / DOF</span></div>
       </div>
     </div>
 
     <!-- CHARTS: Combined Rates + FX -->
     <div class="grid-2" style="margin-top:8px;">
       <div class="chart-card">
-        <div class="chart-card-head"><div class="chart-card-title">Tasas de Referencia — TIIE 28d vs Fed Funds (mensual)</div><div class="chart-card-meta">Mensual desde ene 2022 · Proyección H2 2026</div></div>
+        <div class="chart-card-head"><div class="chart-card-title">Tasas de Referencia — TIIE 28d vs Fed Funds (mensual)</div><div class="chart-card-meta">Mensual desde ene 2022 · Proyección Q4 2026</div></div>
         <div class="chart-card-body"><div style="position:relative;height:280px;"><canvas id="ratesChart"></canvas></div></div>
       </div>
       <div class="chart-card">
-        <div class="chart-card-head forest"><div class="chart-card-title">Tipo de Cambio MXN/USD</div><div class="chart-card-meta">Mensual desde ene 2022 · Proyección H2 2026</div></div>
+        <div class="chart-card-head forest"><div class="chart-card-title">Tipo de Cambio MXN/USD</div><div class="chart-card-meta">Mensual desde ene 2022 · Proyección Q4 2026</div></div>
         <div class="chart-card-body"><div style="position:relative;height:280px;"><canvas id="fxHistChart"></canvas></div></div>
       </div>
     </div>
@@ -220,7 +224,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     <div class="section-head-light"><span>Actuals vs Budget — 2026</span></div>
     <div class="grid-2">
       <div class="chart-card">
-        <div class="chart-card-head"><div class="chart-card-title">Tasas de Referencia — Actual vs Budget 2026</div><div class="chart-card-meta">TIIE 28d (budget 6.50%) · TIIE ON: 6.50% · Fed Funds (budget 3.00%)</div></div>
+        <div class="chart-card-head"><div class="chart-card-title">Tasas de Referencia — Actual vs Budget 2026</div><div class="chart-card-meta">TIIE 28d (budget 6.50%) · TIIE ON: 6.50% · Fed Funds (budget 3.00%) · Actuals hasta Sep'26</div></div>
         <div class="chart-card-body"><div style="position:relative;height:240px;"><canvas id="ratesBdgChart"></canvas></div></div>
       </div>
       <div class="chart-card">
@@ -290,77 +294,31 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       <a href="#inv-pos" class="inv-jump" onclick="document.getElementById('inv-pos').scrollIntoView({behavior:'smooth'});return false;">Posiciones</a>
       <a href="#inv-dist" class="inv-jump" onclick="document.getElementById('inv-dist').scrollIntoView({behavior:'smooth'});return false;">Distribución</a>
       <a href="#inv-ent" class="inv-jump" onclick="document.getElementById('inv-ent').scrollIntoView({behavior:'smooth'});return false;">Entidades</a>
-      <a href="#inv-rend" class="inv-jump" onclick="document.getElementById('inv-rend').scrollIntoView({behavior:'smooth'});return false;">Rendimientos</a>
-      <a href="#inv-opt" class="inv-jump" onclick="document.getElementById('inv-opt').scrollIntoView({behavior:'smooth'});return false;">Opciones</a>
+      <a href="#inv-framework" class="inv-jump" onclick="document.getElementById('inv-framework').scrollIntoView({behavior:'smooth'});return false;">Framework</a>
     </div>
 
     <!-- KPI Cards (dynamic) -->
-    <div class="kpi-grid" style="grid-template-columns:repeat(5,minmax(0,1fr));">
+    <div class="kpi-grid" style="grid-template-columns:repeat(4,minmax(0,1fr));">
       <div class="kpi-card">
         <div class="kpi-label">Cash Total (MXN eq.)</div>
         <div class="kpi-value" style="font-size:24px;color:var(--teal);" id="inv-kpi-total">—</div>
         <div class="kpi-sub" id="inv-kpi-total-sub">—</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Cash MXN</div>
+        <div class="kpi-label">Caja Operativa MXN</div>
         <div class="kpi-value" style="font-size:24px;" id="inv-kpi-mxn">—</div>
         <div class="kpi-sub" id="inv-kpi-mxn-sub">—</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Cash USD</div>
-        <div class="kpi-value" style="font-size:24px;" id="inv-kpi-usd">—</div>
+        <div class="kpi-label">Caja Operativa USD</div>
+        <div class="kpi-value" style="font-size:24px;color:var(--teal);" id="inv-kpi-usd">—</div>
         <div class="kpi-sub" id="inv-kpi-usd-sub">—</div>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-label"># Bancos</div>
-        <div class="kpi-value" style="font-size:24px;color:var(--green);" id="inv-kpi-banks">—</div>
-        <div class="kpi-sub" id="inv-kpi-banks-sub">—</div>
+      <div class="kpi-card" style="border:1px solid var(--amber);">
+        <div class="kpi-label">Caja Restringida <span style="font-weight:400;text-transform:none;letter-spacing:0;">(MORELCAMP)</span></div>
+        <div class="kpi-value" style="font-size:24px;color:var(--amber);" id="inv-kpi-restricted">—</div>
+        <div class="kpi-sub" id="inv-kpi-restricted-sub">—</div>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-label"># Entidades</div>
-        <div class="kpi-value" style="font-size:24px;" id="inv-kpi-ents">—</div>
-        <div class="kpi-sub" id="inv-kpi-ents-sub">—</div>
-      </div>
-    </div>
-
-    <!-- Rendimientos Reales H1 2026 -->
-    <div class="section-head-light" id="inv-rend"><span>Rendimientos Reales H1 2026</span>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <span style="font-size:10px;color:var(--text3);font-weight:400;">Empresa:</span>
-        <select id="yieldFilter" onchange="updateYieldChart()" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:4px 8px;font-size:11px;font-family:'Space Grotesk',sans-serif;cursor:pointer;">
-          <option value="TOTAL">Total VEMO</option>
-          <option value="HOLDCO">HOLDCO</option>
-          <option value="MORELCAMP">MORELCAMP</option>
-          <option value="DAE">DAE</option>
-          <option value="FIMECO">FIMECO</option>
-          <option value="GREEN">GREEN</option>
-          <option value="CHARGING">CHARGING</option>
-          <option value="FLEETS">FLEETS</option>
-          <option value="PSM">PSM</option>
-          <option value="ESPACIOS">ESPACIOS</option>
-          <option value="INGENIERIA">INGENIERÍA</option>
-          <option value="IP">IP</option>
-          <option value="EMC">EMC</option>
-          <option value="MOVILIDAD">MOVILIDAD</option>
-        </select>
-      </div>
-    </div>
-    <div class="chart-card" style="margin-bottom:16px;">
-      <div class="chart-card-head forest">
-        <div class="chart-card-title">Intereses Ganados vs Yield Anualizado</div>
-        <div class="chart-card-meta">Ene–Jun 2026 · Intereses en MXN · Yield anualizado eje secundario</div>
-      </div>
-      <div class="chart-card-body">
-        <div style="position:relative;height:320px;"><canvas id="yieldChart"></canvas></div>
-      </div>
-    </div>
-    <div class="tbl-outer" style="margin-bottom:16px;">
-      <table class="dt" id="yieldTable">
-        <thead><tr>
-          <th>Empresa</th><th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Total H1</th>
-        </tr></thead>
-        <tbody id="yieldTableBody"></tbody>
-      </table>
     </div>
 
     <!-- Detalle de Posiciones por Banco (dinámico) -->
@@ -368,7 +326,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     <div class="tbl-outer">
       <table class="dt" id="posTable">
         <thead><tr>
-          <th>Banco</th><th>Moneda</th><th>Monto</th><th>MXN Equiv.</th><th>% del Total</th>
+          <th>Banco</th><th>Moneda</th><th>Monto (Moneda de Origen)</th><th>Monto MXN (Equivalente)</th><th>% del Total</th>
         </tr></thead>
         <tbody id="posTableBody"></tbody>
       </table>
@@ -412,148 +370,36 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       </div>
     </div>
 
-    <!-- Opciones de Inversión -->
-    <div class="section-head-light" id="inv-opt"><span>Opciones de Inversión</span><span style="font-size:10px;color:var(--text3);font-weight:400;">Cotizaciones vigentes · Sujetas a confirmación</span></div>
-    <div class="tbl-outer">
-      <table class="dt">
-        <thead><tr>
-          <th>Instrumento</th><th>Banco</th><th>Plazo</th><th>Tasa</th><th>Moneda</th><th>Observaciones</th>
-        </tr></thead>
-        <tbody>
-          <tr style="background:rgba(17,171,171,.03);"><td colspan="6" style="text-align:left;font-weight:700;color:var(--teal);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:8px 12px;border-bottom:1px solid var(--border);">BBVA — 90-93% Fed Funds · Permanencia +17 MDD</td></tr>
-          <tr><td>PRLV 1d</td><td>BBVA</td><td>Diario</td><td>3.15%</td><td>USD</td><td style="color:var(--text3);font-size:10px;">Tasa actual contratada</td></tr>
-          <tr><td>PRLV</td><td>BBVA</td><td>7 días</td><td>3.15%</td><td>USD</td><td style="color:var(--text3);font-size:10px;">—</td></tr>
-          <tr><td>PRLV</td><td>BBVA</td><td>14 días</td><td>3.15%</td><td>USD</td><td style="color:var(--text3);font-size:10px;">—</td></tr>
-          <tr><td>PRLV</td><td>BBVA</td><td>22 días</td><td>3.15%</td><td>USD</td><td style="color:var(--text3);font-size:10px;">—</td></tr>
-          <tr><td>Pagaré</td><td>BBVA</td><td>30 días</td><td style="color:var(--green);font-weight:700;">3.26%</td><td>USD</td><td style="color:var(--text3);font-size:10px;">+11bp vs diario</td></tr>
-          <tr><td>Pagaré</td><td>BBVA</td><td>60 días</td><td style="color:var(--green);font-weight:700;">3.26%</td><td>USD</td><td style="color:var(--text3);font-size:10px;">+11bp vs diario</td></tr>
-          <tr style="background:rgba(17,171,171,.03);"><td colspan="6" style="text-align:left;font-weight:700;color:var(--teal);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:8px 12px;border-bottom:1px solid var(--border);">Monex — Inversión de 17 MDD</td></tr>
-          <tr><td>PRLV 1d</td><td>Monex</td><td>Diario</td><td>2.80%</td><td>USD</td><td style="color:var(--text3);font-size:10px;">Tasa actual contratada</td></tr>
-          <tr><td>PRLV</td><td>Monex</td><td>7 días</td><td>2.80%</td><td>USD</td><td style="color:var(--text3);font-size:10px;">—</td></tr>
-          <tr><td>PRLV</td><td>Monex</td><td>14 días</td><td>2.80%</td><td>USD</td><td style="color:var(--text3);font-size:10px;">—</td></tr>
-          <tr><td>Pagaré</td><td>Monex</td><td>30 días</td><td>2.85%</td><td>USD</td><td style="color:var(--text3);font-size:10px;">+5bp vs diario</td></tr>
-          <tr><td>Pagaré</td><td>Monex</td><td>60 días</td><td style="color:var(--green);font-weight:700;">2.92%</td><td>USD</td><td style="color:var(--text3);font-size:10px;">+12bp vs diario</td></tr>
-          <tr><td>Pagaré</td><td>Monex</td><td>90 días</td><td style="color:var(--green);font-weight:700;">3.10%</td><td>USD</td><td style="color:var(--text3);font-size:10px;">+30bp vs diario</td></tr>
-          <tr style="background:rgba(17,171,171,.03);"><td colspan="6" style="text-align:left;font-weight:700;color:var(--teal);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:8px 12px;border-bottom:1px solid var(--border);">Citi — Inversión de 17 MDD · Requiere cuenta US Corporate</td></tr>
-          <tr><td>Depósito</td><td>Citi</td><td>Diario</td><td>3.12%</td><td>USD</td><td style="color:var(--text3);font-size:10px;">Requiere cuenta US Corporate</td></tr>
-          <tr><td>Depósito</td><td>Citi</td><td>7 días</td><td>3.14%</td><td>USD</td><td style="color:var(--text3);font-size:10px;">—</td></tr>
-          <tr><td>Depósito</td><td>Citi</td><td>14 días</td><td>3.17%</td><td>USD</td><td style="color:var(--text3);font-size:10px;">—</td></tr>
-          <tr><td>Depósito</td><td>Citi</td><td>22 días</td><td>3.17%</td><td>USD</td><td style="color:var(--text3);font-size:10px;">—</td></tr>
-          <tr><td>Depósito</td><td>Citi</td><td>30 días</td><td>3.17%</td><td>USD</td><td style="color:var(--text3);font-size:10px;">—</td></tr>
-          <tr><td>Depósito</td><td>Citi</td><td>60 días</td><td style="color:var(--green);font-weight:700;">3.47%</td><td>USD</td><td style="color:var(--text3);font-size:10px;">+34bp vs diario · Mejor tasa a plazo</td></tr>
-          <tr style="background:rgba(17,171,171,.03);"><td colspan="6" style="text-align:left;font-weight:700;color:var(--teal);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:8px 12px;border-bottom:1px solid var(--border);">Morgan Stanley — Fondos de inversión + Disposición diaria</td></tr>
-          <tr><td>Disposición diaria</td><td>Morgan Stanley</td><td>Diario</td><td>3.23%</td><td>USD</td><td style="color:var(--text3);font-size:10px;">Equivalente a mesa bancaria</td></tr>
-          <tr><td style="white-space:normal;">Fondo Debt Instruments</td><td>Morgan Stanley</td><td>T+1</td><td style="color:var(--green);font-weight:700;">4.00%</td><td>USD</td><td style="color:var(--text3);font-size:10px;white-space:normal;">Deuda corp. investment grade · <span class="pct-cell pct-inv-best" style="font-size:9px;">AA/AAA</span></td></tr>
-          <tr><td style="white-space:normal;">Fondo Debt + Derivados</td><td>Morgan Stanley</td><td>T+1</td><td style="color:var(--green);font-weight:700;">4.30%</td><td>USD</td><td style="color:var(--text3);font-size:10px;white-space:normal;">Mayor riesgo por derivados · <span class="pct-cell pct-inv-good" style="font-size:9px;">AA/AAA+</span></td></tr>
-        </tbody>
-      </table>
+    <!-- Framework de Inversión por Tramos -->
+    <div class="section-head-light" id="inv-framework"><span>Framework de Inversión</span><span style="font-size:10px;color:var(--text3);font-weight:400;">Post-capitalización · Base: $467M disponibles · RR ~$22M/sem</span></div>
+    <div class="chart-card" style="padding:20px;" id="inv-framework-card">
+      <!-- Stacked bar + 3 tranche cards rendered by JS -->
     </div>
   </div>
 
   <!-- ═══════════════════════════════════════════════════════════════ -->
-  <!-- SECTION 3 · ANÁLISIS & ESCENARIOS                              -->
-  <!-- ═══════════════════════════════════════════════════════════════ -->
-  <div class="section" id="sec-analytics">
-    <div class="section-head">
-      <span>Análisis & Escenarios</span>
-      <span class="section-note">Riesgos · Simuladores · Optimización</span>
-    </div>
-
-    <div class="chart-card" style="margin-bottom:24px;">
-      <div class="chart-card-head forest" style="padding:12px 20px;">
-        <div><div class="chart-card-title" style="font-size:14px;">Mapa de Riesgos — Factores a Monitorear</div><div class="chart-card-meta">Cash total: MXN $757.0M equiv. · Operativo $467.9M · Restringido $289.1M (MORELCAMP)</div></div>
-      </div>
-      <div class="chart-card-body" style="padding:0;">
-        <table style="border-collapse:collapse;font-size:12px;width:100%;">
-          <thead>
-            <tr style="background:rgba(17,171,171,.04);">
-              <th style="padding:12px 16px;text-align:left;font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);">Riesgo</th>
-              <th style="padding:12px 16px;text-align:center;font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);width:100px;">Probabilidad</th>
-              <th style="padding:12px 16px;text-align:center;font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);width:90px;">Impacto</th>
-              <th style="padding:12px 16px;text-align:left;font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);">Efecto Cuantificado</th>
-              <th style="padding:12px 16px;text-align:left;font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);">Acción Sugerida</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="border-bottom:1px solid var(--border);"><td style="padding:14px 16px;font-weight:600;vertical-align:top;">Depreciación MXN<br><span style="font-size:10px;color:var(--text3);font-weight:400;">FX → $18.00 MXN/USD</span></td><td style="padding:14px 16px;text-align:center;vertical-align:top;"><span class="pct-cell pct-inv-mid" style="font-size:11px;">Media</span></td><td style="padding:14px 16px;text-align:center;vertical-align:top;"><span class="pct-cell pct-inv-best" style="font-size:11px;">Positivo</span></td><td style="padding:14px 16px;vertical-align:top;line-height:1.5;"><strong style="color:var(--green);">+MXN $17.5M</strong> si FX llega a $18.00 ($35.0M USD × $0.50)</td><td style="padding:14px 16px;vertical-align:top;line-height:1.5;">Mantener posición USD como hedge natural de operaciones dolarizadas</td></tr>
-            <tr style="border-bottom:1px solid var(--border);"><td style="padding:14px 16px;font-weight:600;vertical-align:top;">Apreciación MXN<br><span style="font-size:10px;color:var(--text3);font-weight:400;">FX < $16.50 MXN/USD</span></td><td style="padding:14px 16px;text-align:center;vertical-align:top;"><span class="pct-cell pct-inv-warn" style="font-size:11px;">Media-Baja</span></td><td style="padding:14px 16px;text-align:center;vertical-align:top;"><span class="pct-cell pct-inv-bad" style="font-size:11px;">Negativo</span></td><td style="padding:14px 16px;vertical-align:top;line-height:1.5;"><strong style="color:var(--red);">−MXN $35.0M</strong> si FX llega a $16.50 ($35.0M USD × −$1.00)</td><td style="padding:14px 16px;vertical-align:top;line-height:1.5;">Considerar forwards parciales para cubrir gastos operativos MXN del próximo trimestre</td></tr>
-            <tr style="border-bottom:1px solid var(--border);"><td style="padding:14px 16px;font-weight:600;vertical-align:top;">Fed recorta tasas<br><span style="font-size:10px;color:var(--text3);font-weight:400;">Target < 3.25%</span></td><td style="padding:14px 16px;text-align:center;vertical-align:top;"><span class="pct-cell pct-inv-mid" style="font-size:11px;">Media</span></td><td style="padding:14px 16px;text-align:center;vertical-align:top;"><span class="pct-cell pct-inv-warn" style="font-size:11px;">Negativo</span></td><td style="padding:14px 16px;vertical-align:top;line-height:1.5;"><strong style="color:var(--red);">−MXN $2.1M anuales</strong> por cada −25bp en tasa USD</td><td style="padding:14px 16px;vertical-align:top;line-height:1.5;">Lock-in con plazos más largos (pagarés) si hay señal de recorte en FOMC</td></tr>
-            <tr style="border-bottom:1px solid var(--border);"><td style="padding:14px 16px;font-weight:600;vertical-align:top;">TIIE baja adicional<br><span style="font-size:10px;color:var(--text3);font-weight:400;">Referencia < 6.50%</span></td><td style="padding:14px 16px;text-align:center;vertical-align:top;"><span class="pct-cell" style="font-size:11px;background:rgba(31,85,86,.08);color:var(--text2);">Baja</span></td><td style="padding:14px 16px;text-align:center;vertical-align:top;"><span class="pct-cell pct-inv-mid" style="font-size:11px;">Moderado</span></td><td style="padding:14px 16px;vertical-align:top;line-height:1.5;"><strong style="color:var(--amber);">−MXN $233K anuales</strong> por cada −25bp en tasa MXN</td><td style="padding:14px 16px;vertical-align:top;line-height:1.5;">Monitorear comunicados Banxico. Riesgo contenido por ahora</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="chart-card">
-      <div class="chart-card-head forest"><div><div class="chart-card-title">Sensibilidad FX — Impacto en Cash USD</div><div class="chart-card-meta">¿Qué pasa con el valor MXN del cash si el tipo de cambio se mueve?</div></div></div>
-      <div class="chart-card-body">
-        <div class="sim-panel" style="border:none;padding:0;">
-          <div class="sim-row"><span class="sim-label">Tipo de Cambio Simulado</span><input type="range" class="sim-slider" id="fxSlider" min="15" max="22" step="0.05" value="17.40"><span class="sim-val" id="fxSliderVal">$17.40</span></div>
-          <div class="sim-result" id="fxResult"></div>
-        </div>
-        <div style="position:relative;height:220px;margin-top:16px;"><canvas id="fxSensChart"></canvas></div>
-      </div>
-    </div>
-
-    <div class="chart-card">
-      <div class="chart-card-head"><div><div class="chart-card-title">Simulador de Escenarios de Tasa</div><div class="chart-card-meta">Ajusta tasas MXN y USD para proyectar rendimiento</div></div></div>
-      <div class="chart-card-body">
-        <div class="sim-panel" style="border:none;padding:0;">
-          <div class="sim-row"><span class="sim-label">Tasa MXN (actual 6.05%)</span><input type="range" class="sim-slider" id="mxnRateSlider" min="4" max="9" step="0.05" value="6.05"><span class="sim-val" id="mxnRateVal">6.05%</span></div>
-          <div class="sim-row"><span class="sim-label">Tasa USD (actual 3.18%)</span><input type="range" class="sim-slider" id="usdRateSlider" min="1.5" max="5" step="0.05" value="3.18"><span class="sim-val" id="usdRateVal">3.18%</span></div>
-          <div class="sim-result" id="rateResult"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="chart-card">
-      <div class="chart-card-head forest"><div><div class="chart-card-title">Optimizador de Asignación por Moneda</div><div class="chart-card-meta">¿Cuánto más rinde si muevo parte del cash de USD a MXN?</div></div></div>
-      <div class="chart-card-body">
-        <div class="sim-panel" style="border:none;padding:0;">
-          <div class="sim-row"><span class="sim-label">% en MXN (actual 19.6%)</span><input type="range" class="sim-slider" id="allocSlider" min="5" max="50" step="1" value="20"><span class="sim-val" id="allocVal">10%</span></div>
-          <div class="sim-result" id="allocResult"></div>
-        </div>
-        <div style="position:relative;height:220px;margin-top:16px;"><canvas id="allocChart"></canvas></div>
-      </div>
-    </div>
-
-    <div class="comment-box">
-      <strong>Recomendaciones para Maximizar Rendimiento:</strong>
-      <div style="margin-top:8px;">
-        <div class="bullet"><strong>Quick win — Monex USD:</strong> Renegociar tasa de 2.75% a ≥3.15% (alineado con BBVA) o reubicar en BX+. Impacto: +$1,390/mes sobre $347K USD.</div>
-        <div class="bullet"><strong>Rebalanceo MXN:</strong> Con 19.6% ya en MXN (vs 10% anterior), el spread de tasas MXN-USD genera mayor rendimiento. Monitorear oportunidades de lock-in a plazo.</div>
-        <div class="bullet"><strong>Pagarés BASE:</strong> Para saldos MXN con horizonte >7 días, usar pagaré de BASE (4.32–4.47% mensual) en lugar de PRLV 1d. DAE y HOLDCO son candidatos.</div>
-        <div class="bullet"><strong>Hedge FX:</strong> Con 80% en USD, considerar forwards parciales para proteger valor MXN de gastos operativos del próximo trimestre.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════════════════════════ -->
-  <!-- SECTION 4 · CASH FLOW                                           -->
+  <!-- SECTION 3 · CASH FLOW                                           -->
   <!-- ═══════════════════════════════════════════════════════════════ -->
   <div class="section" id="sec-capital">
     <div class="section-head">
-      <span>Cash Flow</span>
+      <span>Use of Funds</span>
       <span class="section-note">Semanal · Ago–Oct 2026 · MXN$m · Verde=Actual · Gris=Proyección</span>
     </div>
 
-    <!-- ENTITY SELECTOR -->
-    <div style="display:flex;align-items:center;gap:12px;margin:8px 0 12px;">
-      <label style="font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;">Vista:</label>
-      <select id="entitySelector" onchange="switchEntityView(this.value)" style="padding:6px 28px 6px 12px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-family:inherit;color:var(--text);background:var(--card);cursor:pointer;appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%226%22><path d=%22M0 0l5 6 5-6z%22 fill=%22%236B7280%22/></svg>');background-repeat:no-repeat;background-position:right 10px center;">
-        <option value="general">Vista General</option>
-        <option value="HOLDCO">HoldCo</option>
-        <option value="LTO">LTO</option>
-        <option value="DAE">DAE</option>
-        <option value="VCN">VCN</option>
-        <option value="AuHaus">Au Haus</option>
-        <option value="CF">CF</option>
-        <option value="Green">Green</option>
-        <option value="PSM">PSM</option>
-        <option value="EMC">EMC</option>
-        <option value="IP">IP</option>
-        <option value="MC">MC</option>
-      </select>
+    <!-- ENTITY NAV CHIPS -->
+    <div id="entityChips" style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 14px;">
+      <button class="ent-chip ent-chip-active" onclick="scrollToEntity('general')">Vista General</button>
+      <button class="ent-chip" onclick="scrollToEntity('HOLDCO')">HoldCo</button>
+      <button class="ent-chip" onclick="scrollToEntity('LTO')">LTO</button>
+      <button class="ent-chip" onclick="scrollToEntity('DAE')">DAE</button>
+      <button class="ent-chip" onclick="scrollToEntity('VCN')">VCN</button>
+      <button class="ent-chip" onclick="scrollToEntity('AuHaus')">Au Haus</button>
+      <button class="ent-chip" onclick="scrollToEntity('CF')">CF</button>
+      <button class="ent-chip" onclick="scrollToEntity('Green')">Green</button>
+      <button class="ent-chip" onclick="scrollToEntity('PSM')">PSM</button>
+      <button class="ent-chip" onclick="scrollToEntity('EMC')">EMC</button>
+      <button class="ent-chip" onclick="scrollToEntity('IP')">IP</button>
+      <button class="ent-chip" onclick="scrollToEntity('MC')">MC</button>
     </div>
 
     <!-- GENERAL VIEW -->
@@ -581,8 +427,8 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     </div>
     </div><!-- /cashView-general -->
 
-    <!-- ENTITY DETAIL VIEWS (hidden by default) -->
-    <div id="entityDetailContainer" style="display:none;"></div>
+    <!-- ALL ENTITY DETAIL SECTIONS -->
+    <div id="entityDetailContainer"></div>
 
     <script>
     // Entity detail data
@@ -693,14 +539,42 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
         ],monthly:['Ago','Sep','Oct','Total']}
     };
 
-    function switchEntityView(val){
-      document.getElementById('cashView-general').style.display=val==='general'?'':'none';
-      var dc=document.getElementById('entityDetailContainer');
-      if(val==='general'){dc.style.display='none';dc.innerHTML='';return;}
-      var ent=ENTITY_DATA[val];if(!ent){dc.style.display='none';return;}
-      dc.style.display='';
-      var h='<div class="section-head-light"><span>'+ent.name+' — Detalle de Flujo</span><span style="font-size:10px;color:var(--text3);font-weight:400;">MXN$m · Ago–Oct 2026</span></div>';
+    // Weekly balance data per entity (for weekly row in detail cards)
+    var ENTITY_WEEKLY={
+      dates:['03-Ago','10-Ago','17-Ago','24-Ago','31-Ago','07-Sep','14-Sep','21-Sep','28-Sep','05-Oct','12-Oct','19-Oct','26-Oct'],
+      isAct:[true,true,true,true,true,true,true,true,false,false,false,false,false],
+      cats:[
+        {k:'bop',l:'BoP',t:'bop'},
+        {k:'cobranza',l:'(+) Cobranza',t:'in'},
+        {k:'interco_in',l:'(+) Inflows Interco',t:'in'},
+        {k:'equity',l:'(+) Equity',t:'in'},
+        {k:'opex',l:'(-) OPEX',t:'out'},
+        {k:'capex',l:'(-) CAPEX',t:'out'},
+        {k:'interco_out',l:'(-) Outflow Interco',t:'out'},
+        {k:'otros',l:'(±) Otros / FX',t:'other'},
+        {k:'eop',l:'EoP',t:'eop'}
+      ],
+      data:{
+        HOLDCO:{bop:[128.7,128.7,125.6,68.6,49.4,36.9,36.8,28.3,28.4,428.2,384.9,362.0,348.1],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],equity:[0,0,0,0,0,0,0,0,427.5,0,0,0,0],opex:[0,0,0,0,0,0,0,0,0,0,0,0,0],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0,-3.0,-57.0,-19.2,-12.5,-0.1,-8.6,0.2,-27.7,-43.3,-22.9,-14.0,-20.3],eop:[128.7,125.6,68.6,49.4,36.9,36.8,28.3,28.4,428.2,384.9,362.0,348.1,327.8]},
+        LTO:{bop:[9.9,9.9,5.1,6.6,5.1,1.0,3.1,9.2,10.6,0,0,0,0],cobranza:[12.1,12.1,12.1,12.1,12.1,12.1,12.1,12.1,12.1,12.1,12.1,12.1,12.1],interco_in:[0,0,0,0,0,0,0,1.4,0,0,0,0,1.4],equity:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-5.7,-6.9,-17.9,-5.1,-5.1,-7.6,-9.6,-16.7,-5.1,-7.6,-9.9,-14.9,-5.1],capex:[0,0,0,0,0,0,0,-0.5,0,-21.0,0,0,-21.0],interco_out:[0,0,0,0,-2.0,-5.0,0,-7.0,0,0,-5.0,0,-5.0],otros:[-6.4,-10.0,7.4,-8.5,-9.2,2.6,3.5,12.1,-7.0,16.5,2.8,2.8,17.6],eop:[9.9,5.1,6.6,5.1,1.0,3.1,9.2,10.6,0,0,0,0,0]},
+        DAE:{bop:[52.6,52.6,41.8,45.8,44.9,46.9,50.4,25.8,26.6,17.7,23.3,27.6,19.7],cobranza:[12.3,12.3,12.3,12.3,12.3,12.3,12.3,12.3,12.3,12.3,12.3,12.3,12.3],interco_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],equity:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-6.7,-7.9,-16.1,-6.7,-6.7,-7.9,-20.8,-8.7,-6.7,-7.9,-15.2,-8.7,-6.7],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,-5.0,0,-12.5,0,0,-5.0,-11.1,-1.4],otros:[-5.6,-15.1,7.9,-6.6,-3.5,4.2,-16.1,9.8,-14.6,1.3,12.2,-0.3,-11.8],eop:[52.6,41.8,45.8,44.9,46.9,50.4,25.8,26.6,17.7,23.3,27.6,19.7,12.1]},
+        VCN:{bop:[1.1,1.1,23.9,79.1,54.8,31.7,30.8,2.5,1.3,0,0,0,0],cobranza:[7.5,0,7.5,0,7.2,0,7.0,7.5,0,7.5,0,7.5,0],interco_in:[0,0,0,0,0,0,0,4.3,0,0,0,4.3,0],equity:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-15.2,-2.3,-3.0,-1.4,-1.4,-16.1,-3.2,-2.7,-1.4,-16.1,-2.6,-2.7,-1.4],capex:[0,0,0,0,-0.7,-13.8,0,-8.6,0,0,0,0,-3.1],interco_out:[0,-8.0,0,-4.0,0,-10.5,-2.7,-14.3,-15.5,-10.5,-12.5,0,-4.0],otros:[7.7,33.1,50.7,-18.9,-28.2,39.5,-29.4,12.6,17.0,19.1,15.1,-9.1,17.6],eop:[1.1,23.9,79.1,54.8,31.7,30.8,2.5,1.3,0,0,0,0,9.1]},
+        AuHaus:{bop:[0.4,0.4,3.7,0.2,0.3,1.6,0.2,5.1,0.4,0.7,0.2,8.6,11.7],cobranza:[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],interco_in:[0,0,0,0,0,10.5,2.7,6.3,3.5,10.5,4.5,0,0],equity:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-1.4,-2.3,-2.4,-0.8,-0.8,-2.9,-3.0,-2.5,-0.8,-2.9,-2.1,-2.5,-0.8],capex:[0,0,0,0,0,-6.6,-3.6,-4.5,-4.2,-0.3,-0.3,-1.4,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0.4,4.5,-2.2,-0.2,1.1,-3.4,7.7,-5.0,0.8,-8.8,5.1,6.1,-3.2],eop:[0.4,3.7,0.2,0.3,1.6,0.2,5.1,0.4,0.7,0.2,8.6,11.7,8.8]},
+        CF:{bop:[6.5,6.5,6.5,6.8,5.2,5.5,5.9,3.6,0.2,0.1,0.2,0.1,0.1],cobranza:[0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2],interco_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],equity:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-0.1,-0.3,-0.2,-0.1,-0.1,-0.3,-0.3,-0.3,-0.1,-0.3,-0.2,-0.3,-0.1],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[-0.1,0.1,0.3,-1.7,0.1,0.5,-2.0,-3.4,-0.2,0.2,0,0,-0.2],eop:[6.5,6.5,6.8,5.2,5.5,5.9,3.6,0.2,0.1,0.2,0.1,0.1,0]},
+        Green:{bop:[6.4,6.4,6.9,6.9,7.0,7.0,2.4,2.3,1.3,1.8,1.6,1.5,1.0],cobranza:[0,0,0,0.6,0,0,0,0.6,0,0,0,0.6,0],interco_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],equity:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-0.1,-0.1,-0.5,-0.1,-0.1,-0.1,-0.5,-0.1,-0.1,-0.1,-0.5,-0.1,-0.1],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,-5.0,0,0,0,0,0,0,0,0],otros:[0.1,0.6,0.5,-0.4,5.1,-4.4,0.4,-1.4,0.6,0,-0.1,-1.0,0.6],eop:[6.4,6.9,6.9,7.0,7.0,2.4,2.3,1.3,1.8,1.6,1.5,1.0,1.4]},
+        PSM:{bop:[0.4,0.4,0.6,0.6,0.8,0.6,2.8,2.0,0.4,11.5,21.4,11.8,13.6],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,8.0,0,4.0,5.0,5.0,0,19.5,12.0,0,13.0,6.5,9.0],equity:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-2.0,-9.6,-12.1,-2.0,-2.0,-9.6,-14.2,-8.4,-2.0,-9.6,-11.2,-8.4,-2.0],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[2.0,1.8,12.1,-1.8,-3.2,6.8,13.5,-12.7,1.1,19.6,-11.4,3.7,-8.9],eop:[0.4,0.6,0.6,0.8,0.6,2.8,2.0,0.4,11.5,21.4,11.8,13.6,11.6]},
+        EMC:{bop:[0.5,0.5,1.8,0.3,0.5,0.4,0.8,0.2,0.7,0,0,0,0],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0,2.0,5.0,0,2.0,0,0,5.0,0,0],equity:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-3.4,-3.9,-3.5,-2.7,-2.7,-4.8,-3.9,-4.0,-2.7,-4.8,-3.4,-4.0,-2.7],capex:[0,0,0,0,0,0,-0.7,0,0,0,-6.3,-4.2,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[3.4,5.2,2.0,2.9,0.7,0.1,4.0,2.6,2.7,4.8,4.7,8.2,2.7],eop:[0.5,1.8,0.3,0.5,0.4,0.8,0.2,0.7,0,0,0,0,0]},
+        IP:{bop:[0.3,0.3,0.7,0.3,0.4,0.6,0.4,0.3,0.5,0,0,0,0],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],equity:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[0,-2.9,-0.3,0,0,-2.9,-0.5,-2.9,0,-2.9,-0.3,-2.9,0],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0,3.3,-0.2,0.1,0.2,2.7,0.4,3.1,0,2.9,0.3,2.9,0],eop:[0.3,0.7,0.3,0.4,0.6,0.4,0.3,0.5,0,0,0,0,0]},
+        MC:{bop:[5.7,5.7,5.7,5.6,5.6,5.9,5.9,5.9,5.9,6.2,6.2,6.2,6.1],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0,0,0,0,0.3,0,0,0,0.3,0],equity:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[0,0,0,0,0,0,-0.1,0,0,0,0,0,0],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0,0,0,0,0.3,0,0.1,-0.3,0.3,0,0,-0.3,0.3],eop:[5.7,5.7,5.6,5.6,5.9,5.9,5.9,5.9,6.2,6.2,6.2,6.1,6.4]}
+      }
+    };
+
+    function buildEntityCard(key,ent){
+      var h='<div id="ent-section-'+key+'" style="margin-top:20px;">';
+      h+='<div class="section-head-light"><span>'+ent.name+' — Detalle de Flujo</span><span style="font-size:10px;color:var(--text3);font-weight:400;">MXN$m · Ago–Oct 2026</span></div>';
+      // Monthly detail table
       h+='<div class="chart-card" style="padding:16px;">';
+      h+='<div style="font-size:10px;font-weight:600;color:var(--teal);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">Vista Mensual</div>';
       h+='<table style="width:100%;max-width:600px;font-size:12px;border-collapse:collapse;">';
       h+='<thead><tr style="color:var(--teal);border-bottom:2px solid var(--border);font-size:10px;text-transform:uppercase;letter-spacing:.5px;">';
       h+='<th style="text-align:left;padding:8px;">Concepto</th>';
@@ -721,31 +595,100 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
           h+='<td style="text-align:right;padding:'+(isSub?'2px 8px':'8px')+';font-weight:'+fw+';color:'+clr+';font-size:'+fs+';">'+(v===null?'—':v.toFixed(1))+'</td>';
         });
         h+='</tr>';
-        if(r.note){h+='<tr><td colspan="5" style="padding:2px 8px 6px 24px;font-size:10px;color:var(--text3);font-style:italic;">'+r.note+'</td></tr>';}
       });
       h+='</tbody></table>';
       // Summary cards
-      var totIn=0,totOut=0;
-      ent.rows.forEach(function(r){if(r.t==='in'){var t=r.v[3]||0;totIn+=t;}if(r.t==='out'){var t=r.v[3]||0;totOut+=t;}});
-      h+='<div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;">';
-      h+='<div style="flex:1;min-width:140px;padding:12px;background:rgba(34,197,94,.08);border-radius:8px;text-align:center;">';
-      h+='<div style="font-size:10px;color:var(--green);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Total Inflows</div>';
-      h+='<div style="font-size:20px;font-weight:700;color:var(--green);margin-top:4px;">$'+totIn.toFixed(1)+'M</div></div>';
-      h+='<div style="flex:1;min-width:140px;padding:12px;background:rgba(239,68,68,.08);border-radius:8px;text-align:center;">';
-      h+='<div style="font-size:10px;color:var(--red);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Total Outflows</div>';
-      h+='<div style="font-size:20px;font-weight:700;color:var(--red);margin-top:4px;">$'+totOut.toFixed(1)+'M</div></div>';
+      var totIn=0,totOut=0,bopVal=null,eopVal=null;
+      ent.rows.forEach(function(r){
+        if(r.t==='in'){totIn+=(r.v[3]||0);}
+        if(r.t==='out'){totOut+=(r.v[3]||0);}
+        if(r.t==='bop')bopVal=r.v[0];
+        if(r.t==='eop')eopVal=r.v[2]!==null?r.v[2]:r.v[3];
+      });
       var net=totIn+totOut;
       var nc=net>=0?'var(--teal)':'var(--red)';
-      h+='<div style="flex:1;min-width:140px;padding:12px;background:rgba(14,133,133,.08);border-radius:8px;text-align:center;">';
-      h+='<div style="font-size:10px;color:'+nc+';font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Neto</div>';
-      h+='<div style="font-size:20px;font-weight:700;color:'+nc+';margin-top:4px;">'+(net>=0?'+':'')+net.toFixed(1)+'M</div></div>';
+      h+='<div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;">';
+      h+='<div style="flex:1;min-width:100px;padding:10px;background:rgba(0,0,0,.03);border-radius:8px;text-align:center;">';
+      h+='<div style="font-size:9px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">BoP (Ago)</div>';
+      h+='<div style="font-size:18px;font-weight:700;color:var(--text);margin-top:3px;">$'+(bopVal!==null?bopVal.toFixed(1):'—')+'M</div></div>';
+      h+='<div style="flex:1;min-width:100px;padding:10px;background:rgba(34,197,94,.08);border-radius:8px;text-align:center;">';
+      h+='<div style="font-size:9px;color:var(--green);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Inflows Ago–Oct</div>';
+      h+='<div style="font-size:18px;font-weight:700;color:var(--green);margin-top:3px;">$'+totIn.toFixed(1)+'M</div></div>';
+      h+='<div style="flex:1;min-width:100px;padding:10px;background:rgba(239,68,68,.08);border-radius:8px;text-align:center;">';
+      h+='<div style="font-size:9px;color:var(--red);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Outflows Ago–Oct</div>';
+      h+='<div style="font-size:18px;font-weight:700;color:var(--red);margin-top:3px;">$'+totOut.toFixed(1)+'M</div></div>';
+      h+='<div style="flex:1;min-width:100px;padding:10px;background:rgba(14,133,133,.08);border-radius:8px;text-align:center;">';
+      h+='<div style="font-size:9px;color:'+nc+';font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Neto Periodo</div>';
+      h+='<div style="font-size:18px;font-weight:700;color:'+nc+';margin-top:3px;">'+(net>=0?'+':'')+net.toFixed(1)+'M</div></div>';
+      h+='<div style="flex:1;min-width:100px;padding:10px;background:rgba(0,0,0,.03);border-left:3px solid var(--teal);border-radius:8px;text-align:center;">';
+      h+='<div style="font-size:9px;color:var(--teal);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">EoP (Oct)</div>';
+      h+='<div style="font-size:18px;font-weight:700;color:var(--teal);margin-top:3px;">$'+(eopVal!==null?eopVal.toFixed(1):'—')+'M</div></div>';
       h+='</div>';
       if(ent.note){
         h+='<div style="margin-top:12px;padding:10px 14px;background:rgba(245,158,11,.1);border-left:3px solid var(--amber);border-radius:0 6px 6px 0;font-size:11px;color:var(--text2);line-height:1.5;">';
         h+='<strong style="color:var(--amber);">Nota:</strong> '+ent.note+'</div>';
       }
       h+='</div>';
-      dc.innerHTML=h;
+      // Weekly detailed flow table
+      var wd=ENTITY_WEEKLY.data[key];
+      if(wd){
+        h+='<div class="chart-card" style="overflow-x:auto;padding:12px;margin-top:8px;">';
+        h+='<div style="font-size:10px;font-weight:600;color:var(--teal);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Flujo Semanal Detallado (MXN$m)</div>';
+        h+='<table style="width:100%;min-width:900px;font-size:10px;border-collapse:collapse;text-align:right;">';
+        h+='<thead><tr style="color:var(--teal);border-bottom:2px solid var(--border);font-size:8px;text-transform:uppercase;letter-spacing:.5px;">';
+        h+='<th style="text-align:left;padding:4px 6px;min-width:120px;">Concepto</th>';
+        ENTITY_WEEKLY.dates.forEach(function(d,i){
+          var bg=ENTITY_WEEKLY.isAct[i]?'':'background:rgba(0,0,0,.03);';
+          h+='<th style="padding:4px 3px;'+bg+'">'+d+'</th>';
+        });
+        h+='</tr></thead><tbody>';
+        ENTITY_WEEKLY.cats.forEach(function(cat){
+          var arr=wd[cat.k];if(!arr)return;
+          var hasVal=arr.some(function(v){return v!==0;});
+          if(!hasVal&&cat.t!=='bop'&&cat.t!=='eop')return;
+          var isBold=cat.t==='bop'||cat.t==='eop';
+          var topBorder=cat.t==='eop'?'border-top:2px solid var(--border);':'';
+          var botBorder=cat.t==='bop'?'border-bottom:1px solid var(--border);':'border-bottom:1px solid rgba(0,0,0,.04);';
+          var lc=cat.t==='in'?'var(--green)':cat.t==='out'?'var(--red)':cat.t==='other'?'var(--text3)':'var(--text)';
+          h+='<tr style="'+topBorder+botBorder+'">';
+          h+='<td style="text-align:left;padding:4px 6px;font-weight:'+(isBold?700:400)+';color:'+lc+';white-space:nowrap;">'+cat.l+'</td>';
+          arr.forEach(function(v,i){
+            var isA=ENTITY_WEEKLY.isAct[i];
+            var bg=isA?'':'background:rgba(0,0,0,.03);';
+            var vc=lc;
+            if(isBold){vc=isA?'var(--teal)':'var(--text3)';}
+            if(v<0&&!isBold)vc='var(--red)';
+            var fw=isBold?'700':'400';
+            var txt=v===0&&!isBold?'—':v.toFixed(1);
+            h+='<td style="padding:4px 3px;color:'+vc+';'+bg+'font-weight:'+fw+';">'+txt+'</td>';
+          });
+          h+='</tr>';
+        });
+        h+='</tbody></table></div>';
+      }
+      h+='</div>';
+      return h;
+    }
+
+    // Build all entity sections on load
+    (function(){
+      var dc=document.getElementById('entityDetailContainer');
+      var keys=['HOLDCO','LTO','DAE','VCN','AuHaus','CF','Green','PSM','EMC','IP','MC'];
+      var all='';
+      keys.forEach(function(k){
+        var ent=ENTITY_DATA[k];
+        if(ent)all+=buildEntityCard(k,ent);
+      });
+      dc.innerHTML=all;
+    })();
+
+    function scrollToEntity(key){
+      // Update active chip
+      document.querySelectorAll('.ent-chip').forEach(function(c){c.classList.remove('ent-chip-active');});
+      event.currentTarget.classList.add('ent-chip-active');
+      // Scroll
+      var target=key==='general'?document.getElementById('cashView-general'):document.getElementById('ent-section-'+key);
+      if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
     }
     </script>
 
@@ -861,7 +804,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       var ctx=document.getElementById('cashTrajectoryChart');
       if(ctx&&typeof Chart!=='undefined'){
         var actualData=bop.map(function(v,i){return isAct[i]?v:null;});
-        var projData=bop.map(function(v,i){return(!isAct[i]||i===5)?v:null;});
+        var projData=bop.map(function(v,i){return(!isAct[i]||i===7)?v:null;});
         new Chart(ctx,{type:'line',data:{
           labels:dates,
           datasets:[
@@ -872,6 +815,84 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       }
     })();
     </script>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- SECTION 4 · ANÁLISIS & ESCENARIOS                              -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <div class="section" id="sec-analytics">
+    <div class="section-head">
+      <span>Análisis & Escenarios</span>
+      <span class="section-note">Riesgos · Simuladores · Optimización</span>
+    </div>
+
+    <div class="chart-card" style="margin-bottom:24px;">
+      <div class="chart-card-head forest" style="padding:12px 20px;">
+        <div><div class="chart-card-title" style="font-size:14px;">Mapa de Riesgos — Factores a Monitorear</div><div class="chart-card-meta">Cash total al 21-Sep · Operativo + Restringido (MORELCAMP) · Fed 3.75–4.00%</div></div>
+      </div>
+      <div class="chart-card-body" style="padding:0;">
+        <table style="border-collapse:collapse;font-size:12px;width:100%;">
+          <thead>
+            <tr style="background:rgba(17,171,171,.04);">
+              <th style="padding:12px 16px;text-align:left;font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);">Riesgo</th>
+              <th style="padding:12px 16px;text-align:center;font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);width:100px;">Probabilidad</th>
+              <th style="padding:12px 16px;text-align:center;font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);width:90px;">Impacto</th>
+              <th style="padding:12px 16px;text-align:left;font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);">Efecto Cuantificado</th>
+              <th style="padding:12px 16px;text-align:left;font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);">Acción Sugerida</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:14px 16px;font-weight:600;vertical-align:top;">Depreciación MXN<br><span style="font-size:10px;color:var(--text3);font-weight:400;">FX → $18.00 MXN/USD</span></td><td style="padding:14px 16px;text-align:center;vertical-align:top;"><span class="pct-cell pct-inv-mid" style="font-size:11px;">Media</span></td><td style="padding:14px 16px;text-align:center;vertical-align:top;"><span class="pct-cell pct-inv-best" style="font-size:11px;">Positivo</span></td><td style="padding:14px 16px;vertical-align:top;line-height:1.5;"><strong style="color:var(--green);">+MXN $17.5M</strong> si FX llega a $18.00 ($35.0M USD × $0.50)</td><td style="padding:14px 16px;vertical-align:top;line-height:1.5;">Mantener posición USD como hedge natural de operaciones dolarizadas</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:14px 16px;font-weight:600;vertical-align:top;">Apreciación MXN<br><span style="font-size:10px;color:var(--text3);font-weight:400;">FX < $16.50 MXN/USD</span></td><td style="padding:14px 16px;text-align:center;vertical-align:top;"><span class="pct-cell pct-inv-warn" style="font-size:11px;">Media-Baja</span></td><td style="padding:14px 16px;text-align:center;vertical-align:top;"><span class="pct-cell pct-inv-bad" style="font-size:11px;">Negativo</span></td><td style="padding:14px 16px;vertical-align:top;line-height:1.5;"><strong style="color:var(--red);">−MXN $35.0M</strong> si FX llega a $16.50 ($35.0M USD × −$1.00)</td><td style="padding:14px 16px;vertical-align:top;line-height:1.5;">Considerar forwards parciales para cubrir gastos operativos MXN del próximo trimestre</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:14px 16px;font-weight:600;vertical-align:top;">Fed sube más<br><span style="font-size:10px;color:var(--text3);font-weight:400;">Target > 4.25%</span></td><td style="padding:14px 16px;text-align:center;vertical-align:top;"><span class="pct-cell pct-inv-mid" style="font-size:11px;">Media</span></td><td style="padding:14px 16px;text-align:center;vertical-align:top;"><span class="pct-cell pct-inv-warn" style="font-size:11px;">Negativo</span></td><td style="padding:14px 16px;vertical-align:top;line-height:1.5;"><strong style="color:var(--green);">+MXN $2.1M anuales</strong> por cada +25bp en tasa USD</td><td style="padding:14px 16px;vertical-align:top;line-height:1.5;">Beneficia posiciones USD · Riesgo si sobrepasa 4.25% es fortalecimiento excesivo de USD vs MXN</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:14px 16px;font-weight:600;vertical-align:top;">TIIE baja adicional<br><span style="font-size:10px;color:var(--text3);font-weight:400;">Referencia < 6.50%</span></td><td style="padding:14px 16px;text-align:center;vertical-align:top;"><span class="pct-cell" style="font-size:11px;background:rgba(31,85,86,.08);color:var(--text2);">Baja</span></td><td style="padding:14px 16px;text-align:center;vertical-align:top;"><span class="pct-cell pct-inv-mid" style="font-size:11px;">Moderado</span></td><td style="padding:14px 16px;vertical-align:top;line-height:1.5;"><strong style="color:var(--amber);">−MXN $233K anuales</strong> por cada −25bp en tasa MXN</td><td style="padding:14px 16px;vertical-align:top;line-height:1.5;">Monitorear comunicados Banxico. Riesgo contenido por ahora</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-card-head forest"><div><div class="chart-card-title">Sensibilidad FX — Impacto en Cash USD</div><div class="chart-card-meta">¿Qué pasa con el valor MXN del cash si el tipo de cambio se mueve?</div></div></div>
+      <div class="chart-card-body">
+        <div class="sim-panel" style="border:none;padding:0;">
+          <div class="sim-row"><span class="sim-label">Tipo de Cambio Simulado</span><input type="range" class="sim-slider" id="fxSlider" min="15" max="22" step="0.05" value="17.22"><span class="sim-val" id="fxSliderVal">$17.22</span></div>
+          <div class="sim-result" id="fxResult"></div>
+        </div>
+        <div style="position:relative;height:220px;margin-top:16px;"><canvas id="fxSensChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-card-head"><div><div class="chart-card-title">Simulador de Escenarios de Tasa</div><div class="chart-card-meta">Ajusta tasas MXN y USD para proyectar rendimiento</div></div></div>
+      <div class="chart-card-body">
+        <div class="sim-panel" style="border:none;padding:0;">
+          <div class="sim-row"><span class="sim-label">Tasa MXN (actual 6.05%)</span><input type="range" class="sim-slider" id="mxnRateSlider" min="4" max="9" step="0.05" value="6.05"><span class="sim-val" id="mxnRateVal">6.05%</span></div>
+          <div class="sim-row"><span class="sim-label">Tasa USD (actual 3.43%)</span><input type="range" class="sim-slider" id="usdRateSlider" min="1.5" max="5" step="0.05" value="3.43"><span class="sim-val" id="usdRateVal">3.43%</span></div>
+          <div class="sim-result" id="rateResult"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-card-head forest"><div><div class="chart-card-title">Optimizador de Asignación por Moneda</div><div class="chart-card-meta">¿Cuánto más rinde si muevo parte del cash de USD a MXN?</div></div></div>
+      <div class="chart-card-body">
+        <div class="sim-panel" style="border:none;padding:0;">
+          <div class="sim-row"><span class="sim-label">% en MXN (actual 19.6%)</span><input type="range" class="sim-slider" id="allocSlider" min="5" max="50" step="1" value="20"><span class="sim-val" id="allocVal">10%</span></div>
+          <div class="sim-result" id="allocResult"></div>
+        </div>
+        <div style="position:relative;height:220px;margin-top:16px;"><canvas id="allocChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="comment-box">
+      <strong>Recomendaciones para Maximizar Rendimiento:</strong>
+      <div style="margin-top:8px;">
+        <div class="bullet"><strong>Quick win — Monex USD:</strong> Con Fed en 3.75–4.00%, renegociar tasa Monex (~3.05%) a ≥3.40% (alineado con BBVA post-alza). Impacto potencial: +$1,500/mes.</div>
+        <div class="bullet"><strong>Aprovechar alza Fed:</strong> Las posiciones USD se benefician del +25bp. Con dot plot apuntando a 4.00–4.25% cierre '26, considerar lock-in en pagarés a 30–60 días antes de siguiente alza.</div>
+        <div class="bullet"><strong>Pagarés BASE:</strong> Para saldos MXN con horizonte >7 días, usar pagaré de BASE (4.32–4.47% mensual) en lugar de PRLV 1d. DAE y HOLDCO son candidatos.</div>
+        <div class="bullet"><strong>Diferencial MX–US comprimido:</strong> Con Banxico en pausa (6.50%) y Fed subiendo (3.875% mid), el spread se comprime a ~262bp. Favorece mantener exposición USD. Monitorear decisión Banxico 24-Sep.</div>
+      </div>
+    </div>
   </div>
 
   <!-- ═══════════════════════════════════════════════════════════════ -->
@@ -976,7 +997,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
   </div>
 
   <footer class="footer">
-    <div class="footer-left">VEMO · Weekly Investment Overview · Saldos al 30 Jun 2026</div>
+    <div class="footer-left">VEMO · Weekly Investment Overview · Saldos al 21 Sep 2026</div>
     <div style="display:flex;gap:12px;align-items:center;">
       <span style="font-size:10px;color:var(--text3);">Fuente: Tesorería · Investment Analysis VEMO.xlsx</span>
       <span class="footer-conf">Confidential</span>
@@ -995,10 +1016,12 @@ function showSection(key){
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   event.currentTarget.classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
+  // Rebuild charts when switching to Inversiones (they render at 0px while hidden)
+  if(key==='investments'){requestAnimationFrame(function(){rebuildBankChart();rebuildCurrChart();rebuildEntityChart();rebuildMaturity();});}
 }
 
 // DATA
-var FX=17.40;
+var FX=17.22;
 
 // Monthly labels from Jan 2022 to Dec 2026
 const M_LABELS=[
@@ -1073,13 +1096,13 @@ const FED_BDG=MO26.map(()=>3.00);
 const FX_BDG=[17.99,18.01,18.04,18.06,18.08,18.10,18.12,18.14,18.17,18.19,18.21,18.23];
 
 var CASH_DATES={
-  '2026-05-29':{label:'29 May 2026',fx:17.35,total:922260529,mxn:93219985,usd_eq:829040544,restricted:304812662,
+  '2026-05-29':{label:'29 May 2026',fx:17.35,total:922260529,mxn:93219985,usd_eq:829040544,restricted:376495000,
     banks:[{n:'BBVA',mxn:36259000,usd_eq:523647746,total:559906746,c:'#1F5556'},{n:'BX+',mxn:0,usd_eq:298109602,total:298109602,c:'#9333EA'},{n:'MONEX',mxn:34924001,usd_eq:7283197,total:42207198,c:'#2a8a8a'},{n:'BASE',mxn:22005444,usd_eq:0,total:22005444,c:'#4abfbf'},{n:'KAPITAL',mxn:31540,usd_eq:0,total:31540,c:'#6B7280'}],
     entities:[{n:'HOLDCO',v:548088746},{n:'MC',v:304812662},{n:'DAE',v:53427871},{n:'LTO',v:5842000},{n:'Green',v:5049745},{n:'CF',v:2446190},{n:'Au Haus',v:1103993},{n:'VCN',v:594000},{n:'IP',v:309144},{n:'PSM',v:285178},{n:'EMC',v:280000},{n:'ZEE',v:21000}]},
-  '2026-06-30':{label:'30 Jun 2026',fx:17.45,total:758913126,mxn:148124311,usd_eq:610788815,restricted:289967842,
+  '2026-06-30':{label:'30 Jun 2026',fx:17.45,total:758913126,mxn:148124311,usd_eq:610788815,restricted:378565000,
     banks:[{n:'BBVA',mxn:66546503,usd_eq:321064973,total:387611476,c:'#1F5556'},{n:'BX+',mxn:0,usd_eq:283666548,total:283666548,c:'#9333EA'},{n:'MONEX',mxn:32403103,usd_eq:6057294,total:38460397,c:'#2a8a8a'},{n:'ACTINVER',mxn:21918874,usd_eq:0,total:21918874,c:'#8B5CF6'},{n:'BASE',mxn:20723768,usd_eq:0,total:20723768,c:'#4abfbf'},{n:'INVEX',mxn:3502088,usd_eq:0,total:3502088,c:'#EC4899'},{n:'COVALTO',mxn:2998358,usd_eq:0,total:2998358,c:'#3B82F6'},{n:'KAPITAL',mxn:31618,usd_eq:0,total:31618,c:'#6B7280'}],
     entities:[{n:'HOLDCO',v:324024973},{n:'MC',v:289967842},{n:'DAE',v:70907355},{n:'LTO',v:42459978},{n:'Green',v:10382481},{n:'CF',v:10139000},{n:'VCN',v:5988944},{n:'PSM',v:2297146},{n:'Au Haus',v:1179407},{n:'ZEE',v:894000},{n:'EMC',v:385000},{n:'IP',v:287000}]},
-  '2026-07-27':{label:'27 Jul 2026',fx:17.444,total:554983666,mxn:65390798,usd_eq:489592867,restricted:289322969,
+  '2026-07-27':{label:'27 Jul 2026',fx:17.444,total:554983666,mxn:65390798,usd_eq:489592867,restricted:378334800,
     banks:[{n:'BX+',mxn:0,usd_eq:283569012,total:283569012,c:'#9333EA'},{n:'BBVA',mxn:16792000,usd_eq:200657899,total:217449899,c:'#1F5556'},{n:'MONEX',mxn:27796061,usd_eq:5365957,total:33162018,c:'#2a8a8a'},{n:'BASE',mxn:20802737,usd_eq:0,total:20802737,c:'#4abfbf'}],
     entities:[{n:'MC',v:289322969},{n:'HOLDCO',v:202108899},{n:'DAE',v:47082919},{n:'CF',v:6518000},{n:'Green',v:6297307},{n:'LTO',v:2513661},{n:'ZEE',v:695000},{n:'Au Haus',v:247000},{n:'PSM',v:197911}]},
   '2026-08-03':{label:'03 Ago 2026',fx:17.2717,total:588068330,mxn:78679076,usd_eq:509389254,restricted:374795890,
@@ -1111,6 +1134,10 @@ var CASH_DATE_KEYS=Object.keys(CASH_DATES).sort().reverse();
 var currentCashDate=CASH_DATE_KEYS[0];
 // Chart instances for destroy/rebuild
 var bankChartInstance=null,currChartInstance=null,entityChartInstance=null;
+
+// Chart style constants (must be before any rebuild call)
+var tooltipStyle={backgroundColor:'rgba(255,255,255,.95)',titleColor:'#1A1D23',bodyColor:'rgba(26,29,35,.75)',borderColor:'rgba(17,171,171,.4)',borderWidth:1,padding:10};
+var chartDefs={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false,labels:{color:'#9CA3AF'}}},interaction:{mode:'index',intersect:false}};
 
 // Bank-entity detail per date (from SALDOS sheets)
 var INV_DETAIL={
@@ -1232,21 +1259,25 @@ function updateInvView(dateKey){
   if(lbl)lbl.textContent='Corte '+snap.label+' · FX: '+snap.fx.toFixed(2)+' MXN/USD';
   // Update KPIs
   document.getElementById('inv-kpi-total').textContent=fmt(snap.total);
-  document.getElementById('inv-kpi-total-sub').textContent='MXN '+fmt(snap.mxn)+' + USD eq. '+fmt(snap.usd_eq);
-  document.getElementById('inv-kpi-mxn').textContent=fmt(snap.mxn);
-  var mxnPct=(snap.mxn/snap.total*100).toFixed(1);
-  document.getElementById('inv-kpi-mxn-sub').textContent=mxnPct+'% del total';
-  document.getElementById('inv-kpi-usd').textContent=fmt(snap.usd_eq);
-  var usdPct=(snap.usd_eq/snap.total*100).toFixed(1);
-  document.getElementById('inv-kpi-usd-sub').textContent=usdPct+'% · '+Math.round(snap.usd_eq/snap.fx).toLocaleString('en-US')+' USD';
-  // Count unique banks and entities
-  var bankSet={},entSet={};
-  if(detail){detail.forEach(function(r){bankSet[r.b]=1;r.e.forEach(function(e){entSet[e.n]=1;});});}
-  else{snap.banks.forEach(function(b){bankSet[b.n]=1;});snap.entities.forEach(function(e){entSet[e.n]=1;});}
-  document.getElementById('inv-kpi-banks').textContent=Object.keys(bankSet).length;
-  document.getElementById('inv-kpi-banks-sub').textContent=Object.keys(bankSet).join(' · ');
-  document.getElementById('inv-kpi-ents').textContent=Object.keys(entSet).length;
-  document.getElementById('inv-kpi-ents-sub').textContent='Empresas con saldo';
+  var opCash=snap.total-snap.restricted;
+  document.getElementById('inv-kpi-total-sub').textContent='Operativo '+fmt(opCash)+' + Restringido '+fmt(snap.restricted);
+  // Caja Operativa MXN (total MXN minus restricted MXN portion)
+  var restrictedMXN=snap.restricted; // restricted is already MXN equiv
+  var opMXN=snap.mxn; // All direct MXN is operative (restricted is in USD via MORELCAMP)
+  document.getElementById('inv-kpi-mxn').textContent=fmt(opMXN);
+  var mxnPct=(opMXN/snap.total*100).toFixed(1);
+  document.getElementById('inv-kpi-mxn-sub').textContent=mxnPct+'% del total · Pesos mexicanos';
+  // Caja Operativa USD
+  var opUSD_mxn=snap.usd_eq-snap.restricted; // USD equiv minus restricted
+  var opUSD_raw=Math.round(opUSD_mxn/snap.fx);
+  document.getElementById('inv-kpi-usd').textContent=fmt(opUSD_mxn);
+  var usdPct=(opUSD_mxn/snap.total*100).toFixed(1);
+  document.getElementById('inv-kpi-usd-sub').textContent=usdPct+'% · $'+opUSD_raw.toLocaleString('en-US')+' @ $'+snap.fx.toFixed(2);
+  // Caja Restringida
+  document.getElementById('inv-kpi-restricted').textContent=fmt(snap.restricted);
+  var bxPlus=snap.banks.find(function(b){return b.n==='BX+';});
+  var bxUSD=bxPlus?Math.round(bxPlus.usd_eq/snap.fx):0;
+  document.getElementById('inv-kpi-restricted-sub').textContent='$'+bxUSD.toLocaleString('en-US')+' USD (BX+) @ $'+snap.fx.toFixed(2)+' · No disponible';
   // Rebuild positions table
   buildPosTable(dateKey);
   // Also update section 1 charts via updateCashView
@@ -1272,85 +1303,88 @@ function buildPosTable(dateKey){
   tbody.innerHTML='';
   invExpandedRows={};
   if(!detail){
-    // Fallback: use CASH_DATES bank data without entity detail
     var grandTotal=snap.total;
     snap.banks.forEach(function(b){
-      var tr=document.createElement('tr');
-      tr.className='bank-row';
-      var mxnEq=b.total;
-      tr.innerHTML='<td>'+b.n+'</td><td>MXN+USD</td><td>'+fmtFull(mxnEq)+'</td><td>'+fmtFull(mxnEq)+'</td><td>'+pct(mxnEq,grandTotal)+'</td>';
+      var tr=document.createElement('tr');tr.className='bank-row';
+      tr.innerHTML='<td><span style="color:'+(BANK_COLORS[b.n]||'var(--text)')+';font-weight:600;">'+b.n+'</span></td><td>MXN+USD</td><td>'+fmtFull(b.total)+'</td><td>'+fmtFull(b.total)+'</td><td>'+pct(b.total,grandTotal)+'</td>';
       tbody.appendChild(tr);
     });
-    var totalTr=document.createElement('tr');totalTr.className='tr-total';
-    totalTr.innerHTML='<td>TOTAL</td><td></td><td></td><td>'+fmtFull(grandTotal)+'</td><td>100%</td>';
-    tbody.appendChild(totalTr);
+    var ttr=document.createElement('tr');ttr.className='tr-total';
+    ttr.innerHTML='<td>TOTAL</td><td></td><td></td><td>'+fmtFull(grandTotal)+'</td><td>100%</td>';
+    tbody.appendChild(ttr);
     return;
   }
   // Compute grand totals by currency
   var grandMXN=0,grandUSD=0;
-  detail.forEach(function(r){
-    if(r.d==='MXN')grandMXN+=r.t;
-    else grandUSD+=r.t;
-  });
+  detail.forEach(function(r){if(r.d==='MXN')grandMXN+=r.t;else grandUSD+=r.t;});
   var grandTotal=grandMXN+grandUSD*snap.fx;
-  // Aggregate by bank (merge MXN + USD)
+  // Aggregate by bank
   var bankAgg={};
   detail.forEach(function(r){
     if(!bankAgg[r.b])bankAgg[r.b]={mxn:0,usd:0,mxnDetail:[],usdDetail:[]};
     if(r.d==='MXN'){bankAgg[r.b].mxn+=r.t;bankAgg[r.b].mxnDetail=r.e;}
     else{bankAgg[r.b].usd+=r.t;bankAgg[r.b].usdDetail=r.e;}
   });
-  // Sort by total MXN equiv desc
-  var bankList=Object.keys(bankAgg).map(function(name){
-    var b=bankAgg[name];
-    return{name:name,mxn:b.mxn,usd:b.usd,mxnEq:b.mxn+b.usd*snap.fx,mxnDetail:b.mxnDetail,usdDetail:b.usdDetail};
-  }).sort(function(a,b){return b.mxnEq-a.mxnEq;});
 
-  bankList.forEach(function(bank){
-    // MXN row
-    if(bank.mxn>0){
-      var key=bank.name+'-MXN';
-      var safeKey=key.replace(/[^a-zA-Z0-9]/g,'-');
-      var tr=document.createElement('tr');
-      tr.className='bank-row';
-      tr.style.cursor='pointer';
-      tr.onclick=function(){toggleInvRow(key);};
-      var color=BANK_COLORS[bank.name]||'var(--text)';
-      tr.innerHTML='<td><span class="toggle-arrow" id="inv-arrow-'+safeKey+'" style="font-size:10px;margin-right:4px;">▸</span> <span style="color:'+color+';font-weight:600;">'+bank.name+'</span></td><td>MXN</td><td>'+fmtFull(bank.mxn)+'</td><td>'+fmtFull(bank.mxn)+'</td><td>'+pct(bank.mxn,grandTotal)+'</td>';
-      tbody.appendChild(tr);
-      // Entity detail rows
-      bank.mxnDetail.forEach(function(ent){
-        var etr=document.createElement('tr');
-        etr.className='entity-row inv-ent-'+safeKey;
-        etr.style.display='none';
-        etr.innerHTML='<td style="padding-left:28px;color:var(--text3);font-weight:400;">'+ent.n+'</td><td>MXN</td><td style="color:var(--text2);">'+fmtFull(ent.v)+'</td><td></td><td></td>';
-        tbody.appendChild(etr);
-      });
-    }
-    // USD row
-    if(bank.usd>0){
-      var key2=bank.name+'-USD';
-      var safeKey2=key2.replace(/[^a-zA-Z0-9]/g,'-');
-      var usdMxnEq=bank.usd*snap.fx;
-      var tr2=document.createElement('tr');
-      tr2.className='bank-row';
-      tr2.style.cursor='pointer';
-      tr2.onclick=function(){toggleInvRow(key2);};
-      var color2=BANK_COLORS[bank.name]||'var(--text)';
-      tr2.innerHTML='<td><span class="toggle-arrow" id="inv-arrow-'+safeKey2+'" style="font-size:10px;margin-right:4px;">▸</span> <span style="color:'+color2+';font-weight:600;">'+bank.name+'</span></td><td>USD</td><td>$'+Math.round(bank.usd).toLocaleString('en-US')+' USD</td><td>'+fmtFull(usdMxnEq)+'</td><td>'+pct(usdMxnEq,grandTotal)+'</td>';
-      tbody.appendChild(tr2);
-      bank.usdDetail.forEach(function(ent){
-        var etr2=document.createElement('tr');
-        etr2.className='entity-row inv-ent-'+safeKey2;
-        etr2.style.display='none';
-        etr2.innerHTML='<td style="padding-left:28px;color:var(--text3);font-weight:400;">'+ent.n+'</td><td>USD</td><td style="color:var(--text2);">$'+Math.round(ent.v).toLocaleString('en-US')+' USD</td><td></td><td></td>';
-        tbody.appendChild(etr2);
-      });
-    }
+  // Build MXN rows first, then USD rows
+  var mxnBanks=[];var usdBanks=[];
+  Object.keys(bankAgg).forEach(function(name){
+    var b=bankAgg[name];
+    if(b.mxn>0)mxnBanks.push({name:name,amt:b.mxn,detail:b.mxnDetail});
+    if(b.usd>0)usdBanks.push({name:name,amt:b.usd,mxnEq:b.usd*snap.fx,detail:b.usdDetail});
   });
-  // Total row
+  mxnBanks.sort(function(a,b){return b.amt-a.amt;});
+  usdBanks.sort(function(a,b){return b.mxnEq-a.mxnEq;});
+
+  // MXN section header
+  var mxnHdr=document.createElement('tr');
+  mxnHdr.innerHTML='<td colspan="5" style="padding:10px 12px 6px;font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:rgba(17,171,171,.04);">Posiciones en Pesos (MXN)</td>';
+  tbody.appendChild(mxnHdr);
+
+  mxnBanks.forEach(function(bank){
+    var key=bank.name+'-MXN';var safeKey=key.replace(/[^a-zA-Z0-9]/g,'-');
+    var tr=document.createElement('tr');tr.className='bank-row';tr.style.cursor='pointer';
+    tr.onclick=function(){toggleInvRow(key);};
+    var color=BANK_COLORS[bank.name]||'var(--text)';
+    tr.innerHTML='<td><span class="toggle-arrow" id="inv-arrow-'+safeKey+'" style="font-size:10px;margin-right:4px;">▸</span> <span style="color:'+color+';font-weight:600;">'+bank.name+'</span></td><td style="color:var(--text3);">MXN</td><td>'+fmtFull(bank.amt)+'</td><td>'+fmtFull(bank.amt)+'</td><td>'+pct(bank.amt,grandTotal)+'</td>';
+    tbody.appendChild(tr);
+    bank.detail.forEach(function(ent){
+      var etr=document.createElement('tr');etr.className='entity-row inv-ent-'+safeKey;etr.style.display='none';
+      etr.innerHTML='<td style="padding-left:28px;color:var(--text3);font-weight:400;">'+ent.n+'</td><td></td><td style="color:var(--text2);">'+fmtFull(ent.v)+'</td><td></td><td></td>';
+      tbody.appendChild(etr);
+    });
+  });
+  // MXN subtotal
+  var mxnSub=document.createElement('tr');mxnSub.style.cssText='border-top:1.5px solid var(--border);font-weight:600;background:rgba(17,171,171,.02);';
+  mxnSub.innerHTML='<td style="padding:8px 12px;">Subtotal MXN</td><td></td><td>'+fmtFull(grandMXN)+'</td><td>'+fmtFull(grandMXN)+'</td><td>'+pct(grandMXN,grandTotal)+'</td>';
+  tbody.appendChild(mxnSub);
+
+  // USD section header
+  var usdHdr=document.createElement('tr');
+  usdHdr.innerHTML='<td colspan="5" style="padding:10px 12px 6px;font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:rgba(17,171,171,.04);">Posiciones en Dólares (USD) <span style="font-weight:400;color:var(--text3);text-transform:none;letter-spacing:0;">@ $'+snap.fx.toFixed(2)+' MXN/USD</span></td>';
+  tbody.appendChild(usdHdr);
+
+  usdBanks.forEach(function(bank){
+    var key2=bank.name+'-USD';var safeKey2=key2.replace(/[^a-zA-Z0-9]/g,'-');
+    var tr2=document.createElement('tr');tr2.className='bank-row';tr2.style.cursor='pointer';
+    tr2.onclick=function(){toggleInvRow(key2);};
+    var color2=BANK_COLORS[bank.name]||'var(--text)';
+    tr2.innerHTML='<td><span class="toggle-arrow" id="inv-arrow-'+safeKey2+'" style="font-size:10px;margin-right:4px;">▸</span> <span style="color:'+color2+';font-weight:600;">'+bank.name+'</span></td><td style="color:var(--text3);">USD</td><td>$'+Math.round(bank.amt).toLocaleString('en-US')+'</td><td>'+fmtFull(bank.mxnEq)+'</td><td>'+pct(bank.mxnEq,grandTotal)+'</td>';
+    tbody.appendChild(tr2);
+    bank.detail.forEach(function(ent){
+      var etr2=document.createElement('tr');etr2.className='entity-row inv-ent-'+safeKey2;etr2.style.display='none';
+      etr2.innerHTML='<td style="padding-left:28px;color:var(--text3);font-weight:400;">'+ent.n+'</td><td></td><td style="color:var(--text2);">$'+Math.round(ent.v).toLocaleString('en-US')+'</td><td></td><td></td>';
+      tbody.appendChild(etr2);
+    });
+  });
+  // USD subtotal
+  var usdSub=document.createElement('tr');usdSub.style.cssText='border-top:1.5px solid var(--border);font-weight:600;background:rgba(17,171,171,.02);';
+  usdSub.innerHTML='<td style="padding:8px 12px;">Subtotal USD</td><td></td><td>$'+Math.round(grandUSD).toLocaleString('en-US')+'</td><td>'+fmtFull(grandUSD*snap.fx)+'</td><td>'+pct(grandUSD*snap.fx,grandTotal)+'</td>';
+  tbody.appendChild(usdSub);
+
+  // Grand total — two clean lines
   var totalTr=document.createElement('tr');totalTr.className='tr-total';
-  totalTr.innerHTML='<td>TOTAL</td><td></td><td>MXN '+fmtFull(grandMXN)+' + USD $'+Math.round(grandUSD).toLocaleString('en-US')+'</td><td>'+fmtFull(grandTotal)+'</td><td>100%</td>';
+  totalTr.innerHTML='<td style="padding:10px 12px;">TOTAL</td><td></td><td style="line-height:1.8;font-size:11px;">MXN '+fmtFull(grandMXN)+'<br>USD $'+Math.round(grandUSD).toLocaleString('en-US')+'</td><td style="color:var(--teal);font-size:15px;">'+fmtFull(grandTotal)+'</td><td>100.0%</td>';
   tbody.appendChild(totalTr);
 }
 
@@ -1361,8 +1395,7 @@ function fmt(n){if(Math.abs(n)>=1e9)return'$'+(n/1e9).toFixed(1)+'B';if(Math.abs
 function fmtFull(n){return'$'+Math.round(n).toLocaleString('en-US');}
 function pct(n,t){return t>0?(n/t*100).toFixed(1)+'%':'—';}
 Chart.defaults.color='#9CA3AF';
-const chartDefs={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false,labels:{color:'#9CA3AF'}}},interaction:{mode:'index',intersect:false}};
-const tooltipStyle={backgroundColor:'rgba(255,255,255,.95)',titleColor:'#1A1D23',bodyColor:'rgba(26,29,35,.75)',borderColor:'rgba(17,171,171,.4)',borderWidth:1,padding:10};
+// chartDefs and tooltipStyle moved to top (before rebuild functions)
 function gradient(ctx,c1,c2){const g=ctx.createLinearGradient(0,0,0,280);g.addColorStop(0,c1);g.addColorStop(1,'transparent');return g;}
 const minAxis={x:{grid:{display:false},border:{display:false},ticks:{font:{size:9,weight:'500'},color:'#6B7280',padding:2,maxRotation:45}},y:{grid:{drawTicks:false,color:'rgba(0,0,0,.06)'},border:{display:false},ticks:{font:{size:9},color:'#6B7280',padding:6}}};
 
@@ -1473,66 +1506,54 @@ const minAxis={x:{grid:{display:false},border:{display:false},ticks:{font:{size:
 })();
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SECTION 2 — INVESTMENT CHARTS
+// SECTION 2 — INVESTMENT CHARTS (built lazily on section switch via rebuildX functions)
 // ═══════════════════════════════════════════════════════════════════════════════
-
-// Bank distribution donut
-bankChartInstance=new Chart(document.getElementById('bankChart').getContext('2d'),{type:'doughnut',data:{labels:BANKS.map(b=>b.name),datasets:[{data:BANKS.map(b=>b.totalMXN),backgroundColor:BANKS.map(b=>b.color),borderWidth:2,borderColor:'#FFFFFF'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{...tooltipStyle,callbacks:{label:i=>` ${i.label}: ${fmt(i.raw)} (${pct(i.raw,TOTAL_MXN_EQ)})`}}}}});
-const bankRows=document.getElementById('bank-rows');
-BANKS.forEach(b=>{const r=document.createElement('div');r.className='stat-row';r.innerHTML=`<span class="stat-name"><span class="stat-dot" style="background:${b.color}"></span>${b.name}</span><span class="stat-count">${fmt(b.totalMXN)} <span style="font-size:10px;color:var(--text3);margin-left:4px;">${pct(b.totalMXN,TOTAL_MXN_EQ)}</span></span>`;bankRows.appendChild(r);});
-
-// Currency distribution donut
-currChartInstance=new Chart(document.getElementById('currChart').getContext('2d'),{type:'doughnut',data:{labels:['MXN Directo','USD (MXN equiv.)'],datasets:[{data:[TOTAL_MXN_DIRECT,TOTAL_USD_MXN],backgroundColor:['#1A5C5C','#11ABAB'],borderWidth:2,borderColor:'#FFFFFF'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{...tooltipStyle,callbacks:{label:i=>` ${i.label}: ${fmt(i.raw)} (${pct(i.raw,TOTAL_MXN_EQ)})`}}}}});
-const currRows=document.getElementById('curr-rows');
-[{n:'MXN Directo',v:TOTAL_MXN_DIRECT,c:'#1A5C5C'},{n:'USD (MXN equiv.)',v:TOTAL_USD_MXN,c:'#11ABAB'}].forEach(d=>{const r=document.createElement('div');r.className='stat-row';r.innerHTML=`<span class="stat-name"><span class="stat-dot" style="background:${d.c}"></span>${d.n}</span><span class="stat-count">${fmt(d.v)} <span style="font-size:10px;color:var(--text3);margin-left:4px;">${pct(d.v,TOTAL_MXN_EQ)}</span></span>`;currRows.appendChild(r);});
-
-// Entity stacked bar chart
-const sortedEnt=[...ENTITIES].sort((a,b)=>b.total-a.total);
-entityChartInstance=new Chart(document.getElementById('entityChart').getContext('2d'),{type:'bar',data:{labels:sortedEnt.map(e=>e.name),datasets:[{label:'MXN',data:sortedEnt.map(e=>e.mxn),backgroundColor:'#1F5556',borderRadius:2},{label:'USD (MXN eq.)',data:sortedEnt.map(e=>e.usd*FX),backgroundColor:'#11ABAB',borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',scales:{x:{stacked:true,grid:{color:'rgba(0,0,0,.06)'},ticks:{font:{size:9},callback:v=>fmt(v)}},y:{stacked:true,grid:{display:false},ticks:{font:{size:10,weight:'600'}}}},plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:12}},tooltip:{...tooltipStyle,callbacks:{label:i=>` ${i.dataset.label}: ${fmt(i.raw)}`}}}}});
 
 
 // Maturity profile — horizontal bars with target markers
-(function(){
-  const T=TOTAL_MXN_EQ;
-  const buckets=[
+function rebuildMaturity(){
+  var T=TOTAL_MXN_EQ;
+  var container=document.getElementById('maturityBars');
+  if(!container)return;
+  container.innerHTML='';
+  var buckets=[
     {label:'1 día',actual:T,targetPct:35,color:'#11ABAB'},
     {label:'< 7 días',actual:0,targetPct:15,color:'#1F5556'},
     {label:'30 días',actual:0,targetPct:25,color:'#2a8a8a'},
     {label:'60 días',actual:0,targetPct:15,color:'#4abfbf'},
     {label:'> 60 días',actual:0,targetPct:10,color:'#7dd4d4'}
   ];
-  const container=document.getElementById('maturityBars');
   // Legend
-  const legend=document.createElement('div');
+  var legend=document.createElement('div');
   legend.style.cssText='display:flex;gap:16px;align-items:center;margin-bottom:14px;font-size:10px;color:var(--text2);';
   legend.innerHTML='<span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:var(--teal);"></span>Actual</span><span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:2px;border-top:2px dashed var(--amber);"></span>Target</span>';
   container.appendChild(legend);
   buckets.forEach(b=>{
-    const actPct=T>0?(b.actual/T*100):0;
-    const row=document.createElement('div');
+    var actPct=T>0?(b.actual/T*100):0;
+    var row=document.createElement('div');
     row.style.cssText='display:grid;grid-template-columns:70px 1fr 50px;align-items:center;gap:10px;margin-bottom:8px;';
     // Label
-    const lbl=document.createElement('div');
+    var lbl=document.createElement('div');
     lbl.style.cssText='font-size:11px;font-weight:600;color:var(--text);white-space:nowrap;';
     lbl.textContent=b.label;
     // Bar track
-    const track=document.createElement('div');
+    var track=document.createElement('div');
     track.style.cssText='position:relative;height:22px;background:var(--surface2);border-radius:3px;overflow:visible;';
     // Actual fill
-    const fill=document.createElement('div');
+    var fill=document.createElement('div');
     fill.style.cssText=`height:100%;width:${actPct}%;background:${b.color};border-radius:3px;transition:width .4s;min-width:${actPct>0?'2px':'0'};`;
     track.appendChild(fill);
     // Target marker line
-    const marker=document.createElement('div');
+    var marker=document.createElement('div');
     marker.style.cssText=`position:absolute;left:${b.targetPct}%;top:-2px;bottom:-2px;width:0;border-left:2px dashed var(--amber);`;
     track.appendChild(marker);
     // Target label
-    const tLbl=document.createElement('div');
+    var tLbl=document.createElement('div');
     tLbl.style.cssText=`position:absolute;left:${b.targetPct}%;top:-14px;transform:translateX(-50%);font-size:8px;color:var(--amber);font-weight:600;white-space:nowrap;`;
     tLbl.textContent=b.targetPct+'%';
     track.appendChild(tLbl);
     // Value
-    const val=document.createElement('div');
+    var val=document.createElement('div');
     val.style.cssText='font-size:11px;font-weight:700;color:var(--teal);text-align:right;font-variant-numeric:tabular-nums;';
     val.textContent=actPct>0?actPct.toFixed(0)+'%':'0%';
     row.appendChild(lbl);
@@ -1540,6 +1561,88 @@ entityChartInstance=new Chart(document.getElementById('entityChart').getContext(
     row.appendChild(val);
     container.appendChild(row);
   });
+}
+rebuildMaturity();
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// INVESTMENT FRAMEWORK — 3 Tranches
+// ═══════════════════════════════════════════════════════════════════════════════
+(function(){
+  var postCap=466.7; // MXN$m post-capitalización
+  var burnWeek=22.2; // MXN$m/sem run rate
+  var floor=40; // caja mínima
+  var opWeeks=4;
+  var resWeeks=9; // weeks 5-13
+
+  var operativo=Math.round(burnWeek*opWeeks);     // ~89M
+  var reserva=Math.round(burnWeek*resWeeks);       // ~200M
+  var estrategico=Math.round(postCap-operativo-reserva-floor); // ~138M
+  var total=operativo+reserva+estrategico+floor;
+
+  var pctOp=Math.round(operativo/total*100);
+  var pctRes=Math.round(reserva/total*100);
+  var pctEst=Math.round(estrategico/total*100);
+  var pctFloor=Math.round(floor/total*100);
+
+  var fc=document.getElementById('inv-framework-card');
+  if(!fc)return;
+  var h='';
+
+  // Horizontal stacked bar
+  h+='<div style="margin-bottom:20px;">';
+  h+='<div style="font-size:10px;font-weight:600;color:var(--text2);margin-bottom:6px;">Distribución de Caja Post-Capitalización · $'+postCap.toFixed(0)+'M MXN</div>';
+  h+='<div style="display:flex;height:38px;border-radius:6px;overflow:hidden;border:1px solid var(--border);">';
+  h+='<div style="width:'+pctOp+'%;background:#DC2626;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;">Op $'+operativo+'M</div>';
+  h+='<div style="width:'+pctRes+'%;background:#D97706;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;">Res $'+reserva+'M</div>';
+  h+='<div style="width:'+pctEst+'%;background:#11ABAB;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;">Est $'+estrategico+'M</div>';
+  h+='<div style="width:'+pctFloor+'%;background:#6B7280;display:flex;align-items:center;justify-content:center;color:#fff;font-size:9px;font-weight:600;">Piso</div>';
+  h+='</div></div>';
+
+  // Three tranche cards
+  h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">';
+
+  // Operativo
+  h+='<div style="border:2px solid #DC2626;border-radius:8px;padding:14px;position:relative;">';
+  h+='<div style="position:absolute;top:-10px;left:12px;background:var(--surface);padding:0 6px;font-size:9px;font-weight:700;color:#DC2626;text-transform:uppercase;letter-spacing:.5px;">Tramo 1 · Operativo</div>';
+  h+='<div style="font-size:28px;font-weight:800;color:#DC2626;margin:8px 0 4px;">$'+operativo+'M</div>';
+  h+='<div style="font-size:11px;color:var(--text2);line-height:1.6;">';
+  h+='<strong>Horizonte:</strong> 1–4 semanas<br>';
+  h+='<strong>Plazo inversión:</strong> 1 día (overnight)<br>';
+  h+='<strong>Instrumento:</strong> PRLV diario / Mesa<br>';
+  h+='<strong>Tasa est.:</strong> ~3.40% USD / ~8.5% MXN<br>';
+  h+='<strong>Prioridad:</strong> Liquidez inmediata</div></div>';
+
+  // Reserva
+  h+='<div style="border:2px solid #D97706;border-radius:8px;padding:14px;position:relative;">';
+  h+='<div style="position:absolute;top:-10px;left:12px;background:var(--surface);padding:0 6px;font-size:9px;font-weight:700;color:#D97706;text-transform:uppercase;letter-spacing:.5px;">Tramo 2 · Reserva</div>';
+  h+='<div style="font-size:28px;font-weight:800;color:#D97706;margin:8px 0 4px;">$'+reserva+'M</div>';
+  h+='<div style="font-size:11px;color:var(--text2);line-height:1.6;">';
+  h+='<strong>Horizonte:</strong> 5–13 semanas<br>';
+  h+='<strong>Plazo inversión:</strong> ≤91 días<br>';
+  h+='<strong>Instrumento:</strong> Pagaré 30-90d / CEDES<br>';
+  h+='<strong>Tasa est.:</strong> ~3.50% USD / ~9.0% MXN<br>';
+  h+='<strong>Prioridad:</strong> Rendimiento + acceso programado</div></div>';
+
+  // Estratégico
+  h+='<div style="border:2px solid #11ABAB;border-radius:8px;padding:14px;position:relative;">';
+  h+='<div style="position:absolute;top:-10px;left:12px;background:var(--surface);padding:0 6px;font-size:9px;font-weight:700;color:#11ABAB;text-transform:uppercase;letter-spacing:.5px;">Tramo 3 · Estratégico</div>';
+  h+='<div style="font-size:28px;font-weight:800;color:#11ABAB;margin:8px 0 4px;">$'+estrategico+'M</div>';
+  h+='<div style="font-size:11px;color:var(--text2);line-height:1.6;">';
+  h+='<strong>Horizonte:</strong> +3 meses<br>';
+  h+='<strong>Plazo inversión:</strong> ≤364 días<br>';
+  h+='<strong>Instrumento:</strong> Fondos inv. / Pagaré 180-364d<br>';
+  h+='<strong>Tasa est.:</strong> ~4.25% USD / ~9.5% MXN<br>';
+  h+='<strong>Prioridad:</strong> Maximizar rendimiento</div></div>';
+
+  h+='</div>';
+
+  // Footnote
+  h+='<div style="margin-top:14px;padding:10px;background:rgba(0,0,0,.03);border-radius:6px;font-size:10px;color:var(--text3);line-height:1.6;">';
+  h+='<strong>Supuestos:</strong> Caja post-cap $'+postCap.toFixed(0)+'M · Run rate ~$'+burnWeek.toFixed(1)+'M/sem (proyección Ago–Oct) · Piso mínimo operativo $'+floor+'M · ';
+  h+='Operativo = '+opWeeks+' semanas de burn · Reserva = semanas 5–13 · Estratégico = excedente post 3 meses';
+  h+='</div>';
+
+  fc.innerHTML=h;
 })();
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -1627,109 +1730,7 @@ document.getElementById('allocSlider').addEventListener('input',updateAlloc);
 updateAlloc();
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// RENDIMIENTOS REALES H1 2026
-// ═══════════════════════════════════════════════════════════════════════════════
-const YIELD_MONTHS=['Ene','Feb','Mar','Abr','May','Jun'];
-const YIELD_INT={
-  CHARGING:[29813.51,4320.70,122624.81,67251.22,121326.26,97544.83],
-  DAE:[147256.72,95408.87,130307.31,216838.78,267188.93,297533.58],
-  EMC:[1179.34,698.07,7621.93,14240.25,5772.59,8364.93],
-  ESPACIOS:[4147.34,471.64,5514.56,309.99,8427.27,2683.24],
-  FIMECO:[141532.25,161208.71,212184.31,164575.01,171800.45,164595.66],
-  FLEETS:[2467.68,827.42,658.22,2219.86,1882.15,2886.98],
-  GREEN:[43025.93,40523.58,51387.13,43581.84,37489.04,44268.67],
-  HOLDCO:[1685777.52,1341395.46,1442571.40,871693.08,379197.26,1254538.22],
-  INGENIERIA:[142.25,1733.66,810.91,10617.76,-137.49,1201.91],
-  IP:[1102.10,940.41,685.49,726.76,926.71,1180.10],
-  MORELCAMP:[1280799.51,371542.38,3927764.58,884352.47,794610.89,557000.81],
-  MOVILIDAD:[2845.87,1016.90,506.38,532.31,206.93,159.84],
-  PSM:[927.85,1009.63,2173.70,1686.34,3286.54,5201.80]
-};
-// Pre-computed annualized yields from Excel (exact cached values from file)
-const YIELD_PCT={
-  CHARGING:[3.28,0.72,17.08,8.88,8.80,8.58],
-  DAE:[9.82,9.20,6.78,6.66,6.26,5.71],
-  EMC:[3.67,5.33,5.73,9.24,11.32,22.49],
-  ESPACIOS:[8.19,0.18,1.35,0.21,19.11,4.40],
-  FIMECO:[5.05,4.71,4.65,3.98,4.43,4.35],
-  FLEETS:[4.84,3.50,2.92,5.21,4.93,0.67],
-  GREEN:[4.92,5.01,5.93,5.32,4.36,5.14],
-  HOLDCO:[4.20,4.31,5.43,7.21,1.48,3.41],
-  INGENIERIA:[0.55,5.26,2.80,36.05,-0.44,2.59],
-  IP:[1.86,2.36,2.60,2.53,3.42,3.40],
-  MORELCAMP:[9.06,1.51,14.40,3.41,3.03,2.25],
-  MOVILIDAD:[5.57,5.13,5.22,5.68,3.64,0.40],
-  PSM:[5.51,4.62,9.83,15.86,13.87,4.42],
-  TOTAL:[5.51,3.26,9.44,4.81,2.87,3.32]
-};
-function getYieldData(entity){
-  if(entity==='TOTAL'){
-    var int=YIELD_MONTHS.map(function(_,i){return Object.values(YIELD_INT).reduce(function(s,a){return s+a[i];},0);});
-    return {interest:int,yield:YIELD_PCT.TOTAL};
-  }
-  var int2=YIELD_INT[entity]||[0,0,0,0,0,0];
-  var yld2=YIELD_PCT[entity]||[0,0,0,0,0,0];
-  return {interest:int2,yield:yld2};
-}
-var yieldChartInstance=null;
-function updateYieldChart(){
-  var entity=document.getElementById('yieldFilter').value;
-  var data=getYieldData(entity);
-  if(yieldChartInstance)yieldChartInstance.destroy();
-  var ctx=document.getElementById('yieldChart').getContext('2d');
-  yieldChartInstance=new Chart(ctx,{type:'bar',data:{labels:YIELD_MONTHS,datasets:[
-    {label:'Intereses MXN',data:data.interest,backgroundColor:'rgba(17,171,171,.55)',borderColor:'#11ABAB',borderWidth:1,borderRadius:4,yAxisID:'y',order:2},
-    {label:'Yield Anualizado %',data:data.yield,type:'line',borderColor:'#F59E0B',backgroundColor:'transparent',borderWidth:2.5,pointRadius:5,pointBackgroundColor:'#F59E0B',pointBorderColor:'#FFFFFF',pointBorderWidth:2,tension:.3,yAxisID:'y1',order:1}
-  ]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-    plugins:{legend:{display:true,position:'bottom',labels:{font:{size:10},boxWidth:12,padding:10,color:'#4B5563'}},
-      tooltip:{...tooltipStyle,callbacks:{label:function(i){
-        if(i.datasetIndex===0)return' Intereses: $'+Math.round(i.raw).toLocaleString('en-US')+' MXN';
-        return' Yield: '+i.raw.toFixed(2)+'%';
-      }}}},
-    scales:{
-      x:{grid:{display:false},border:{display:false},ticks:{font:{size:11,weight:'600'},color:'#9CA3AF'}},
-      y:{position:'left',grid:{color:'rgba(0,0,0,.06)'},border:{display:false},
-        ticks:{font:{size:9},color:'#6B7280',callback:function(v){if(Math.abs(v)>=1e6)return'$'+(v/1e6).toFixed(1)+'M';if(Math.abs(v)>=1e3)return'$'+(v/1e3).toFixed(0)+'K';return'$'+v;}},
-        title:{display:true,text:'Intereses MXN',font:{size:10,weight:'600'},color:'#9CA3AF'}},
-      y1:{position:'right',grid:{display:false},border:{display:false},
-        ticks:{font:{size:9},color:'#F59E0B',callback:function(v){return v.toFixed(1)+'%';}},
-        title:{display:true,text:'Yield Anualizado',font:{size:10,weight:'600'},color:'#F59E0B'},
-        min:0}
-    }}});
-}
-updateYieldChart();
-(function(){
-  var tbody=document.getElementById('yieldTableBody');
-  // Build sorted entity list (highest Total H1 first)
-  var sorted=Object.keys(YIELD_INT).map(function(e){
-    var ints=YIELD_INT[e];
-    return {name:e,ints:ints,total:ints.reduce(function(s,v){return s+v;},0)};
-  }).sort(function(a,b){return b.total-a.total;});
-  // TOTAL row first (always visible)
-  var totals=YIELD_MONTHS.map(function(_,i){return Object.values(YIELD_INT).reduce(function(s,a){return s+a[i];},0);});
-  var grandTotal=totals.reduce(function(s,v){return s+v;},0);
-  var trT=document.createElement('tr');
-  trT.className='tr-total';
-  trT.style.cursor='pointer';
-  trT.onclick=function(){
-    var rows=document.querySelectorAll('.yield-entity-row');
-    var arrow=document.getElementById('arrow-yield-detail');
-    var isOpen=arrow.classList.contains('open');
-    rows.forEach(function(r){r.style.display=isOpen?'none':'table-row';});
-    arrow.classList.toggle('open');
-  };
-  trT.innerHTML='<td><span class="toggle-arrow" id="arrow-yield-detail">▸</span> TOTAL</td>'+totals.map(function(v){return'<td>$'+Math.round(v).toLocaleString('en-US')+'</td>';}).join('')+'<td>$'+Math.round(grandTotal).toLocaleString('en-US')+'</td>';
-  tbody.appendChild(trT);
-  // Entity rows (hidden by default, sorted desc by Total H1)
-  sorted.forEach(function(item){
-    var tr=document.createElement('tr');
-    tr.className='yield-entity-row';
-    tr.style.display='none';
-    tr.innerHTML='<td style="padding-left:28px;color:var(--text2);font-weight:400;">'+item.name+'</td>'+item.ints.map(function(v){return'<td>'+(v<0?'−$'+Math.abs(Math.round(v)).toLocaleString('en-US'):'$'+Math.round(v).toLocaleString('en-US'))+'</td>';}).join('')+'<td style="font-weight:700;color:var(--teal);">$'+Math.round(item.total).toLocaleString('en-US')+'</td>';
-    tbody.appendChild(tr);
-  });
-})();
-
+// (Rendimientos Reales H1 2026 — removido por ahora)
 // ═══════════════════════════════════════════════════════════════════════════════
 // (Section 4 waterfall removed — replaced by inline Cash Flow tables)
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -1761,7 +1762,7 @@ updateCashView(currentCashDate);
 // Fuentes (en orden de prioridad):
 //   1. ExchangeRate-API (open.er-api.com) — datos de bancos centrales, sin API key
 //   2. Frankfurter API (frankfurter.app) — datos del ECB, open source
-// Fallback: se mantiene el valor estático del corte (17.40)
+// Fallback: se mantiene el valor estático del corte (17.22)
 (function(){
   var apis=[
     {url:'https://open.er-api.com/v6/latest/USD',parse:function(d){return{rate:d.rates.MXN,date:d.time_last_update_utc?d.time_last_update_utc.split(' ').slice(1,4).join(' '):'hoy',src:'ExchangeRate-API (bancos centrales)'};}},

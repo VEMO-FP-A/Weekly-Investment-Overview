@@ -292,6 +292,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     <!-- Sub-nav -->
     <div style="display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;">
       <a href="#inv-pos" class="inv-jump" onclick="document.getElementById('inv-pos').scrollIntoView({behavior:'smooth'});return false;">Posiciones</a>
+      <a href="#inv-plazo" class="inv-jump" onclick="document.getElementById('inv-plazo').scrollIntoView({behavior:'smooth'});return false;">Plazo USD</a>
       <a href="#inv-dist" class="inv-jump" onclick="document.getElementById('inv-dist').scrollIntoView({behavior:'smooth'});return false;">Distribución</a>
       <a href="#inv-ent" class="inv-jump" onclick="document.getElementById('inv-ent').scrollIntoView({behavior:'smooth'});return false;">Entidades</a>
       <a href="#inv-framework" class="inv-jump" onclick="document.getElementById('inv-framework').scrollIntoView({behavior:'smooth'});return false;">Framework</a>
@@ -332,6 +333,17 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       </table>
     </div>
 
+    <!-- Detalle de Posiciones a Plazo -->
+    <div class="section-head-light" id="inv-plazo"><span>Posiciones con Plazo (USD)</span></div>
+    <div class="tbl-outer">
+      <table class="dt" id="plazoTable">
+        <thead><tr>
+          <th>Banco</th><th>Cuenta / Tipo</th><th>Monto USD</th><th>Tasa</th><th>Plazo</th><th>Vencimiento</th><th>Días Restantes</th>
+        </tr></thead>
+        <tbody id="plazoTableBody"></tbody>
+      </table>
+    </div>
+
     <!-- Distribución -->
     <div class="section-head-light" id="inv-dist"><span>Distribución del Cash</span></div>
     <div class="grid-2" style="margin-bottom:8px;">
@@ -363,7 +375,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     <div class="chart-card">
       <div class="chart-card-head forest">
         <div class="chart-card-title">Distribución por Plazo</div>
-        <div class="chart-card-meta">Actual vs Target diversificado</div>
+        <div class="chart-card-meta" id="maturityMeta">Actual vs Target diversificado</div>
       </div>
       <div class="chart-card-body" style="padding:16px 20px;">
         <div id="maturityBars"></div>
@@ -435,107 +447,105 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     var ENTITY_DATA={
       HOLDCO:{name:'HoldCo',note:'Next Steps: Validar temporalidad de pagos; $$ adecuaciones FIMECO; ver si podemos mover seguros a la semana del 28-sep',
         rows:[
-          {l:'BoP',v:[128.7,36.8,28.3,128.7],t:'bop'},
-          {l:'(-) Neto HoldCo (cap + opex)',v:[-91.8,-52.5,-100.5,-244.8],t:'out'},
-          {l:'   → a LTO',v:[69.3,1.3,39.7,110.3],t:'sub'},
-          {l:'   → a VCN',v:[2.0,45.2,34.2,81.4],t:'sub'},
-          {l:'   → a EMC',v:[7.9,4.0,20.4,32.3],t:'sub'},
-          {l:'   → a IP',v:[5.2,2.4,6.1,13.8],t:'sub'},
-          {l:'   → a PSM',v:[5.0,0.0,0.0,5.0],t:'sub'},
-          {l:'   → OPEX HoldCo',v:[0.6,0.0,0.0,0.6],t:'sub'},
-          {l:'   → FX',v:[1.8,-0.5,0.0,1.3],t:'sub'},
-          {l:'EoP',v:[36.8,28.3,327.8,null],t:'eop'}
+          {l:'BoP',v:[128.7,36.8,384.9,128.7],t:'bop'},
+          {l:'(+) Equity',v:[0.0,416.2,0.0,416.2],t:'in'},
+          {l:'(-) Transferencias a Subsidiarias',v:[-91.8,-52.5,-100.5,-244.8],t:'out'},
+          {l:'(±) FX',v:[1.9,-0.5,0.0,1.4],t:'other'},
+          {l:'(±) Otros',v:[-2.6,-15.1,43.4,25.7],t:'other'},
+          {l:'EoP',v:[36.8,384.9,327.8,327.8],t:'eop'}
         ],monthly:['Ago','Sep','Oct','Total']},
       LTO:{name:'LTO',
         rows:[
-          {l:'BoP',v:[9.9,7.1,7.9,9.9],t:'bop'},
-          {l:'(+) Cobranza',v:[62.0,54.3,48.3,164.7],t:'in'},
-          {l:'(+) Inflows Intercos',v:[0.5,1.4,0.0,3.3],t:'in'},
-          {l:'(+) Capitalización',v:[69.3,0.1,22.2,110.3],t:'in'},
-          {l:'(-) OPEX',v:[-34.4,-30.3,-32.4,-111.3],t:'out'},
-          {l:'(-) CAPEX',v:[-76.4,-0.5,-21.0,-118.9],t:'out'},
-          {l:'(-) Outflow Interco',v:[-23.8,-24.2,-5.0,-58.0],t:'out'},
-          {l:'EoP',v:[7.1,7.9,20.0,0.0],t:'eop'}
+          {l:'BoP',v:[9.9,3.1,0.0,9.9],t:'bop'},
+          {l:'(+) Cobranza',v:[62.0,54.3,48.4,164.7],t:'in'},
+          {l:'(+) Capitalización',v:[69.3,1.3,39.7,110.3],t:'in'},
+          {l:'(+) Inflows Intercos',v:[0.5,1.4,1.4,3.3],t:'in'},
+          {l:'(-) OPEX',v:[-38.4,-35.5,-37.5,-111.4],t:'out'},
+          {l:'(-) CAPEX',v:[-76.4,-0.5,-42.0,-118.9],t:'out'},
+          {l:'(-) Outflow Interco',v:[-23.8,-24.2,-10.0,-58.0],t:'out'},
+          {l:'EoP',v:[3.1,0.0,0.0,0.0],t:'eop'}
         ],monthly:['Ago','Sep','Oct','Total']},
       DAE:{name:'DAE',
         rows:[
-          {l:'BoP',v:[52.6,50.4,29.9,52.6],t:'bop'},
-          {l:'(+) Cobranza',v:[65.7,49.0,49.0,163.7],t:'in'},
-          {l:'(-) OPEX',v:[-46.4,-33.1,-31.8,-124.6],t:'out'},
-          {l:'(-) Outflow Interco',v:[-21.5,-36.4,-16.1,-75.4],t:'out'},
-          {l:'EoP',v:[50.4,29.9,31.0,16.3],t:'eop'}
+          {l:'BoP',v:[52.6,50.4,23.3,52.6],t:'bop'},
+          {l:'(+) Cobranza',v:[65.6,49.2,49.2,164.0],t:'in'},
+          {l:'(-) OPEX',v:[-46.4,-39.7,-38.5,-124.6],t:'out'},
+          {l:'(-) Outflow Interco',v:[-21.5,-36.4,-17.5,-75.4],t:'out'},
+          {l:'(±) Ajuste',v:[0.1,-0.2,-4.4,-4.5],t:'other'},
+          {l:'EoP',v:[50.4,23.3,12.1,12.1],t:'eop'}
         ],monthly:['Ago','Sep','Oct','Total']},
       VCN:{name:'VCN',
         rows:[
-          {l:'BoP',v:[1.1,28.8,-8.8,1.1],t:'bop'},
-          {l:'(+) Cobranza',v:[19.5,7.8,15.0,42.3],t:'in'},
+          {l:'BoP',v:[1.1,30.8,0.0,1.1],t:'bop'},
+          {l:'(+) Cobranza',v:[19.6,7.8,15.0,42.4],t:'in'},
+          {l:'(+) Capitalización',v:[0.0,45.3,34.2,79.5],t:'in'},
           {l:'(+) Inflows Intercos',v:[17.1,4.3,4.3,25.7],t:'in'},
-          {l:'(+) Capitalización',v:[0.0,21.5,34.2,79.5],t:'in'},
           {l:'(+) Debt',v:[84.0,0.0,0.0,84.0],t:'in'},
-          {l:'(-) OPEX',v:[-41.9,-21.9,-21.4,-88.1],t:'out'},
-          {l:'(-) CAPEX',v:[-13.4,-22.3,0.0,-38.8],t:'out'},
-          {l:'(-) Outflow Interco',v:[-37.7,-27.0,-23.0,-107.3],t:'out'},
-          {l:'EoP',v:[28.8,-8.8,0.3,-1.5],t:'eop'}
+          {l:'(-) OPEX',v:[-41.8,-23.3,-22.8,-87.9],t:'out'},
+          {l:'(-) CAPEX',v:[-13.4,-22.4,-3.1,-38.9],t:'out'},
+          {l:'(-) Outflow Interco',v:[-37.7,-42.5,-27.0,-107.2],t:'out'},
+          {l:'(±) Ajuste',v:[1.9,0.0,8.5,10.4],t:'other'},
+          {l:'EoP',v:[30.8,0.0,9.1,9.1],t:'eop'}
         ],monthly:['Ago','Sep','Oct','Total']},
       AuHaus:{name:'Au Haus',
         rows:[
-          {l:'BoP',v:[0.4,0.2,1.7,0.4],t:'bop'},
-          {l:'(+) Cobranza',v:[13.1,7.9,4.2,25.1],t:'in'},
-          {l:'(+) Inflows Intercos',v:[27.3,21.0,15.0,66.8],t:'in'},
-          {l:'(-) OPEX',v:[-19.9,-8.6,-7.6,-37.6],t:'out'},
-          {l:'(-) CAPEX',v:[-18.2,-17.9,-2.0,-42.4],t:'out'},
+          {l:'BoP',v:[0.4,0.2,0.2,0.4],t:'bop'},
+          {l:'(+) Cobranza',v:[13.0,7.7,4.0,24.7],t:'in'},
+          {l:'(+) Inflows Intercos',v:[27.3,24.5,15.0,66.8],t:'in'},
+          {l:'(-) OPEX',v:[-19.9,-9.4,-8.3,-37.6],t:'out'},
+          {l:'(-) CAPEX',v:[-18.2,-22.1,-2.0,-42.3],t:'out'},
           {l:'(-) Outflow Interco',v:[-2.4,-0.9,0.0,-3.3],t:'out'},
-          {l:'EoP',v:[0.2,1.7,11.3,9.1],t:'eop'}
+          {l:'EoP',v:[0.2,0.2,8.8,8.8],t:'eop'}
         ],monthly:['Ago','Sep','Oct','Total']},
       CF:{name:'CF',
         rows:[
-          {l:'BoP',v:[6.5,5.8,0.2,6.5],t:'bop'},
-          {l:'(+) Cobranza',v:[0.2,0.7,0.7,1.5],t:'in'},
-          {l:'(+) Inflows Intercos',v:[0.5,0.0,0.0,0.6],t:'in'},
-          {l:'(-) OPEX',v:[0.2,-6.3,-0.7,-6.9],t:'out'},
-          {l:'(-) Outflow Interco',v:[-1.6,0.0,0.0,-1.6],t:'out'},
-          {l:'EoP',v:[5.8,0.2,0.2,0.1],t:'eop'}
+          {l:'BoP',v:[6.5,5.9,0.2,6.5],t:'bop'},
+          {l:'(+) Cobranza',v:[0.1,0.8,0.8,1.7],t:'in'},
+          {l:'(+) Inflows Intercos',v:[0.5,0.0,0.0,0.5],t:'in'},
+          {l:'(-) OPEX',v:[0.2,-6.4,-0.9,-7.1],t:'out'},
+          {l:'(-) Outflow Interco',v:[-1.5,0.0,0.0,-1.5],t:'out'},
+          {l:'EoP',v:[5.9,0.2,0.0,0.0],t:'eop'}
         ],monthly:['Ago','Sep','Oct','Total']},
       Green:{name:'Green',
         rows:[
-          {l:'BoP',v:[6.4,2.4,1.7,6.4],t:'bop'},
-          {l:'(+) Cobranza',v:[1.2,0.6,0.6,2.3],t:'in'},
-          {l:'(-) OPEX',v:[0.0,-1.3,-0.8,-2.3],t:'out'},
+          {l:'BoP',v:[6.4,2.4,1.6,6.4],t:'bop'},
+          {l:'(+) Cobranza',v:[1.2,0.6,0.6,2.4],t:'in'},
+          {l:'(-) OPEX',v:[0.0,-1.3,-0.8,-2.1],t:'out'},
           {l:'(-) Outflow Interco',v:[-5.2,0.0,0.0,-5.2],t:'out'},
-          {l:'EoP',v:[2.4,1.7,1.5,1.3],t:'eop'}
+          {l:'EoP',v:[2.4,1.6,1.4,1.4],t:'eop'}
         ],monthly:['Ago','Sep','Oct','Total']},
       PSM:{name:'PSM',
         rows:[
-          {l:'BoP',v:[0.4,2.7,21.4,0.4],t:'bop'},
-          {l:'(+) Inflows Intercos',v:[29.0,38.9,28.5,96.4],t:'in'},
+          {l:'BoP',v:[0.4,2.8,21.4,0.4],t:'bop'},
           {l:'(+) Capitalización',v:[5.0,11.8,0.0,16.8],t:'in'},
-          {l:'(-) OPEX',v:[-30.8,-32.0,-31.3,-94.2],t:'out'},
-          {l:'(-) Outflow Capitalización',v:[-0.8,0.0,0.0,-0.8],t:'out'},
-          {l:'EoP',v:[2.7,21.4,18.6,18.6],t:'eop'}
+          {l:'(+) Inflows Intercos',v:[29.1,38.9,28.5,96.5],t:'in'},
+          {l:'(-) OPEX',v:[-30.8,-32.0,-31.2,-94.0],t:'out'},
+          {l:'(±) Ajuste',v:[-0.9,-0.1,-7.1,-8.1],t:'other'},
+          {l:'EoP',v:[2.8,21.4,11.6,11.6],t:'eop'}
         ],monthly:['Ago','Sep','Oct','Total']},
       EMC:{name:'EMC',note:'NEXT STEPS: Ver si podemos hacer anticipos',
         rows:[
-          {l:'BoP',v:[0.5,0.7,-0.1,0.5],t:'bop'},
-          {l:'(+) Inflows Intercos',v:[10.8,4.0,5.0,19.8],t:'in'},
+          {l:'BoP',v:[0.5,0.8,0.0,0.5],t:'bop'},
           {l:'(+) Capitalización',v:[7.9,7.9,20.4,36.2],t:'in'},
-          {l:'(-) OPEX',v:[-18.5,-12.0,-14.9,-45.4],t:'out'},
+          {l:'(+) Inflows Intercos',v:[10.8,4.0,5.0,19.8],t:'in'},
+          {l:'(-) OPEX',v:[-18.5,-11.9,-14.9,-45.3],t:'out'},
           {l:'(-) CAPEX',v:[0.0,-0.7,-10.5,-11.2],t:'out'},
-          {l:'EoP',v:[0.7,-0.1,-0.1,-0.1],t:'eop'}
+          {l:'EoP',v:[0.8,0.0,0.0,0.0],t:'eop'}
         ],monthly:['Ago','Sep','Oct','Total']},
       IP:{name:'IP',
         rows:[
-          {l:'BoP',v:[0.3,0.6,0.1,0.3],t:'bop'},
+          {l:'BoP',v:[0.3,0.4,0.0,0.3],t:'bop'},
+          {l:'(+) Capitalización',v:[5.2,2.4,6.1,13.7],t:'in'},
           {l:'(+) Inflows Intercos',v:[0.6,0.7,0.0,1.3],t:'in'},
-          {l:'(+) Capitalización',v:[5.2,2.4,6.1,13.8],t:'in'},
           {l:'(-) OPEX',v:[-5.6,-3.5,-6.1,-15.2],t:'out'},
-          {l:'EoP',v:[0.6,0.1,0.1,0.1],t:'eop'}
+          {l:'EoP',v:[0.4,0.0,0.0,0.0],t:'eop'}
         ],monthly:['Ago','Sep','Oct','Total']},
       MC:{name:'MC',
         rows:[
-          {l:'BoP',v:[5.7,5.9,6.1,5.7],t:'bop'},
+          {l:'BoP',v:[5.7,5.9,6.2,5.7],t:'bop'},
           {l:'(+) Inflows Intercos',v:[0.3,0.4,0.3,1.0],t:'in'},
-          {l:'(-) OPEX',v:[-0.2,-0.1,-0.1,-0.4],t:'out'},
-          {l:'EoP',v:[5.9,6.1,6.3,6.3],t:'eop'}
+          {l:'(-) OPEX',v:[0.0,-0.1,0.0,-0.1],t:'out'},
+          {l:'EoP',v:[5.9,6.2,6.4,6.4],t:'eop'}
         ],monthly:['Ago','Sep','Oct','Total']}
     };
 
@@ -543,29 +553,41 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     var ENTITY_WEEKLY={
       dates:['03-Ago','10-Ago','17-Ago','24-Ago','31-Ago','07-Sep','14-Sep','21-Sep','28-Sep','05-Oct','12-Oct','19-Oct','26-Oct'],
       isAct:[true,true,true,true,true,true,true,true,false,false,false,false,false],
-      cats:[
+      // Entity-specific category definitions
+      cats_holdco:[
         {k:'bop',l:'BoP',t:'bop'},
-        {k:'cobranza',l:'(+) Cobranza',t:'in'},
-        {k:'interco_in',l:'(+) Inflows Interco',t:'in'},
         {k:'equity',l:'(+) Equity',t:'in'},
-        {k:'opex',l:'(-) OPEX',t:'out'},
-        {k:'capex',l:'(-) CAPEX',t:'out'},
-        {k:'interco_out',l:'(-) Outflow Interco',t:'out'},
-        {k:'otros',l:'(±) Otros / FX',t:'other'},
+        {k:'cap_out',l:'(−) Transferencias a Subsidiarias',t:'out'},
+        {k:'fx',l:'(±) Efecto Cambiario (FX)',t:'other'},
+        {k:'otros',l:'(±) Otros',t:'other'},
         {k:'eop',l:'EoP',t:'eop'}
       ],
+      cats_sub:[
+        {k:'bop',l:'BoP',t:'bop'},
+        {k:'cobranza',l:'(+) Cobranza',t:'in'},
+        {k:'cap_in',l:'(+) Capitalización HoldCo',t:'in'},
+        {k:'interco_in',l:'(+) Interco Operativo',t:'in'},
+        {k:'equity',l:'(+) Equity',t:'in'},
+        {k:'debt',l:'(+) Deuda',t:'in'},
+        {k:'opex',l:'(−) OPEX',t:'out'},
+        {k:'capex',l:'(−) CAPEX',t:'out'},
+        {k:'interco_out',l:'(−) Interco Operativo',t:'out'},
+        {k:'otros',l:'(±) Ajuste',t:'other'},
+        {k:'eop',l:'EoP',t:'eop'}
+      ],
+      catsFor:function(key){return key==='HOLDCO'?this.cats_holdco:this.cats_sub;},
       data:{
-        HOLDCO:{bop:[128.7,128.7,125.6,68.6,49.4,36.9,36.8,28.3,28.4,428.2,384.9,362.0,348.1],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],equity:[0,0,0,0,0,0,0,0,427.5,0,0,0,0],opex:[0,0,0,0,0,0,0,0,0,0,0,0,0],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0,-3.0,-57.0,-19.2,-12.5,-0.1,-8.6,0.2,-27.7,-43.3,-22.9,-14.0,-20.3],eop:[128.7,125.6,68.6,49.4,36.9,36.8,28.3,28.4,428.2,384.9,362.0,348.1,327.8]},
-        LTO:{bop:[9.9,9.9,5.1,6.6,5.1,1.0,3.1,9.2,10.6,0,0,0,0],cobranza:[12.1,12.1,12.1,12.1,12.1,12.1,12.1,12.1,12.1,12.1,12.1,12.1,12.1],interco_in:[0,0,0,0,0,0,0,1.4,0,0,0,0,1.4],equity:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-5.7,-6.9,-17.9,-5.1,-5.1,-7.6,-9.6,-16.7,-5.1,-7.6,-9.9,-14.9,-5.1],capex:[0,0,0,0,0,0,0,-0.5,0,-21.0,0,0,-21.0],interco_out:[0,0,0,0,-2.0,-5.0,0,-7.0,0,0,-5.0,0,-5.0],otros:[-6.4,-10.0,7.4,-8.5,-9.2,2.6,3.5,12.1,-7.0,16.5,2.8,2.8,17.6],eop:[9.9,5.1,6.6,5.1,1.0,3.1,9.2,10.6,0,0,0,0,0]},
-        DAE:{bop:[52.6,52.6,41.8,45.8,44.9,46.9,50.4,25.8,26.6,17.7,23.3,27.6,19.7],cobranza:[12.3,12.3,12.3,12.3,12.3,12.3,12.3,12.3,12.3,12.3,12.3,12.3,12.3],interco_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],equity:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-6.7,-7.9,-16.1,-6.7,-6.7,-7.9,-20.8,-8.7,-6.7,-7.9,-15.2,-8.7,-6.7],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,-5.0,0,-12.5,0,0,-5.0,-11.1,-1.4],otros:[-5.6,-15.1,7.9,-6.6,-3.5,4.2,-16.1,9.8,-14.6,1.3,12.2,-0.3,-11.8],eop:[52.6,41.8,45.8,44.9,46.9,50.4,25.8,26.6,17.7,23.3,27.6,19.7,12.1]},
-        VCN:{bop:[1.1,1.1,23.9,79.1,54.8,31.7,30.8,2.5,1.3,0,0,0,0],cobranza:[7.5,0,7.5,0,7.2,0,7.0,7.5,0,7.5,0,7.5,0],interco_in:[0,0,0,0,0,0,0,4.3,0,0,0,4.3,0],equity:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-15.2,-2.3,-3.0,-1.4,-1.4,-16.1,-3.2,-2.7,-1.4,-16.1,-2.6,-2.7,-1.4],capex:[0,0,0,0,-0.7,-13.8,0,-8.6,0,0,0,0,-3.1],interco_out:[0,-8.0,0,-4.0,0,-10.5,-2.7,-14.3,-15.5,-10.5,-12.5,0,-4.0],otros:[7.7,33.1,50.7,-18.9,-28.2,39.5,-29.4,12.6,17.0,19.1,15.1,-9.1,17.6],eop:[1.1,23.9,79.1,54.8,31.7,30.8,2.5,1.3,0,0,0,0,9.1]},
-        AuHaus:{bop:[0.4,0.4,3.7,0.2,0.3,1.6,0.2,5.1,0.4,0.7,0.2,8.6,11.7],cobranza:[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],interco_in:[0,0,0,0,0,10.5,2.7,6.3,3.5,10.5,4.5,0,0],equity:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-1.4,-2.3,-2.4,-0.8,-0.8,-2.9,-3.0,-2.5,-0.8,-2.9,-2.1,-2.5,-0.8],capex:[0,0,0,0,0,-6.6,-3.6,-4.5,-4.2,-0.3,-0.3,-1.4,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0.4,4.5,-2.2,-0.2,1.1,-3.4,7.7,-5.0,0.8,-8.8,5.1,6.1,-3.2],eop:[0.4,3.7,0.2,0.3,1.6,0.2,5.1,0.4,0.7,0.2,8.6,11.7,8.8]},
-        CF:{bop:[6.5,6.5,6.5,6.8,5.2,5.5,5.9,3.6,0.2,0.1,0.2,0.1,0.1],cobranza:[0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2],interco_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],equity:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-0.1,-0.3,-0.2,-0.1,-0.1,-0.3,-0.3,-0.3,-0.1,-0.3,-0.2,-0.3,-0.1],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[-0.1,0.1,0.3,-1.7,0.1,0.5,-2.0,-3.4,-0.2,0.2,0,0,-0.2],eop:[6.5,6.5,6.8,5.2,5.5,5.9,3.6,0.2,0.1,0.2,0.1,0.1,0]},
-        Green:{bop:[6.4,6.4,6.9,6.9,7.0,7.0,2.4,2.3,1.3,1.8,1.6,1.5,1.0],cobranza:[0,0,0,0.6,0,0,0,0.6,0,0,0,0.6,0],interco_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],equity:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-0.1,-0.1,-0.5,-0.1,-0.1,-0.1,-0.5,-0.1,-0.1,-0.1,-0.5,-0.1,-0.1],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,-5.0,0,0,0,0,0,0,0,0],otros:[0.1,0.6,0.5,-0.4,5.1,-4.4,0.4,-1.4,0.6,0,-0.1,-1.0,0.6],eop:[6.4,6.9,6.9,7.0,7.0,2.4,2.3,1.3,1.8,1.6,1.5,1.0,1.4]},
-        PSM:{bop:[0.4,0.4,0.6,0.6,0.8,0.6,2.8,2.0,0.4,11.5,21.4,11.8,13.6],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,8.0,0,4.0,5.0,5.0,0,19.5,12.0,0,13.0,6.5,9.0],equity:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-2.0,-9.6,-12.1,-2.0,-2.0,-9.6,-14.2,-8.4,-2.0,-9.6,-11.2,-8.4,-2.0],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[2.0,1.8,12.1,-1.8,-3.2,6.8,13.5,-12.7,1.1,19.6,-11.4,3.7,-8.9],eop:[0.4,0.6,0.6,0.8,0.6,2.8,2.0,0.4,11.5,21.4,11.8,13.6,11.6]},
-        EMC:{bop:[0.5,0.5,1.8,0.3,0.5,0.4,0.8,0.2,0.7,0,0,0,0],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0,2.0,5.0,0,2.0,0,0,5.0,0,0],equity:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-3.4,-3.9,-3.5,-2.7,-2.7,-4.8,-3.9,-4.0,-2.7,-4.8,-3.4,-4.0,-2.7],capex:[0,0,0,0,0,0,-0.7,0,0,0,-6.3,-4.2,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[3.4,5.2,2.0,2.9,0.7,0.1,4.0,2.6,2.7,4.8,4.7,8.2,2.7],eop:[0.5,1.8,0.3,0.5,0.4,0.8,0.2,0.7,0,0,0,0,0]},
-        IP:{bop:[0.3,0.3,0.7,0.3,0.4,0.6,0.4,0.3,0.5,0,0,0,0],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],equity:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[0,-2.9,-0.3,0,0,-2.9,-0.5,-2.9,0,-2.9,-0.3,-2.9,0],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0,3.3,-0.2,0.1,0.2,2.7,0.4,3.1,0,2.9,0.3,2.9,0],eop:[0.3,0.7,0.3,0.4,0.6,0.4,0.3,0.5,0,0,0,0,0]},
-        MC:{bop:[5.7,5.7,5.7,5.6,5.6,5.9,5.9,5.9,5.9,6.2,6.2,6.2,6.1],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0,0,0,0,0.3,0,0,0,0.3,0],equity:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[0,0,0,0,0,0,-0.1,0,0,0,0,0,0],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0,0,0,0,0.3,0,0.1,-0.3,0.3,0,0,-0.3,0.3],eop:[5.7,5.7,5.6,5.6,5.9,5.9,5.9,5.9,6.2,6.2,6.2,6.1,6.4]}
+        HOLDCO:{bop:[128.7,125.6,68.6,49.4,36.9,36.8,28.3,28.4,428.2,384.9,362.0,348.1,327.8],equity:[0,0,0,0,0,0,0,416.2,0,0,0,0,0],cap_out:[-3.0,-57.0,-19.2,-12.5,-0.1,-8.6,0.2,-16.4,-27.7,-43.3,-22.9,-14.0,-20.3],fx:[1.0,0.6,0.4,-0.2,0.1,-0.3,-0.2,0.0,0.0,0.0,0.0,0.0,0.0],otros:[-1.1,-0.6,-0.4,-0.4,-0.1,0.4,0.1,0.0,-15.6,20.4,9.0,-6.3,20.3],eop:[125.6,68.6,49.4,36.9,36.8,28.3,28.4,428.2,384.9,362.0,348.1,327.8,327.8]},
+        LTO:{bop:[9.9,5.1,6.6,5.1,1.0,3.1,9.2,10.6,0.0,0.0,0.0,0.0,0.0],cobranza:[12.0,22.4,12.9,8.6,6.1,11.2,27.1,12.1,3.9,12.1,12.1,12.1,12.1],cap_in:[56.4,7.9,5.0,0.0,0.0,0.0,0.0,0.1,1.2,16.5,2.8,2.8,17.6],interco_in:[0.0,0.0,0.0,0.5,0.0,0.0,0.0,1.4,0.0,0.0,0.0,0.0,1.4],debt:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-3.8,-6.6,-16.6,-7.4,-4.0,-4.1,-9.6,-16.7,-5.1,-7.6,-9.9,-14.9,-5.1],capex:[-0.2,-66.9,-0.8,-8.5,0.0,0.0,0.0,-0.5,0.0,-21.0,0.0,0.0,-21.0],interco_out:[-12.7,-3.7,-5.0,-2.4,0.0,-1.1,-16.1,-7.0,0.0,0.0,-5.0,0.0,-5.0],otros:[-56.5,48.4,3.0,5.1,0.0,0.1,0.0,0.0,0.0,0.0,0.0,0.0,0.0],eop:[5.1,6.6,5.1,1.0,3.1,9.2,10.6,0.0,0.0,0.0,0.0,0.0,0.0]},
+        DAE:{bop:[52.6,41.8,45.8,44.9,46.9,50.4,25.8,26.6,17.7,23.3,27.6,19.7,12.1],cobranza:[12.1,11.9,16.5,12.5,12.6,12.3,12.3,12.3,12.3,12.3,12.3,12.3,12.3],cap_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-3.4,-7.9,-17.0,-9.1,-9.0,-12.9,-11.4,-8.7,-6.7,-7.9,-15.2,-8.7,-6.7],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[-19.6,0.0,-0.5,-1.3,-0.1,-23.9,0.0,-12.5,0.0,0.0,-5.0,-11.1,-1.4],otros:[0.1,0.0,0.1,-0.1,0.0,-0.1,-0.1,0.0,0.0,-0.1,0.0,-0.1,-4.2],eop:[41.8,45.8,44.9,46.9,50.4,25.8,26.6,17.7,23.3,27.6,19.7,12.1,12.1]},
+        VCN:{bop:[1.1,23.9,79.1,54.8,31.7,30.8,2.5,1.3,0.0,0.0,0.0,0.0,9.1],cobranza:[10.4,0.2,0.2,1.6,7.2,0.1,7.0,7.5,-6.8,7.5,0.0,7.5,0.0],cap_in:[0.0,0.0,0.0,0.0,0.0,9.0,0.0,12.5,23.8,19.1,15.1,0.0,0.0],interco_in:[17.1,0.0,0.0,0.0,0.0,0.0,0.0,4.3,0.0,0.0,0.0,4.3,0.0],debt:[0,84.0,0,0,0,0,0,0,0,0,0,0,0],opex:[-6.6,-9.7,-15.1,-5.4,-5.0,-13.7,-5.5,-2.7,-1.4,-16.1,-2.6,-2.7,-1.4],capex:[0.0,-5.8,-4.8,-2.1,-0.7,-13.8,0.0,-8.6,0.0,0.0,0.0,0.0,-3.1],interco_out:[0.0,-13.5,-4.6,-17.2,-2.4,-10.0,-2.7,-14.3,-15.5,-10.5,-12.5,0.0,-4.0],otros:[1.9,0.0,0.0,0.0,0.0,0.1,0.0,0.0,-0.1,0.0,0.0,0.0,8.5],eop:[23.9,79.1,54.8,31.7,30.8,2.5,1.3,0.0,0.0,0.0,0.0,9.1,9.1]},
+        AuHaus:{bop:[0.4,3.7,0.2,0.3,1.6,0.2,5.1,0.4,0.7,0.2,8.6,11.7,8.8],cobranza:[5.9,0.1,1.8,5.1,0.1,4.7,1.0,1.0,1.0,1.0,1.0,1.0,1.0],cap_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0.0,4.4,5.6,14.9,2.4,12.0,2.7,6.3,3.5,10.5,4.5,0.0,0.0],opex:[-0.5,-4.2,-1.7,-10.7,-2.8,-3.1,-3.0,-2.5,-0.8,-2.9,-2.1,-2.5,-0.8],capex:[-1.8,-3.7,-5.5,-6.1,-1.1,-7.9,-5.5,-4.5,-4.2,-0.3,-0.3,-1.4,0.0],interco_out:[-0.3,0.0,-0.2,-1.9,0.0,-0.9,0.0,0.0,0.0,0.0,0.0,0.0,0.0],otros:[0.0,-0.1,0.1,0.0,0.0,0.1,0.1,0.0,0.0,0.1,0.0,0.0,-0.2],eop:[3.7,0.2,0.3,1.6,0.2,5.1,0.4,0.7,0.2,8.6,11.7,8.8,8.8]},
+        CF:{bop:[6.5,6.5,6.8,5.2,5.5,5.9,3.6,0.2,0.1,0.2,0.1,0.1,0.0],cobranza:[0.0,0.1,0.0,0.0,0.0,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2],cap_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0.0,0.1,0.2,0.2,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],opex:[0.0,0.0,-0.2,0.0,0.4,-2.4,-3.6,-0.3,-0.1,-0.3,-0.2,-0.3,-0.1],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0.0,0.0,-1.5,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],otros:[0.0,0.1,-0.1,0.1,0.0,-0.1,0.0,0.0,0.0,0.0,0.0,0.0,-0.1],eop:[6.5,6.8,5.2,5.5,5.9,3.6,0.2,0.1,0.2,0.1,0.1,0.0,0.0]},
+        Green:{bop:[6.4,6.9,6.9,7.0,7.0,2.4,2.3,1.3,1.8,1.6,1.5,1.0,1.4],cobranza:[0.5,0.0,0.0,0.0,0.7,0.0,0.0,0.6,0.0,0.0,0.0,0.6,0.0],cap_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[0.0,0.0,0.0,0.0,0.0,-0.1,-1.0,-0.1,-0.1,-0.1,-0.5,-0.1,-0.1],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0.0,0.0,0.0,0.0,-5.2,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],otros:[0.0,0.0,0.1,0.0,-0.1,0.0,0.0,0.0,-0.1,0.0,0.0,-0.1,0.1],eop:[6.9,6.9,7.0,7.0,2.4,2.3,1.3,1.8,1.6,1.5,1.0,1.4,1.4]},
+        PSM:{bop:[0.4,0.6,0.6,0.8,0.6,2.8,2.0,0.4,11.5,21.4,11.8,13.6,11.6],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0],cap_in:[0.0,0.0,5.0,0.0,0.0,0.0,11.8,0.0,0.0,0.0,0.0,0.0,0.0],interco_in:[3.0,9.2,5.0,6.6,5.3,7.0,0.4,19.5,12.0,0.0,13.0,6.5,9.0],opex:[-2.7,-8.7,-9.6,-6.7,-3.1,-7.8,-13.8,-8.4,-2.0,-9.6,-11.2,-8.4,-2.0],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[-0.1,-0.5,-0.2,-0.1,0.0,0.0,0.0,0.0,-0.1,0.0,0.0,-0.1,-7.0],eop:[0.6,0.6,0.8,0.6,2.8,2.0,0.4,11.5,21.4,11.8,13.6,11.6,11.6]},
+        EMC:{bop:[0.5,1.8,0.3,0.5,0.4,0.8,0.2,0.7,0.0,0.0,0.0,0.0,0.0],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0],cap_in:[0.0,5.4,2.5,0.0,0.0,0.0,3.9,1.3,2.7,4.8,4.7,8.2,2.7],interco_in:[4.2,2.5,0.5,1.0,2.6,2.0,0.0,2.0,0.0,0.0,5.0,0.0,0.0],opex:[-2.9,-4.0,-5.8,-3.6,-2.2,-2.6,-2.6,-4.0,-2.7,-4.8,-3.4,-4.0,-2.7],capex:[0.0,0.0,0.0,0.0,0.0,0.0,-0.7,0.0,0.0,0.0,-6.3,-4.2,0.0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0.0,-5.4,3.0,2.5,0.0,0.0,-0.1,0.0,0.0,0.0,0.0,0.0,0.0],eop:[1.8,0.3,0.5,0.4,0.8,0.2,0.7,0.0,0.0,0.0,0.0,0.0,0.0]},
+        IP:{bop:[0.3,0.7,0.3,0.4,0.6,0.4,0.3,0.5,0.0,0.0,0.0,0.0,0.0],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0],cap_in:[0.0,0.0,0.5,4.7,0.0,0.0,0.0,2.4,0.0,2.9,0.3,2.9,0.0],interco_in:[0.4,0.0,0.1,0.1,0.0,0.5,0.2,0.0,0.0,0.0,0.0,0.0,0.0],opex:[0.0,-0.4,-0.5,-4.5,-0.2,-0.6,0.0,-2.9,0.0,-2.9,-0.3,-2.9,0.0],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0.0,0.0,0.0,-0.1,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],eop:[0.7,0.3,0.4,0.6,0.4,0.3,0.5,0.0,0.0,0.0,0.0,0.0,0.0]},
+        MC:{bop:[5.7,5.7,5.6,5.6,5.9,5.9,5.9,5.9,6.2,6.2,6.2,6.2,6.1],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0],cap_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0.0,0.0,0.0,0.3,0.0,0.1,0.0,0.3,0.0,0.0,0.0,0.3,0.0],opex:[0.0,0.0,0.0,0.0,0.0,0.0,-0.1,0.0,0.0,0.0,0.0,0.0,0.0],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0.0,-0.1,0.0,0.0,0.0,-0.1,0.1,0.0,0.0,0.0,-0.1,0.0,0.0],eop:[5.7,5.6,5.6,5.9,5.9,5.9,5.9,6.2,6.2,6.2,6.1,6.4,6.4]}
       }
     };
 
@@ -642,7 +664,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
           h+='<th style="padding:4px 3px;'+bg+'">'+d+'</th>';
         });
         h+='</tr></thead><tbody>';
-        ENTITY_WEEKLY.cats.forEach(function(cat){
+        ENTITY_WEEKLY.catsFor(key).forEach(function(cat){
           var arr=wd[cat.k];if(!arr)return;
           var hasVal=arr.some(function(v){return v!==0;});
           if(!hasVal&&cat.t!=='bop'&&cat.t!=='eop')return;
@@ -666,9 +688,159 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
         });
         h+='</tbody></table></div>';
       }
+      // Key Drivers section
+      var drv=KEY_DRIVERS[key];
+      if(drv){
+        h+='<div class="chart-card" style="padding:14px;margin-top:8px;">';
+        h+='<div style="font-size:10px;font-weight:600;color:var(--amber);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">Key Drivers &amp; Composición de Flujos</div>';
+        h+='<div style="display:flex;flex-wrap:wrap;gap:10px;">';
+        drv.forEach(function(sec){
+          var bc=sec.c==='in'?'rgba(34,197,94,.08)':sec.c==='out'?'rgba(239,68,68,.06)':sec.c==='cap'?'rgba(14,133,133,.08)':'rgba(245,158,11,.06)';
+          var tc=sec.c==='in'?'var(--green)':sec.c==='out'?'var(--red)':sec.c==='cap'?'var(--teal)':'var(--amber)';
+          h+='<div style="flex:1;min-width:200px;max-width:340px;background:'+bc+';border-radius:8px;padding:10px 12px;border-left:3px solid '+tc+';">';
+          h+='<div style="font-size:10px;font-weight:700;color:'+tc+';text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;">'+sec.t+'</div>';
+          h+='<ul style="margin:0;padding-left:14px;font-size:10px;color:var(--text2);line-height:1.7;">';
+          sec.items.forEach(function(it){h+='<li>'+it+'</li>';});
+          h+='</ul></div>';
+        });
+        h+='</div></div>';
+      }
       h+='</div>';
       return h;
     }
+
+    // Key drivers per entity — extracted from Inputs Cash detail
+    var KEY_DRIVERS={
+      HOLDCO:[
+        {t:'Transferencias a Subsidiarias',c:'out',items:[
+          'LTO: $17–18M en Oct (semanas 1 y 4) para pago de vehículos',
+          'VCN: $19–24M Sep–Oct para OPOS y hubs',
+          'EMC: $3–5M continuos para adecuaciones talleres',
+          'IP: $2–3M periódicos para operación DEEL + Argentina'
+        ]},
+        {t:'Equity',c:'in',items:[
+          'Inyección de $427.5M programada en semana 28-Sep',
+          'Post-equity, balance permite cubrir ~13 semanas de caps'
+        ]},
+        {t:'Efecto Cambiario (FX)',c:'cap',items:[
+          'Actual: +$1.0M (Ago wk1) a -$0.3M (Sep wk1)',
+          'Proyección: sin efecto FX asumido en semanas futuras'
+        ]}
+      ],
+      LTO:[
+        {t:'OPEX Principales',c:'out',items:[
+          'Nómina quincenal: <strong>$1.85M</strong> (semanas pares)',
+          'Impuestos M1/M2: <strong>$4.5M</strong> mensual + SUA $0.36M',
+          'Renta Florencia: $0.67M/mes',
+          'Seguros: $8M/mes, WC semanal: $5.1M'
+        ]},
+        {t:'CAPEX',c:'out',items:[
+          '<strong>Pago vehículos: $21M</strong> en Oct wk1 (05-Oct)',
+          '<strong>Pago vehículos: $21M</strong> en Oct wk4 (26-Oct)',
+          'Anticipo $0.5M en Sep (21-Sep)'
+        ]},
+        {t:'Capitalización Requerida',c:'cap',items:[
+          'Oct requiere ~$37M por pagos de vehículos + OPEX',
+          'Sin cap, saldo llega a $0 desde Sep wk4',
+          'Interco In: Vehicle Leasing $1.4M (Sep, Oct)'
+        ]}
+      ],
+      VCN:[
+        {t:'OPEX Principales',c:'out',items:[
+          'Nómina quincenal: $0.9M',
+          'Renta hubs: <strong>$3.8M + $1.1M + $1.6M</strong>/mes (3 contratos)',
+          'Energía: <strong>$7.3M</strong>/mes',
+          'Impuestos: $1M + SUA $0.18M, WC semanal: $1.4M'
+        ]},
+        {t:'CAPEX (Hubs)',c:'out',items:[
+          'OPOS: <strong>$8M</strong> (07-Sep) + <strong>$8.6M</strong> (21-Sep) + $3.1M (Oct)',
+          'Contratistas: $5.8M (07-Sep) + $0.7M (31-Ago)',
+          'Total CAPEX periodo: $26.2M concentrado en Sep'
+        ]},
+        {t:'Intercos',c:'cap',items:[
+          'IN: Op Hubs DAE $4.3M (bimensual)',
+          'OUT: Espacios Proyectos Infra $3.5–$15.5M/sem a Au Haus',
+          'OUT: PSM Corp SG&A $4–$12M/sem'
+        ]}
+      ],
+      DAE:[
+        {t:'OPEX Principales',c:'out',items:[
+          'Nómina quincenal: $1.15M + <strong>semanal: $4.5M</strong>',
+          'Impuestos M1/M2: $5.5M + extras $3M mensual',
+          'Renta Río Guadiana: $0.13M/mes',
+          'Seguros: $0.9M/mes, WC semanal: $2.2M'
+        ]},
+        {t:'Intercos Operativos (salidas)',c:'out',items:[
+          'VCN Op Hubs: $4.3M bimensual',
+          'Electro Mantenimiento: $5M mensual',
+          'PSM Corp SG&A: $6.5M mensual',
+          'LTO Vehicle Leasing: $1.4M, Morelcamp: $0.3M'
+        ]}
+      ],
+      AuHaus:[
+        {t:'OPEX Principales',c:'out',items:[
+          'Nómina quincenal: $1.5M',
+          'Impuestos: $1M + SUA $0.35M mensual',
+          'Renta Protón: $0.66M/mes',
+          'Seguros: $0.26M/mes, WC semanal: $0.76M'
+        ]},
+        {t:'CAPEX',c:'out',items:[
+          'Cargadores: <strong>$6.1M</strong> (07-Sep)',
+          'Baterías: <strong>$4.2M × 2</strong> (21-Sep, 28-Sep)',
+          'Gastos aduanales: $0.5M, Transformadores: $0.3M',
+          'Proyectos: $3.6M (14-Sep) + $1.4M (19-Oct)'
+        ]},
+        {t:'Intercos In (Espacios)',c:'in',items:[
+          'Recibe de VCN: Proyectos Infraestructura',
+          '$10.5M (07-Sep, 05-Oct), $6.3M, $4.5M, etc.',
+          'Financia CAPEX de cargadores y baterías'
+        ]}
+      ],
+      PSM:[
+        {t:'OPEX Principales',c:'out',items:[
+          'Nómina quincenal: <strong>$5.5M</strong> (la mayor del grupo)',
+          'Impuestos M1/M2: <strong>$8.2M</strong> + extras $1M',
+          'Renta Torre Esmeralda + Omega: $2.12M/mes',
+          'Seguros: $0.9M/mes, WC semanal: $2.0M'
+        ]},
+        {t:'Intercos In (servicios corp.)',c:'in',items:[
+          'Cobro SG&A corporativo a subsidiarias',
+          'Flujos variables: $4–$19.5M/semana',
+          'Principales pagadores: LTO, VCN, DAE'
+        ]}
+      ],
+      EMC:[
+        {t:'OPEX Principales',c:'out',items:[
+          'Nómina quincenal: $1.15M',
+          'Impuestos: $0.4M + SUA $0.25M',
+          'Rentas (5 ubicaciones): ~$0.9M/mes total',
+          'WC semanal: <strong>$2.7M</strong>'
+        ]},
+        {t:'CAPEX (Talleres)',c:'out',items:[
+          'Adecuaciones talleres: $0.7M (14-Sep)',
+          '<strong>$6.3M</strong> (12-Oct) + <strong>$4.2M</strong> (19-Oct)',
+          'Total $11.2M concentrado en Oct → requiere cap'
+        ]},
+        {t:'Capitalización + Intercos',c:'cap',items:[
+          'Cap HoldCo: $2.7–$8.2M/semana en Oct',
+          'Interco IN: Electro Mant $5M + $2M de LTO/DAE',
+          'Sin cap, no cubre CAPEX de talleres en Oct'
+        ]}
+      ],
+      IP:[
+        {t:'OPEX Principales',c:'out',items:[
+          'DEEL: <strong>$1.1M</strong> quincenal',
+          'Staff: $0.23M quincenal',
+          'Argentina: <strong>$1.61M</strong> quincenal',
+          'Impuestos: $0.2M + SUA $0.055M'
+        ]},
+        {t:'Capitalización',c:'cap',items:[
+          'Requiere cap periódica de HoldCo: $2.4–$2.9M',
+          'Sin cobranza propia ni CAPEX',
+          'Operación depende 100% de transferencias HoldCo'
+        ]}
+      ]
+    };
 
     // Build all entity sections on load
     (function(){
@@ -901,15 +1073,15 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
   <div class="section" id="sec-authorized">
     <div class="section-head">
       <span>Authorized Investments</span>
-      <span class="section-note">Cash Management — USD Account (Morgan Stanley) · 15 Jul 2026</span>
+      <span class="section-note">Cash Management — USD + MXN · 22 Sep 2026</span>
     </div>
 
     <!-- KEY METRICS -->
     <div class="kpi-grid" style="grid-template-columns:repeat(4,minmax(0,1fr));">
       <div class="kpi-card">
         <div class="kpi-label">Mejor Yield USD (sin lock-up)</div>
-        <div class="kpi-value" style="font-size:24px;color:var(--teal);">3.91%</div>
-        <div class="kpi-sub">US Treasury Bills · 1Y · Soberano</div>
+        <div class="kpi-value" style="font-size:24px;color:var(--teal);">4.39%</div>
+        <div class="kpi-sub">US T-Bills 1Y · Soberano · post hike +25bp</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">Mejor Yield USD (con plazo)</div>
@@ -917,14 +1089,14 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
         <div class="kpi-sub">CD Institucional 6M · Rango 4.00–4.94%</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Benchmark MXN</div>
-        <div class="kpi-value" style="font-size:24px;color:var(--amber);">6.65%</div>
-        <div class="kpi-sub">Cetes / TIIE · No disponible vía MS</div>
+        <div class="kpi-label">Mejor Yield MXN</div>
+        <div class="kpi-value" style="font-size:24px;color:var(--amber);">7.24%</div>
+        <div class="kpi-sub">CETES 364d · Subasta 22-Sep · Banxico</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Cash sin invertir</div>
-        <div class="kpi-value" style="font-size:24px;color:var(--red);">0.25%</div>
-        <div class="kpi-sub">Costo de oportunidad: ~350bp vs T-Bills</div>
+        <div class="kpi-label">MXN disp. diaria</div>
+        <div class="kpi-value" style="font-size:24px;color:var(--red);">~6.15%</div>
+        <div class="kpi-sub">CETES 28d / Mesa dinero · TIIE 6.75%</div>
       </div>
     </div>
 
@@ -933,7 +1105,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       <div class="chart-card">
         <div class="chart-card-head forest">
           <div class="chart-card-title">Rendimiento Anual por Categoría</div>
-          <div class="chart-card-meta">Tasas indicativas al 15 jul 2026 · No son cotizaciones ejecutables</div>
+          <div class="chart-card-meta">Tasas indicativas al 22-Sep-2026 · No son cotizaciones ejecutables</div>
         </div>
         <div class="chart-card-body">
           <div style="position:relative;height:320px;"><canvas id="authInvChart"></canvas></div>
@@ -942,21 +1114,27 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       <div class="chart-card">
         <div class="chart-card-head">
           <div class="chart-card-title">Comparativo Ejecutivo</div>
-          <div class="chart-card-meta">Liquidez · Plazo · Disponibilidad Morgan Stanley</div>
+          <div class="chart-card-meta">Liquidez · Plazo · Disponibilidad · 22-Sep-2026</div>
         </div>
         <div class="chart-card-body" style="padding:12px 16px;">
           <table class="dt" style="font-size:10px;">
-            <thead><tr><th>Categoría</th><th>Yield</th><th>Liquidez</th><th>Plazo Máx.</th><th>MS</th></tr></thead>
+            <thead><tr><th>Categoría</th><th>Moneda</th><th>Yield</th><th>Liquidez</th><th>Plazo</th><th>Disp.</th></tr></thead>
             <tbody>
-              <tr><td>1. Government Securities</td><td style="color:var(--teal);font-weight:700;">3.91%</td><td><span style="color:var(--green);">Muy alta</span></td><td>≤ 1 año</td><td style="color:var(--green);">✓</td></tr>
-              <tr><td>2. Municipal Bonds</td><td>2.20%</td><td><span style="color:var(--amber);">Media</span></td><td>≤ 1 año</td><td style="color:var(--green);">✓</td></tr>
-              <tr><td>3. Commercial Paper</td><td>3.80%</td><td><span style="color:var(--amber);">Baja-media</span></td><td>≤ 180d</td><td style="color:var(--green);">✓</td></tr>
-              <tr><td>4. Bank Instruments (CD)</td><td style="color:var(--green);font-weight:700;">4.50%</td><td><span style="color:var(--red);">Baja</span></td><td>≤ 180d</td><td style="color:var(--green);">✓</td></tr>
-              <tr><td>5. Demand Deposits</td><td>3.75%</td><td><span style="color:var(--green);">Muy alta</span></td><td>Diaria</td><td style="color:var(--green);">✓</td></tr>
-              <tr><td>6. Repo (colateralizado)</td><td>3.60%</td><td><span style="color:var(--green);">Alta</span></td><td>≤ 30d</td><td style="color:var(--green);">✓</td></tr>
-              <tr><td>7. Money Market Funds</td><td>3.65%</td><td><span style="color:var(--green);">Muy alta</span></td><td>Diaria</td><td style="color:var(--green);">✓</td></tr>
-              <tr><td>8. Cash (sin invertir)</td><td style="color:var(--red);">0.25%</td><td><span style="color:var(--green);">Total</span></td><td>—</td><td style="color:var(--green);">✓</td></tr>
-              <tr style="background:rgba(245,158,11,.06);"><td style="font-weight:700;">9. México (Cetes/TIIE)</td><td style="color:var(--amber);font-weight:700;">6.65%</td><td><span style="color:var(--green);">Media-alta</span></td><td>Varía</td><td style="color:var(--red);">✗</td></tr>
+              <tr><td colspan="6" style="font-size:9px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.06em;padding:8px 12px 4px;background:rgba(17,171,171,.04);">USD — Morgan Stanley & Bancos</td></tr>
+              <tr><td>1. T-Bills (Gov. Securities)</td><td>USD</td><td style="color:var(--teal);font-weight:700;">4.11–4.39%</td><td><span style="color:var(--green);">Muy alta</span></td><td>3M–1Y</td><td style="color:var(--green);">✓ MS</td></tr>
+              <tr><td>2. Bank CD (Institucional)</td><td>USD</td><td style="color:var(--green);font-weight:700;">4.50%</td><td><span style="color:var(--red);">Baja</span></td><td>≤ 6M</td><td style="color:var(--green);">✓ MS</td></tr>
+              <tr><td>3. Preferred Savings (MS)</td><td>USD</td><td>4.00%</td><td><span style="color:var(--green);">T+1</span></td><td>Diaria</td><td style="color:var(--green);">✓ MS</td></tr>
+              <tr><td>4. Demand Deposits</td><td>USD</td><td>4.00%</td><td><span style="color:var(--green);">Muy alta</span></td><td>Diaria</td><td style="color:var(--green);">✓ MS</td></tr>
+              <tr><td>5. Money Market Funds</td><td>USD</td><td>3.90%</td><td><span style="color:var(--green);">Muy alta</span></td><td>Diaria</td><td style="color:var(--green);">✓ MS</td></tr>
+              <tr><td>6. Commercial Paper</td><td>USD</td><td>4.05%</td><td><span style="color:var(--amber);">Baja-media</span></td><td>≤ 180d</td><td style="color:var(--green);">✓ MS</td></tr>
+              <tr><td>7. Repo (colateralizado)</td><td>USD</td><td>3.85%</td><td><span style="color:var(--green);">Alta</span></td><td>≤ 30d</td><td style="color:var(--green);">✓ MS</td></tr>
+              <tr><td>8. Municipal Bonds</td><td>USD</td><td style="color:var(--text3);">2.20%</td><td><span style="color:var(--amber);">Media</span></td><td>≤ 1Y</td><td style="color:var(--amber);">⚠️</td></tr>
+              <tr><td colspan="6" style="font-size:9px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.06em;padding:8px 12px 4px;background:rgba(245,158,11,.04);">MXN — Bancos Nacionales (BBVA, Monex, GBM)</td></tr>
+              <tr style="background:rgba(245,158,11,.03);"><td>9. CETES 28d</td><td>MXN</td><td>6.15%</td><td><span style="color:var(--green);">Alta</span></td><td>28d</td><td style="color:var(--green);">✓ CetesDirecto</td></tr>
+              <tr style="background:rgba(245,158,11,.03);"><td>10. CETES 91d</td><td>MXN</td><td style="color:var(--amber);font-weight:700;">6.59%</td><td><span style="color:var(--green);">Media-alta</span></td><td>91d</td><td style="color:var(--green);">✓ CetesDirecto</td></tr>
+              <tr style="background:rgba(245,158,11,.03);"><td>11. CETES 182d</td><td>MXN</td><td style="color:var(--amber);font-weight:700;">6.91%</td><td><span style="color:var(--amber);">Media</span></td><td>182d</td><td style="color:var(--green);">✓ CetesDirecto</td></tr>
+              <tr style="background:rgba(245,158,11,.03);"><td>12. CETES 364d</td><td>MXN</td><td style="color:var(--amber);font-weight:700;">7.24%</td><td><span style="color:var(--red);">Baja</span></td><td>364d</td><td style="color:var(--green);">✓ CetesDirecto</td></tr>
+              <tr style="background:rgba(245,158,11,.03);"><td>13. Pagaré bancario (mesa)</td><td>MXN</td><td>~6.0–6.5%</td><td><span style="color:var(--green);">Alta</span></td><td>1–91d</td><td style="color:var(--green);">✓ BBVA/Monex</td></tr>
             </tbody>
           </table>
         </div>
@@ -971,26 +1149,26 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       <div class="chart-card-body" style="padding:16px 24px;">
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
           <div style="background:var(--surface2);border-radius:6px;padding:14px;border-left:3px solid var(--teal);">
-            <div style="font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Liquidez vs Rendimiento</div>
+            <div style="font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Post-hike Fed (+25bp Sep)</div>
             <div style="font-size:11px;color:var(--text2);line-height:1.6;">
-              T-Bills (3.91%) ofrecen el mejor balance: mercado secundario profundo con rendimiento competitivo. CDs (4.50%) pagan +59bp pero con penalización por retiro anticipado. Demand Deposits y MMFs (~3.65–3.75%) sacrifican ~25bp por liquidez diaria.
+              Fed subió a 3.75–4.00% el 16-Sep. T-Bills 3M: 4.11% · 1Y: 4.39%. MS Preferred Savings ajustó a 4.00% T+1. CDs (4.50%) pagan +11bp adicional sobre T-Bills 1Y pero con lock-up. Favorece posiciones USD de corto plazo.
             </div>
           </div>
           <div style="background:var(--surface2);border-radius:6px;padding:14px;border-left:3px solid var(--amber);">
-            <div style="font-size:10px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Curva Treasury Actual</div>
+            <div style="font-size:10px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Oportunidad MXN: CETES por plazo</div>
             <div style="font-size:11px;color:var(--text2);line-height:1.6;">
-              3M: 3.80% · 6M: 3.93% · 1Y: 4.02%. Curva ligeramente positiva — hay premio por extender plazo. Con FOMC 28-29 jul en hold al 99.6%, la curva corta es estable en el corto plazo.
+              CETES 28d: 6.15% · 91d: 6.59% · 182d: 6.91% · 364d: 7.24%. Curva positiva con +109bp de prima entre 28d y 364d. Con Banxico en pausa (6.50%), considerar CETES 91-182d para Tramo 2 y 364d para Tramo 3. Disponible vía CetesDirecto o mesa GBM/Monex.
             </div>
           </div>
           <div style="background:var(--surface2);border-radius:6px;padding:14px;border-left:3px solid var(--red);">
-            <div style="font-size:10px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Alerta: Municipal Bonds</div>
+            <div style="font-size:10px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Diferencial MX–US comprimiéndose</div>
             <div style="font-size:11px;color:var(--text2);line-height:1.6;">
-              Yield de 2.20% es engañoso: la exención fiscal solo aplica a contribuyentes de EE.UU. Para VEMO (entidad extranjera), el rendimiento neto real es inferior a un Treasury de riesgo comparable. No recomendable sin beneficio fiscal.
+              TIIE 6.75% vs Fed 4.00% = spread 275bp (vs ~500bp hace un año). Con Banxico pausado y Fed subiendo, el carry MXN pierde atractivo. Tramo 1 operativo puede mantener mix 70/30 MXN/USD. Para Tramos 2-3, evaluar lock-in en CETES largo antes de posibles recortes Banxico.
             </div>
           </div>
         </div>
         <div style="font-size:9px;color:var(--text3);margin-top:12px;padding-top:8px;border-top:1px solid var(--border);line-height:1.5;">
-          Fuente: US Treasury / FRED / Federal Reserve / Bankrate / SEC / Banxico · Rendimientos indicativos de mercado público, no cotizaciones de Morgan Stanley · Fed Funds: 3.50–3.75% · SOFR: 3.63% (14 jul 2026) · Esta tabla es referencia informativa, no constituye asesoría de inversión.
+          <strong>Fuentes:</strong> US Treasury (home.treasury.gov) · FRED / Federal Reserve · Banxico subasta CETES 22-Sep-2026 · CetesDirecto · Cadena Política / Imagen Radio (tasas CETES Sep) · Morgan Stanley (Preferred Savings) · Fed Funds: 3.75–4.00% (post hike 16-Sep) · TIIE 28d: 6.7458% · Esta tabla es referencia informativa, no constituye asesoría de inversión.
         </div>
       </div>
     </div>
@@ -1033,7 +1211,7 @@ const M_LABELS=[
 ];
 const PROJ_START=55; // último mes con data real
 
-// TIIE 28d monthly
+// TIIE 28d monthly (Ene22–Dic26 = 60 entries)
 const TIIE_M=[
   5.73,6.23,6.73,6.75,7.22,8.02,8.07,8.82,9.02,9.59,10.29,10.76,
   10.82,11.27,11.43,11.54,11.51,11.49,11.51,11.51,11.50,11.50,11.50,11.50,
@@ -1049,7 +1227,7 @@ const TIIE_PROJ=[
   null,null,null,null,null,null,null,6.77,6.50,6.50,6.50,6.50
 ];
 
-// Fed Funds Rate monthly (upper bound)
+// Fed Funds Rate monthly (upper bound, Ene22–Dic26)
 const FED_M=[
   0.25,0.25,0.50,0.50,1.00,1.75,2.50,2.50,3.25,3.25,4.00,4.50,
   4.50,4.75,5.00,5.00,5.25,5.25,5.50,5.50,5.50,5.50,5.50,5.50,
@@ -1065,7 +1243,7 @@ const FED_PROJ=[
   null,null,null,null,null,null,null,3.75,3.75,3.75,3.80,3.80
 ];
 
-// FX monthly
+// FX monthly (Ene22–Dic26)
 const FX_M=[
   20.64,20.40,19.91,20.36,19.68,20.12,20.36,20.09,20.11,19.85,19.37,19.50,
   18.80,18.34,18.02,18.00,17.75,17.14,16.72,16.88,17.41,18.05,17.38,16.90,
@@ -1151,6 +1329,16 @@ var INV_DETAIL={
   '2026-09-21':[{b:'BBVA',d:'MXN',t:27071763,e:[{n:'DAE',v:11728228},{n:'LTO',v:10521605},{n:'VCN',v:1250973},{n:'EMC',v:704290},{n:'HOLDCO',v:604885},{n:'MC',v:587075},{n:'ZEE',v:551178},{n:'Au Haus',v:346265},{n:'IP',v:283667},{n:'Green',v:214567},{n:'PSM',v:168989},{n:'CF',v:110041}]},{b:'BASE',d:'MXN',t:8510982,e:[{n:'DAE',v:8309947},{n:'PSM',v:199506},{n:'CF',v:1529}]},{b:'MONEX',d:'MXN',t:7436262,e:[{n:'DAE',v:6411394},{n:'Green',v:1024868}]},{b:'Morgan Stanley',d:'USD',t:1000000,e:[{n:'HOLDCO',v:1000000}]},{b:'BBVA',d:'USD',t:624076,e:[{n:'HOLDCO',v:615122},{n:'PSM',v:1661},{n:'Green',v:1636},{n:'DAE',v:1584},{n:'MC',v:1579},{n:'LTO',v:1267},{n:'Au Haus',v:1227}]},{b:'MONEX',d:'USD',t:322309,e:[{n:'MC',v:308503},{n:'IP',v:13469},{n:'VCN',v:236},{n:'DAE',v:59},{n:'PSM',v:35},{n:'Au Haus',v:7}]},{b:'SANTANDER',d:'MXN',t:223063,e:[{n:'DAE',v:161353},{n:'Green',v:39768},{n:'CF',v:21942}]},{b:'KAPITAL',d:'MXN',t:31770,e:[{n:'LTO',v:31770}]},{b:'SANTANDER',d:'USD',t:3457,e:[{n:'CF',v:3457}]},{b:'BASE',d:'USD',t:423,e:[{n:'CF',v:331},{n:'ZEE',v:85},{n:'EMC',v:7}]}]
 };
 
+// ═══ Detalle de posiciones con plazo (Morelcamp BX+ + Morgan Stanley) ═══
+var INV_POSITIONS=[
+  {banco:'BX+',cuenta:'685441',tipo:'Cash Collateral',usd:1500000,tasa:4.30,plazo:'1 día',inicio:'16/06/2026',venc:null,diasVenc:1,color:'#9333EA'},
+  {banco:'BX+',cuenta:'685441(a)',tipo:'Cash Collateral',usd:2681109.60,tasa:3.28,plazo:'104 días',inicio:'16/06/2026',venc:'28/09/2026',diasVenc:6,color:'#9333EA'},
+  {banco:'BX+',cuenta:'685441(b)',tipo:'Cash Collateral',usd:13000000,tasa:null,plazo:'195 días',inicio:'16/06/2026',venc:'28/12/2026',diasVenc:97,color:'#9333EA'},
+  {banco:'BX+',cuenta:'685440',tipo:'Pre-funded Interest',usd:1606.33,tasa:0,plazo:'—',inicio:'16/06/2026',venc:null,diasVenc:0,color:'#9333EA'},
+  {banco:'Morgan Stanley',cuenta:'Preferred Savings',tipo:'Preferred Savings',usd:1000000,tasa:4.00,plazo:'T+1',inicio:null,venc:null,diasVenc:1,color:'#11ABAB'}
+];
+var INV_POS_TOTAL_USD=INV_POSITIONS.reduce(function(s,p){return s+p.usd;},0); // ~$18.18M USD
+
 // Bank colors
 var BANK_COLORS={'BBVA':'#1F5556','MONEX':'#2a8a8a','Morgan Stanley':'#11ABAB','BASE':'#4abfbf','SANTANDER':'#F59E0B','KAPITAL':'#6B7280','BX+':'#9333EA'};
 
@@ -1167,11 +1355,12 @@ function updateCashView(dateKey){
   document.getElementById('kpi-total-sub').textContent='MXN '+fmt(snap.mxn)+' + USD '+fmt(snap.usd_eq)+' (MXN eq.)';
   var op=snap.total-snap.restricted;
   var opPct=(op/snap.total*100).toFixed(1);
+  var rPct=(snap.restricted/snap.total*100).toFixed(1);
+  var rUSD=Math.round(snap.restricted/snap.fx);
   document.getElementById('kpi-op').textContent=fmt(op);
   document.getElementById('kpi-op-sub').innerHTML='<span style="color:var(--amber);font-weight:600;">● '+opPct+'%</span> del total';
-  var rPct=(snap.restricted/snap.total*100).toFixed(1);
   document.getElementById('kpi-restricted').textContent=fmt(snap.restricted);
-  document.getElementById('kpi-restricted-sub').innerHTML='<span style="color:var(--text3);">● '+rPct+'%</span> MORELCAMP';
+  document.getElementById('kpi-restricted-sub').innerHTML='<span style="color:var(--text3);">● '+rPct+'%</span> MORELCAMP · $'+(rUSD/1e6).toFixed(1)+'M USD';
   document.getElementById('kpi-usd').textContent=fmt(snap.usd_eq);
   var usdPct=(snap.usd_eq/snap.total*100).toFixed(1);
   document.getElementById('kpi-usd-sub').textContent='@ $'+snap.fx.toFixed(2)+' · '+usdPct+'% del cash';
@@ -1260,24 +1449,21 @@ function updateInvView(dateKey){
   // Update KPIs
   document.getElementById('inv-kpi-total').textContent=fmt(snap.total);
   var opCash=snap.total-snap.restricted;
+  var rUSD=Math.round(snap.restricted/snap.fx);
   document.getElementById('inv-kpi-total-sub').textContent='Operativo '+fmt(opCash)+' + Restringido '+fmt(snap.restricted);
-  // Caja Operativa MXN (total MXN minus restricted MXN portion)
-  var restrictedMXN=snap.restricted; // restricted is already MXN equiv
-  var opMXN=snap.mxn; // All direct MXN is operative (restricted is in USD via MORELCAMP)
+  // Caja Operativa MXN
+  var opMXN=snap.mxn;
   document.getElementById('inv-kpi-mxn').textContent=fmt(opMXN);
   var mxnPct=(opMXN/snap.total*100).toFixed(1);
-  document.getElementById('inv-kpi-mxn-sub').textContent=mxnPct+'% del total · Pesos mexicanos';
+  document.getElementById('inv-kpi-mxn-sub').textContent=mxnPct+'% del total · MXN';
   // Caja Operativa USD
-  var opUSD_mxn=snap.usd_eq-snap.restricted; // USD equiv minus restricted
+  var opUSD_mxn=snap.usd_eq-snap.restricted;
   var opUSD_raw=Math.round(opUSD_mxn/snap.fx);
   document.getElementById('inv-kpi-usd').textContent=fmt(opUSD_mxn);
   var usdPct=(opUSD_mxn/snap.total*100).toFixed(1);
-  document.getElementById('inv-kpi-usd-sub').textContent=usdPct+'% · $'+opUSD_raw.toLocaleString('en-US')+' @ $'+snap.fx.toFixed(2);
-  // Caja Restringida
+  document.getElementById('inv-kpi-usd-sub').textContent=usdPct+'% · $'+(opUSD_raw/1e6).toFixed(1)+'M USD @ $'+snap.fx.toFixed(2);
   document.getElementById('inv-kpi-restricted').textContent=fmt(snap.restricted);
-  var bxPlus=snap.banks.find(function(b){return b.n==='BX+';});
-  var bxUSD=bxPlus?Math.round(bxPlus.usd_eq/snap.fx):0;
-  document.getElementById('inv-kpi-restricted-sub').textContent='$'+bxUSD.toLocaleString('en-US')+' USD (BX+) @ $'+snap.fx.toFixed(2)+' · No disponible';
+  document.getElementById('inv-kpi-restricted-sub').textContent='$'+(rUSD/1e6).toFixed(1)+'M USD (BX+) @ $'+snap.fx.toFixed(2)+' · Colateral no disponible';
   // Rebuild positions table
   buildPosTable(dateKey);
   // Also update section 1 charts via updateCashView
@@ -1388,7 +1574,36 @@ function buildPosTable(dateKey){
   tbody.appendChild(totalTr);
 }
 
+// Build plazo detail table (BX+ + Morgan Stanley positions)
+function buildPlazoTable(){
+  var tbody=document.getElementById('plazoTableBody');
+  if(!tbody)return;
+  tbody.innerHTML='';
+  var snap=getCashSnap();
+  var totalUSD=0;
+  INV_POSITIONS.forEach(function(p){
+    totalUSD+=p.usd;
+    var tr=document.createElement('tr');tr.className='bank-row';
+    var vencStr=p.venc||'—';
+    var diasStr=p.diasVenc===0?'—':(p.diasVenc<=7?'<span style="color:var(--amber);font-weight:600;">'+p.diasVenc+'d</span>':p.diasVenc+'d');
+    var tasaStr=p.tasa!=null&&p.tasa>0?p.tasa.toFixed(2)+'%':'—';
+    tr.innerHTML='<td><span style="color:'+p.color+';font-weight:600;">'+p.banco+'</span></td>'+
+      '<td style="font-size:11px;">'+p.cuenta+'<br><span style="color:var(--text3);font-size:10px;">'+p.tipo+'</span></td>'+
+      '<td style="font-variant-numeric:tabular-nums;">$'+Math.round(p.usd).toLocaleString('en-US')+'</td>'+
+      '<td>'+tasaStr+'</td>'+
+      '<td>'+p.plazo+'</td>'+
+      '<td>'+vencStr+'</td>'+
+      '<td>'+diasStr+'</td>';
+    tbody.appendChild(tr);
+  });
+  // Total row
+  var ttr=document.createElement('tr');ttr.className='tr-total';
+  ttr.innerHTML='<td>TOTAL</td><td></td><td style="color:var(--teal);font-weight:700;">$'+Math.round(totalUSD).toLocaleString('en-US')+'</td><td></td><td></td><td></td><td><span style="font-size:10px;color:var(--text3);">≈ '+fmt(Math.round(totalUSD*snap.fx))+' MXN</span></td>';
+  tbody.appendChild(ttr);
+}
+
 // Initialize Section 2 on load
+buildPlazoTable();
 updateInvView(currentCashDate);
 
 function fmt(n){if(Math.abs(n)>=1e9)return'$'+(n/1e9).toFixed(1)+'B';if(Math.abs(n)>=1e6)return'$'+(n/1e6).toFixed(1)+'M';if(Math.abs(n)>=1e3)return'$'+(n/1e3).toFixed(0)+'K';return'$'+n.toFixed(0);}
@@ -1411,7 +1626,7 @@ const minAxis={x:{grid:{display:false},border:{display:false},ticks:{font:{size:
   const projLinePlugin={id:'projLine',beforeDraw(chart){
     const xScale=chart.scales.x;
     const yScale=chart.scales.y;
-    const x=xScale.getPixelForValue(PROJ_START-1); // Ago'26
+    const x=xScale.getPixelForValue(PROJ_START); // Sep'26 (último real)
     const c=chart.ctx;
     c.save();
     c.setLineDash([4,4]);
@@ -1446,7 +1661,7 @@ const minAxis={x:{grid:{display:false},border:{display:false},ticks:{font:{size:
   const projLinePlugin2={id:'projLine2',beforeDraw(chart){
     const xScale=chart.scales.x;
     const yScale=chart.scales.y;
-    const x=xScale.getPixelForValue(PROJ_START-1);
+    const x=xScale.getPixelForValue(PROJ_START); // Sep'26 (último real)
     const c=chart.ctx;
     c.save();
     c.setLineDash([4,4]);
@@ -1510,25 +1725,54 @@ const minAxis={x:{grid:{display:false},border:{display:false},ticks:{font:{size:
 // ═══════════════════════════════════════════════════════════════════════════════
 
 
-// Maturity profile — horizontal bars with target markers
+// Maturity profile — horizontal bars with hover tooltips showing MXN amount + entities
 function rebuildMaturity(){
+  var snap=getCashSnap();
   var T=TOTAL_MXN_EQ;
   var container=document.getElementById('maturityBars');
   if(!container)return;
   container.innerHTML='';
+
+  // Classify positions by remaining days to maturity, track details per bucket
+  var bucketData={b1d:{mxn:0,items:[]},b7d:{mxn:0,items:[]},b30d:{mxn:0,items:[]},b60d:{mxn:0,items:[]},b60plus:{mxn:0,items:[]}};
+  INV_POSITIONS.forEach(function(p){
+    var mxnEq=p.usd*snap.fx;
+    var desc=p.banco+' '+p.cuenta+' ($'+(p.usd/1e6).toFixed(2)+'M USD)';
+    if(p.diasVenc<=1){bucketData.b1d.mxn+=mxnEq;bucketData.b1d.items.push(desc);}
+    else if(p.diasVenc<=7){bucketData.b7d.mxn+=mxnEq;bucketData.b7d.items.push(desc+(p.venc?' · vence '+p.venc:''));}
+    else if(p.diasVenc<=30){bucketData.b30d.mxn+=mxnEq;bucketData.b30d.items.push(desc+(p.venc?' · vence '+p.venc:''));}
+    else if(p.diasVenc<=60){bucketData.b60d.mxn+=mxnEq;bucketData.b60d.items.push(desc+(p.venc?' · vence '+p.venc:''));}
+    else{bucketData.b60plus.mxn+=mxnEq;bucketData.b60plus.items.push(desc+(p.venc?' · vence '+p.venc:''));}
+  });
+  // Everything NOT in INV_POSITIONS is operational (1-day/call)
+  var posTotal=INV_POSITIONS.reduce(function(s,p){return s+p.usd*snap.fx;},0);
+  var opCash=T-posTotal;
+  if(opCash>0){bucketData.b1d.mxn+=opCash;bucketData.b1d.items.unshift('Operativo (MXN+USD call): $'+(opCash/1e6).toFixed(0)+'M');}
+
   var buckets=[
-    {label:'1 día',actual:T,targetPct:35,color:'#11ABAB'},
-    {label:'< 7 días',actual:0,targetPct:15,color:'#1F5556'},
-    {label:'30 días',actual:0,targetPct:25,color:'#2a8a8a'},
-    {label:'60 días',actual:0,targetPct:15,color:'#4abfbf'},
-    {label:'> 60 días',actual:0,targetPct:10,color:'#7dd4d4'}
+    {label:'1 día',actual:bucketData.b1d.mxn,items:bucketData.b1d.items,targetPct:35,color:'#11ABAB'},
+    {label:'< 7 días',actual:bucketData.b7d.mxn,items:bucketData.b7d.items,targetPct:15,color:'#1F5556'},
+    {label:'30 días',actual:bucketData.b30d.mxn,items:bucketData.b30d.items,targetPct:25,color:'#2a8a8a'},
+    {label:'60 días',actual:bucketData.b60d.mxn,items:bucketData.b60d.items,targetPct:15,color:'#4abfbf'},
+    {label:'> 60 días',actual:bucketData.b60plus.mxn,items:bucketData.b60plus.items,targetPct:10,color:'#7dd4d4'}
   ];
+
+  // Update header with total
+  var meta=document.getElementById('maturityMeta');
+  if(meta) meta.textContent='Total: '+fmt(T)+' MXN equiv. · Actual vs Target diversificado';
+
   // Legend
   var legend=document.createElement('div');
   legend.style.cssText='display:flex;gap:16px;align-items:center;margin-bottom:14px;font-size:10px;color:var(--text2);';
   legend.innerHTML='<span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:var(--teal);"></span>Actual</span><span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:2px;border-top:2px dashed var(--amber);"></span>Target</span>';
   container.appendChild(legend);
-  buckets.forEach(b=>{
+
+  // Tooltip element (shared, positioned on hover)
+  var tooltip=document.createElement('div');
+  tooltip.style.cssText='display:none;position:fixed;z-index:999;background:#1a1a2e;color:#fff;padding:10px 14px;border-radius:8px;font-size:11px;line-height:1.6;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:none;max-width:340px;';
+  document.body.appendChild(tooltip);
+
+  buckets.forEach(function(b){
     var actPct=T>0?(b.actual/T*100):0;
     var row=document.createElement('div');
     row.style.cssText='display:grid;grid-template-columns:70px 1fr 50px;align-items:center;gap:10px;margin-bottom:8px;';
@@ -1538,20 +1782,38 @@ function rebuildMaturity(){
     lbl.textContent=b.label;
     // Bar track
     var track=document.createElement('div');
-    track.style.cssText='position:relative;height:22px;background:var(--surface2);border-radius:3px;overflow:visible;';
+    track.style.cssText='position:relative;height:22px;background:var(--surface2);border-radius:3px;overflow:visible;cursor:pointer;';
     // Actual fill
     var fill=document.createElement('div');
-    fill.style.cssText=`height:100%;width:${actPct}%;background:${b.color};border-radius:3px;transition:width .4s;min-width:${actPct>0?'2px':'0'};`;
+    fill.style.cssText='height:100%;width:'+actPct+'%;background:'+b.color+';border-radius:3px;transition:width .4s;min-width:'+(actPct>0?'2px':'0')+';';
     track.appendChild(fill);
     // Target marker line
     var marker=document.createElement('div');
-    marker.style.cssText=`position:absolute;left:${b.targetPct}%;top:-2px;bottom:-2px;width:0;border-left:2px dashed var(--amber);`;
+    marker.style.cssText='position:absolute;left:'+b.targetPct+'%;top:-2px;bottom:-2px;width:0;border-left:2px dashed var(--amber);';
     track.appendChild(marker);
     // Target label
     var tLbl=document.createElement('div');
-    tLbl.style.cssText=`position:absolute;left:${b.targetPct}%;top:-14px;transform:translateX(-50%);font-size:8px;color:var(--amber);font-weight:600;white-space:nowrap;`;
+    tLbl.style.cssText='position:absolute;left:'+b.targetPct+'%;top:-14px;transform:translateX(-50%);font-size:8px;color:var(--amber);font-weight:600;white-space:nowrap;';
     tLbl.textContent=b.targetPct+'%';
     track.appendChild(tLbl);
+
+    // Hover tooltip on bar
+    track.addEventListener('mouseenter',function(e){
+      var lines=['<div style="font-weight:700;margin-bottom:4px;font-size:12px;">'+b.label+': '+fmt(b.actual)+' MXN <span style="opacity:.6;">('+actPct.toFixed(1)+'%)</span></div>'];
+      if(b.items.length>0){
+        b.items.forEach(function(it){lines.push('<div style="padding-left:8px;border-left:2px solid '+b.color+';margin-bottom:2px;">'+it+'</div>');});
+      } else {
+        lines.push('<div style="color:#999;">Sin posiciones</div>');
+      }
+      tooltip.innerHTML=lines.join('');
+      tooltip.style.display='block';
+    });
+    track.addEventListener('mousemove',function(e){
+      tooltip.style.left=(e.clientX+14)+'px';
+      tooltip.style.top=(e.clientY-10)+'px';
+    });
+    track.addEventListener('mouseleave',function(){tooltip.style.display='none';});
+
     // Value
     var val=document.createElement('div');
     val.style.cssText='font-size:11px;font-weight:700;color:var(--teal);text-align:right;font-variant-numeric:tabular-nums;';
@@ -1571,12 +1833,12 @@ rebuildMaturity();
   var postCap=466.7; // MXN$m post-capitalización
   var burnWeek=22.2; // MXN$m/sem run rate
   var floor=40; // caja mínima
-  var opWeeks=4;
-  var resWeeks=9; // weeks 5-13
+  var opWeeks=7;  // 6–8 semanas
+  var resWeeks=6; // semanas 9–14
 
-  var operativo=Math.round(burnWeek*opWeeks);     // ~89M
-  var reserva=Math.round(burnWeek*resWeeks);       // ~200M
-  var estrategico=Math.round(postCap-operativo-reserva-floor); // ~138M
+  var operativo=Math.round(burnWeek*opWeeks);     // ~155M
+  var reserva=Math.round(burnWeek*resWeeks);       // ~133M
+  var estrategico=Math.round(postCap-operativo-reserva-floor); // ~139M
   var total=operativo+reserva+estrategico+floor;
 
   var pctOp=Math.round(operativo/total*100);
@@ -1601,37 +1863,43 @@ rebuildMaturity();
   // Three tranche cards
   h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">';
 
-  // Operativo
+  // Operativo — disposición diaria
   h+='<div style="border:2px solid #DC2626;border-radius:8px;padding:14px;position:relative;">';
   h+='<div style="position:absolute;top:-10px;left:12px;background:var(--surface);padding:0 6px;font-size:9px;font-weight:700;color:#DC2626;text-transform:uppercase;letter-spacing:.5px;">Tramo 1 · Operativo</div>';
   h+='<div style="font-size:28px;font-weight:800;color:#DC2626;margin:8px 0 4px;">$'+operativo+'M</div>';
   h+='<div style="font-size:11px;color:var(--text2);line-height:1.6;">';
-  h+='<strong>Horizonte:</strong> 1–4 semanas<br>';
-  h+='<strong>Plazo inversión:</strong> 1 día (overnight)<br>';
-  h+='<strong>Instrumento:</strong> PRLV diario / Mesa<br>';
-  h+='<strong>Tasa est.:</strong> ~3.40% USD / ~8.5% MXN<br>';
-  h+='<strong>Prioridad:</strong> Liquidez inmediata</div></div>';
+  h+='<strong>Horizonte:</strong> 6–8 semanas<br>';
+  h+='<strong>Disposición:</strong> Diaria (T+0 / T+1)<br>';
+  h+='<strong>Instrumento actual:</strong><br>';
+  h+='<span style="padding-left:8px;">MXN: Mesa de dinero / Cuenta vista</span><br>';
+  h+='<span style="padding-left:8px;">USD: Preferred Savings (MS) T+1</span><br>';
+  h+='<strong>Tasa actual:</strong> <span style="color:#DC2626;font-weight:700;">4.00% USD</span> · <span style="color:#DC2626;font-weight:700;">~6.15% MXN</span><br>';
+  h+='<strong>Prioridad:</strong> Liquidez total — sin lock-up</div></div>';
 
-  // Reserva
+  // Reserva — suggested investment 60-91d
   h+='<div style="border:2px solid #D97706;border-radius:8px;padding:14px;position:relative;">';
   h+='<div style="position:absolute;top:-10px;left:12px;background:var(--surface);padding:0 6px;font-size:9px;font-weight:700;color:#D97706;text-transform:uppercase;letter-spacing:.5px;">Tramo 2 · Reserva</div>';
   h+='<div style="font-size:28px;font-weight:800;color:#D97706;margin:8px 0 4px;">$'+reserva+'M</div>';
   h+='<div style="font-size:11px;color:var(--text2);line-height:1.6;">';
-  h+='<strong>Horizonte:</strong> 5–13 semanas<br>';
-  h+='<strong>Plazo inversión:</strong> ≤91 días<br>';
-  h+='<strong>Instrumento:</strong> Pagaré 30-90d / CEDES<br>';
-  h+='<strong>Tasa est.:</strong> ~3.50% USD / ~9.0% MXN<br>';
-  h+='<strong>Prioridad:</strong> Rendimiento + acceso programado</div></div>';
+  h+='<strong>Horizonte:</strong> 9–14 semanas<br>';
+  h+='<strong>Plazo sugerido:</strong> 60–91 días<br>';
+  h+='<strong>Instrumento sugerido:</strong><br>';
+  h+='<span style="padding-left:8px;">MXN: CETES 91d (6.59%) / Pagaré 91d</span><br>';
+  h+='<span style="padding-left:8px;">USD: T-Bills 3M (4.11%) / CD 90d</span><br>';
+  h+='<strong>Tasa ref.:</strong> <span style="color:#D97706;font-weight:700;">~4.11% USD</span> · <span style="color:#D97706;font-weight:700;">~6.59% MXN</span><br>';
+  h+='<strong>Prioridad:</strong> Rendimiento + vencimiento programado</div></div>';
 
-  // Estratégico
+  // Estratégico — suggested investment 180-364d
   h+='<div style="border:2px solid #11ABAB;border-radius:8px;padding:14px;position:relative;">';
   h+='<div style="position:absolute;top:-10px;left:12px;background:var(--surface);padding:0 6px;font-size:9px;font-weight:700;color:#11ABAB;text-transform:uppercase;letter-spacing:.5px;">Tramo 3 · Estratégico</div>';
   h+='<div style="font-size:28px;font-weight:800;color:#11ABAB;margin:8px 0 4px;">$'+estrategico+'M</div>';
   h+='<div style="font-size:11px;color:var(--text2);line-height:1.6;">';
   h+='<strong>Horizonte:</strong> +3 meses<br>';
-  h+='<strong>Plazo inversión:</strong> ≤364 días<br>';
-  h+='<strong>Instrumento:</strong> Fondos inv. / Pagaré 180-364d<br>';
-  h+='<strong>Tasa est.:</strong> ~4.25% USD / ~9.5% MXN<br>';
+  h+='<strong>Plazo sugerido:</strong> 182–364 días<br>';
+  h+='<strong>Instrumento sugerido:</strong><br>';
+  h+='<span style="padding-left:8px;">MXN: CETES 182d (6.91%) / CETES 364d (7.24%)</span><br>';
+  h+='<span style="padding-left:8px;">USD: T-Bills 6M–1Y (4.39%) / CD 6M (4.50%)</span><br>';
+  h+='<strong>Tasa ref.:</strong> <span style="color:#11ABAB;font-weight:700;">~4.39% USD</span> · <span style="color:#11ABAB;font-weight:700;">~7.24% MXN</span><br>';
   h+='<strong>Prioridad:</strong> Maximizar rendimiento</div></div>';
 
   h+='</div>';
@@ -1639,7 +1907,8 @@ rebuildMaturity();
   // Footnote
   h+='<div style="margin-top:14px;padding:10px;background:rgba(0,0,0,.03);border-radius:6px;font-size:10px;color:var(--text3);line-height:1.6;">';
   h+='<strong>Supuestos:</strong> Caja post-cap $'+postCap.toFixed(0)+'M · Run rate ~$'+burnWeek.toFixed(1)+'M/sem (proyección Ago–Oct) · Piso mínimo operativo $'+floor+'M · ';
-  h+='Operativo = '+opWeeks+' semanas de burn · Reserva = semanas 5–13 · Estratégico = excedente post 3 meses';
+  h+='Operativo = '+opWeeks+' semanas de burn (6–8 sem) · Reserva = semanas 9–14 · Estratégico = excedente post 14 semanas<br>';
+  h+='<strong>Tasas:</strong> CETES subasta 22-Sep-2026 (Banxico) · T-Bills 22-Sep-2026 (US Treasury) · MS Preferred Savings actual · Mesa MXN estimado TIIE-spread';
   h+='</div>';
 
   fc.innerHTML=h;
@@ -1741,9 +2010,9 @@ updateAlloc();
 (function(){
   var ctx=document.getElementById('authInvChart');
   if(!ctx)return;
-  var labels=['Mexico (Cetes/TIIE)','Bank CD 6M','US Treasury Bills','Commercial Paper','Demand Deposits','Money Market Funds','Repo (col.)','Municipal Bonds','Cash'];
-  var yields=[6.65,4.50,3.91,3.80,3.75,3.65,3.60,2.20,0.25];
-  var colors=yields.map(function(v){return v>=4.0?'rgba(17,171,171,.7)':v>=3.0?'rgba(17,171,171,.45)':v>=2.0?'rgba(245,158,11,.5)':'rgba(239,68,68,.5)';});
+  var labels=['CETES 364d (MXN)','CETES 182d (MXN)','CETES 91d (MXN)','CETES 28d (MXN)','Bank CD 6M (USD)','T-Bills 1Y (USD)','T-Bills 3M (USD)','Commercial Paper (USD)','Pref. Savings MS (USD)','MMF (USD)','Repo col. (USD)','Muni Bonds (USD)'];
+  var yields=[7.24,6.91,6.59,6.15,4.50,4.39,4.11,4.05,4.00,3.90,3.85,2.20];
+  var colors=yields.map(function(v){return v>=6.0?'rgba(245,158,11,.6)':v>=4.0?'rgba(17,171,171,.7)':v>=3.0?'rgba(17,171,171,.45)':'rgba(245,158,11,.4)';});
   new Chart(ctx,{type:'bar',data:{labels:labels,datasets:[{data:yields,backgroundColor:colors,borderColor:colors.map(function(c){return c.replace(/[\d.]+\)$/,'1)');}),borderWidth:1,borderRadius:4}]},
     options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},tooltip:{...tooltipStyle,callbacks:{label:function(i){return' '+i.raw.toFixed(2)+'% anual';}}}},

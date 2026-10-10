@@ -466,14 +466,14 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     <script>
     // Entity detail data
     var ENTITY_DATA={
-      HOLDCO:{name:'HoldCo',note:'Caja operativa Oct: $454.3M · Cap out Oct: $64M (VCN $38.5M, EMC $19.4M, IP $5.6M, Green $0.5M) · Otros +$26.2M incluye inflows interco op y ajustes',
+      HOLDCO:{name:'HoldCo',note:'Caja operativa Oct: $454.3M · Cap out Oct: $54.7M (VCN $38.5M, EMC $10.1M, IP $5.6M, Green $0.5M) · Otros +$26.1M incluye inflows interco op y ajustes',
         rows:[
           {l:'BoP',v:[128.7,36.8,454.3,128.7],t:'bop'},
           {l:'(+) Equity',v:[0.0,460.9,0.0,460.9],t:'in'},
-          {l:'(-) Transferencias a Subsidiarias',v:[-90.0,-42.8,-64.0,-196.8],t:'out'},
+          {l:'(-) Transferencias a Subsidiarias',v:[-90.0,-42.8,-54.7,-187.5],t:'out'},
           {l:'(±) FX',v:[1.9,0.6,3.7,6.2],t:'other'},
-          {l:'(±) Otros',v:[-3.8,-1.2,26.2,21.2],t:'other'},
-          {l:'EoP',v:[36.8,454.3,420.2,420.2],t:'eop'}
+          {l:'(±) Otros',v:[-3.8,-1.2,26.1,21.1],t:'other'},
+          {l:'EoP',v:[36.8,454.3,429.4,429.4],t:'eop'}
         ],monthly:['Ago','Sep','Oct','Total']},
       LTO:{name:'LTO',
         rows:[
@@ -484,8 +484,8 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
           {l:'(+) Debt',v:[0.0,0.0,100.0,100.0],t:'in'},
           {l:'(-) OPEX',v:[-34.4,-16.9,-32.4,-97.8],t:'out'},
           {l:'(-) CAPEX',v:[-76.4,-1.3,-21.0,-119.6],t:'out'},
-          {l:'(-) Outflow Interco',v:[-23.8,-31.2,-10.0,-67.5],t:'out'},
-          {l:'EoP',v:[7.1,16.6,101.6,65.3],t:'eop'}
+          {l:'(-) Outflow Interco',v:[-23.8,-31.2,-12.0,-69.5],t:'out'},
+          {l:'EoP',v:[7.1,16.6,99.5,63.3],t:'eop'}
         ],monthly:['Ago','Sep','Oct','Total']},
       DAE:{name:'DAE',
         rows:[
@@ -544,13 +544,13 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
           {l:'(-) OPEX',v:[-30.8,-32.0,-31.3,-94.2],t:'out'},
           {l:'EoP',v:[2.7,0.5,1.1,1.1],t:'eop'}
         ],monthly:['Ago','Sep','Oct','Total']},
-      EMC:{name:'EMC',note:'Oct: Cap in $19.4M + Interco $5M · OPEX $14.9M + CAPEX $10.5M · EoP negativo $-0.1M — requiere capitalización adicional',
+      EMC:{name:'EMC',note:'Oct: Cap in $10.1M + Interco $8M · OPEX $14.9M + CAPEX $4.2M · EoP negativo $-0.1M — requiere capitalización adicional',
         rows:[
           {l:'BoP',v:[0.5,0.7,0.9,0.5],t:'bop'},
-          {l:'(+) Capitalización',v:[7.9,3.9,19.4,31.3],t:'in'},
-          {l:'(+) Inflows Intercos',v:[10.8,4.0,5.0,19.8],t:'in'},
+          {l:'(+) Capitalización',v:[7.9,3.9,10.1,21.9],t:'in'},
+          {l:'(+) Inflows Intercos',v:[10.8,4.0,8.0,22.8],t:'in'},
           {l:'(-) OPEX',v:[-18.5,-7.1,-14.9,-40.5],t:'out'},
-          {l:'(-) CAPEX',v:[0.0,-0.7,-10.5,-11.2],t:'out'},
+          {l:'(-) CAPEX',v:[0.0,-0.7,-4.2,-4.9],t:'out'},
           {l:'EoP',v:[0.7,0.9,-0.1,-0.1],t:'eop'}
         ],monthly:['Ago','Sep','Oct','Total']},
       IP:{name:'IP',
@@ -598,15 +598,15 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       ],
       catsFor:function(key){return key==='HOLDCO'?this.cats_holdco:this.cats_sub;},
       data:{
-        HOLDCO:{bop:[128.7,125.6,68.6,49.4,36.9,36.8,28.3,28.4,232.1,454.3,436.7,425.6,422.9],equity:[0,0,0,0,0,0,0,223.5,237.4,0,0,0,0],cap_out:[-2.0,-56.4,-18.8,-12.8,0,-8.9,0,-19.7,-14.2,-32.6,-17.6,-11.1,-2.7],fx:[1.0,0.6,0.4,-0.2,0.1,-0.3,-0.2,0.1,1.0,3.7,0,0,0],otros:[-2.1,-1.2,-0.8,0.5,-0.2,0.7,0.3,-0.2,-2.0,11.3,6.5,8.4,0],eop:[125.6,68.6,49.4,36.9,36.8,28.3,28.4,232.1,454.3,436.7,425.6,422.9,420.2]},
-        LTO:{bop:[9.9,5.1,6.6,5.1,1.0,3.1,9.2,10.6,8.1,7.6,7.1,83.3,80.4],cobranza:[12.0,22.4,12.9,8.6,6.1,12.2,35.5,5.2,4.6,12.1,12.1,12.1,12.1],cap_in:[56.4,7.9,5.0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0.5,0,0,0,1.4,0,0,0,0,1.4],debt:[0,0,0,0,0,0,0,0,0,0,100.0,0,0],opex:[-3.8,-6.6,-16.6,-7.4,-4.0,-3.9,-6.4,-6.6,-5.1,-7.6,-9.9,-14.9,-5.1],capex:[-0.2,-66.9,-0.8,-8.5,0,0,-0.8,-0.5,0,0,-21.0,0,-21.0],interco_out:[-12.7,-3.7,-5.0,-2.4,0,-2.2,-27.0,-2.0,0,-5.0,-5.0,0,-2.5],otros:[-56.5,48.4,3.0,5.1,0,0,0.1,0,0,0,0,-0.1,0],eop:[5.1,6.6,5.1,1.0,3.1,9.2,10.6,8.1,7.6,7.1,83.3,80.4,65.3]},
+        HOLDCO:{bop:[128.7,125.6,68.6,49.4,36.9,36.8,28.3,28.4,232.1,454.3,441.4,433.9,432.2],equity:[0,0,0,0,0,0,0,223.5,237.4,0,0,0,0],cap_out:[-2.0,-56.4,-18.8,-12.8,0,-8.9,0,-19.7,-14.2,-32.6,-12.9,-7.5,-1.7],fx:[1.0,0.6,0.4,-0.2,0.1,-0.3,-0.2,0.1,1.0,3.7,0,0,0],otros:[-2.1,-1.2,-0.8,0.5,-0.2,0.7,0.3,-0.2,-2.0,16.0,5.4,5.8,-1.1],eop:[125.6,68.6,49.4,36.9,36.8,28.3,28.4,232.1,454.3,441.4,433.9,432.2,429.4]},
+        LTO:{bop:[9.9,5.1,6.6,5.1,1.0,3.1,9.2,10.6,8.1,7.6,7.1,83.3,78.4],cobranza:[12.0,22.4,12.9,8.6,6.1,12.2,35.5,5.2,4.6,12.1,12.1,12.1,12.1],cap_in:[56.4,7.9,5.0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0.5,0,0,0,1.4,0,0,0,0,1.4],debt:[0,0,0,0,0,0,0,0,0,0,100.0,0,0],opex:[-3.8,-6.6,-16.6,-7.4,-4.0,-3.9,-6.4,-6.6,-5.1,-7.6,-9.9,-14.9,-5.1],capex:[-0.2,-66.9,-0.8,-8.5,0,0,-0.8,-0.5,0,0,-21.0,0,-21.0],interco_out:[-12.7,-3.7,-5.0,-2.4,0,-2.2,-27.0,-2.0,0,-5.0,-5.0,-2.0,-2.5],otros:[-56.5,48.4,3.0,5.1,0,0,0.1,0,0,0,0,-0.1,0],eop:[5.1,6.6,5.1,1.0,3.1,9.2,10.6,8.1,7.6,7.1,83.3,78.4,63.3]},
         DAE:{bop:[52.6,41.8,45.8,44.9,46.9,50.4,25.8,26.6,32.8,40.2,44.5,36.6,29.0],cobranza:[12.1,11.9,16.5,12.5,12.6,5.9,24.3,11.4,14.0,12.3,12.3,12.3,12.3],cap_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-3.4,-7.9,-17.0,-9.1,-9.0,-8.6,-17.4,-5.3,-6.7,-7.9,-15.2,-8.7,-6.7],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[-19.6,0.0,-0.5,-1.3,-0.1,-21.9,-6.0,0.0,0.0,0.0,-5.0,-11.1,-1.4],otros:[0.1,0.0,0.1,-0.1,0.0,0.0,-0.1,0.1,0.1,-0.1,0.0,-0.1,0.0],eop:[41.8,45.8,44.9,46.9,50.4,25.8,26.6,32.8,40.2,44.5,36.6,29.0,33.2]},
         VCN:{bop:[1.1,23.9,79.1,54.8,31.7,30.8,2.5,1.3,8.2,3.3,0,0,9.1],cobranza:[10.4,0.2,0.2,1.6,7.2,0.1,1.8,7.0,0,7.5,0,7.5,0],cap_in:[0,0,0,0,0,9.0,0,0,-5.0,26.4,12.1,0,0],interco_in:[17.1,0,0,0,0,0,11.0,0,0,0,0,4.3,0],debt:[0,84.0,0,0,0,0,0,0,0,0,0,0,0],opex:[-6.6,-9.7,-15.1,-5.4,-5.0,-13.7,-5.5,0,0,-16.1,-2.6,-2.7,-1.4],capex:[0,-5.8,-4.8,-2.1,-0.7,-13.8,-6.5,0,0,-2.6,0,0,-3.1],interco_out:[0,-13.5,-4.6,-17.2,-2.4,-10.0,-2.7,0,0,-18.5,-9.5,0,0],otros:[1.9,0,0,0,0,0.1,0.7,-0.1,0.1,0,0,0,0],eop:[23.9,79.1,54.8,31.7,30.8,2.5,1.3,8.2,3.3,0,0,9.1,4.6]},
         AuHaus:{bop:[0.4,3.7,0.2,0.3,1.6,0.2,5.1,0.4,0.8,0.5,8.8,12.0,9.1],cobranza:[5.9,0.1,1.8,5.1,0.1,4.7,1.0,1.0,1.0,1.0,1.0,1.0,1.0],cap_in:[0,0,0,0,0,0,0,12.8,0,0,0,0,0],interco_in:[0,4.4,5.6,14.9,2.4,12.0,2.7,6.3,3.5,10.5,4.5,0,0],opex:[-0.5,-4.2,-1.7,-10.7,-2.8,-3.1,-3.0,-2.5,-0.8,-2.9,-2.1,-2.5,-0.8],capex:[-1.8,-3.7,-5.5,-6.1,-1.1,-7.9,-5.5,-4.4,-4.0,-0.3,-0.3,-1.4,0],interco_out:[-0.3,0,-0.2,-1.9,0,-0.9,0,0,0,0,0,0,0],otros:[0,-0.1,0.1,0,0,0.1,0.1,-12.8,0,0,0.1,0,0],eop:[3.7,0.2,0.3,1.6,0.2,5.1,0.4,0.8,0.5,8.8,12.0,9.1,9.3]},
         CF:{bop:[6.5,6.5,6.8,5.2,5.5,5.9,3.6,0.2,0.6,0.6,0.5,0.4,0.3],cobranza:[0,0.1,0,0,0,0.2,0.2,0.4,0.2,0.2,0.2,0.2,0.2],cap_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0.1,0.2,0.2,0,0,0,0,0,0,0,0,0],opex:[0,0,-0.2,0,0.4,-2.4,-3.6,0,-0.2,-0.3,-0.2,-0.3,-0.1],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,-1.5,0,0,0,0,0,0,0,0,0,0],otros:[0,0.1,-0.1,0.1,0,-0.1,0,0,0,0,-0.1,0,0],eop:[6.5,6.8,5.2,5.5,5.9,3.6,0.2,0.6,0.6,0.5,0.4,0.3,0.4]},
         Green:{bop:[6.4,6.9,6.9,7.0,7.0,2.4,2.3,1.3,0.2,0.2,0,0,0.4],cobranza:[0.5,0,0,0,0.7,0,0,0,0,0,0,0.6,0],cap_in:[0,0,0,0,0,0,0,0,0,0,0.5,0,0],interco_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[0,0,0,0,0,-0.1,-1.0,-1.2,-0.1,-0.1,-0.5,-0.1,-0.1],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,-5.2,0,0,0,0,0,0,0,0],otros:[0,0,0.1,0,-0.1,0,0,0.1,0.1,-0.1,0,-0.1,0],eop:[6.9,6.9,7.0,7.0,2.4,2.3,1.3,0.2,0.2,0,0,0.4,0.3]},
         PSM:{bop:[0.4,0.6,0.6,0.8,0.6,2.8,2.0,0.4,0.7,0.5,3.8,2.6,0.7],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0],cap_in:[0,0,5.0,0,0,0,11.8,0,0,0,0,0,0],interco_in:[3.0,9.2,5.0,6.6,5.3,7.0,0.4,8.5,2.0,13.0,10.0,6.5,2.5],opex:[-2.7,-8.7,-9.6,-6.7,-3.1,-7.8,-13.8,-8.2,-2.2,-9.6,-11.2,-8.4,-2.0],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[-0.1,-0.5,-0.2,-0.1,0,0,0,0,0,-0.1,0,0,0],eop:[0.6,0.6,0.8,0.6,2.8,2.0,0.4,0.7,0.5,3.8,2.6,0.7,1.2]},
-        EMC:{bop:[0.5,1.8,0.3,0.5,0.4,0.8,0.2,0.7,0.9,0.9,0,0,0],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0],cap_in:[0,5.4,2.5,0,0,0,3.9,0,0,3.8,4.7,8.2,2.7],interco_in:[4.2,2.5,0.5,1.0,2.6,2.0,0,2.0,0,0,5.0,0,0],opex:[-2.9,-4.0,-5.8,-3.6,-2.2,-2.6,-2.6,-1.8,0,-4.8,-3.4,-4.0,-2.7],capex:[0,0,0,0,0,0,-0.7,0,0,0,-6.3,-4.2,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0,-5.4,3.0,2.5,0,0,-0.1,0,0,0.1,0,0,0],eop:[1.8,0.3,0.5,0.4,0.8,0.2,0.7,0.9,0.9,0,0,0,0]},
+        EMC:{bop:[0.5,1.8,0.3,0.5,0.4,0.8,0.2,0.7,0.9,0.9,0,1.6,0],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0],cap_in:[0,5.4,2.5,0,0,0,3.9,0,0,3.8,0,4.6,1.7],interco_in:[4.2,2.5,0.5,1.0,2.6,2.0,0,2.0,0,0,5.0,2.0,1.0],opex:[-2.9,-4.0,-5.8,-3.6,-2.2,-2.6,-2.6,-1.8,0,-4.8,-3.4,-4.0,-2.7],capex:[0,0,0,0,0,0,-0.7,0,0,0,0,-4.2,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0,-5.4,3.0,2.5,0,0,-0.1,0,0,0.1,0,0,0],eop:[1.8,0.3,0.5,0.4,0.8,0.2,0.7,0.9,0.9,0,1.6,0,0]},
         IP:{bop:[0.3,0.7,0.3,0.4,0.6,0.4,0.3,0.5,0.6,0.6,0,0,0],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0],cap_in:[0,0,0.5,4.7,0,0,0,0,-0.1,2.4,0.3,2.9,0],interco_in:[0.4,0,0.1,0.1,0,0.5,0.2,0.1,0,0,0,0,0],opex:[0,-0.4,-0.5,-4.5,-0.2,-0.6,0,0,0,-2.9,-0.3,-2.9,0],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0,0,0,-0.1,0,0,0,0,0.1,-0.1,0,0,0],eop:[0.7,0.3,0.4,0.6,0.4,0.3,0.5,0.6,0.6,0,0,0,0]},
         MC:{bop:[5.7,5.7,5.6,5.6,5.9,5.9,5.9,5.9,5.7,5.7,5.7,5.7,5.9],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0],cap_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0.3,0,0.1,0,0,0,0,0,0.3,0],opex:[0,0,0,0,0,0,-0.1,0,0,0,0,0,0],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0,-0.1,0,0,0,-0.1,0,-0.2,0,0,0,-0.1,0],eop:[5.7,5.6,5.6,5.9,5.9,5.9,5.9,5.7,5.7,5.7,5.7,5.9,5.9]}
       }
@@ -734,9 +734,9 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     var KEY_DRIVERS={
       HOLDCO:[
         {t:'Transferencias a Subsidiarias',c:'out',items:[
-          'LTO: $17–18M en Oct (semanas 1 y 4) para pago de vehículos',
+          'LTO: $17–18M en Oct (semanas 2 y 4) para pago de vehículos',
           'VCN: $19–24M Sep–Oct para OPOS y hubs',
-          'EMC: $3–5M continuos para adecuaciones talleres',
+          'EMC: $10.1M Oct (cap reducida) + Interco $8M',
           'IP: $2–3M periódicos para operación DEEL + Argentina'
         ]},
         {t:'Equity',c:'in',items:[
@@ -756,7 +756,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
           'Seguros: $8M/mes, WC semanal: $5.1M'
         ]},
         {t:'CAPEX',c:'out',items:[
-          '<strong>Pago vehículos: $21M</strong> en Oct wk1 (05-Oct)',
+          '<strong>Pago vehículos: $21M</strong> en Oct wk2 (12-Oct)',
           '<strong>Pago vehículos: $21M</strong> en Oct wk4 (26-Oct)',
           'Anticipo $0.5M en Sep (21-Sep)'
         ]},
@@ -839,13 +839,13 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
         ]},
         {t:'CAPEX (Talleres)',c:'out',items:[
           'Adecuaciones talleres: $0.7M (14-Sep)',
-          '<strong>$6.3M</strong> (12-Oct) + <strong>$4.2M</strong> (19-Oct)',
-          'Total $11.2M concentrado en Oct → requiere cap'
+          '<strong>$4.2M</strong> (19-Oct)',
+          'Total CAPEX Oct $4.2M (reducido vs plan original)'
         ]},
         {t:'Capitalización + Intercos',c:'cap',items:[
-          'Cap HoldCo: $2.7–$8.2M/semana en Oct',
-          'Interco IN: Electro Mant $5M + $2M de LTO/DAE',
-          'Sin cap, no cubre CAPEX de talleres en Oct'
+          'Cap HoldCo: $10.1M Oct (reducida de $19.4M)',
+          'Interco IN: Electro Mant $5M + LTO $2M + DAE $1M = $8M',
+          'Cobertura: Cap + Interco cubre OPEX + CAPEX Oct'
         ]}
       ],
       IP:[
@@ -893,13 +893,13 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       bop:[128.7, 36.8, 454.3],
       equity:[0.0, 460.9, 0.0],
       fx:[1.9, 0.6, 3.7],
-      otros:[-3.8, -1.2, 26.2],
-      eop:[36.8, 454.3, 420.2],
+      otros:[-3.8, -1.2, 26.1],
+      eop:[36.8, 454.3, 429.4],
       // Cap_out broken down by entity (from Cash sheet rows 55-64)
       entities:{
         LTO:  [-69.3, 0.0, 0.0],
         VCN:  [-2.0, -25.7, -38.5],
-        EMC:  [-7.9, 0.0, -19.4],
+        EMC:  [-7.9, 0.0, -10.1],
         IP:   [-5.2, -4.3, -5.6],
         PSM:  [-5.0, 0.0, 0.0],
         OPEX: [-0.6, 0.0, 0.0],
@@ -1150,7 +1150,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       var capData=[
         {name:'LTO',ago:69.3,sep:0.0,oct:0.0},
         {name:'VCN',ago:2.0,sep:25.7,oct:38.5},
-        {name:'EMC',ago:7.9,sep:3.9,oct:19.4},
+        {name:'EMC',ago:7.9,sep:3.9,oct:10.1},
         {name:'IP',ago:5.2,sep:4.3,oct:5.6},
         {name:'PSM',ago:5.0,sep:0.0,oct:0.0},
         {name:'Au Haus',ago:0.0,sep:12.8,oct:0.0},
@@ -2189,7 +2189,7 @@ rebuildMaturity();
 // ═══════════════════════════════════════════════════════════════════════════════
 (function(){
   var postCap=454.3; // MXN$m — HOLDCO BoP Oct real
-  var burnWeek=16.0; // MXN$m/sem run rate (cap_out Oct: $64M / 4 sem)
+  var burnWeek=13.7; // MXN$m/sem run rate (cap_out Oct: $54.7M / 4 sem)
   var floor=40; // caja mínima
   var opWeeks=7;  // 6–8 semanas
   var resWeeks=6; // semanas 9–14
@@ -2264,7 +2264,7 @@ rebuildMaturity();
 
   // Footnote
   h+='<div style="margin-top:14px;padding:10px;background:rgba(0,0,0,.03);border-radius:6px;font-size:10px;color:var(--text3);line-height:1.6;">';
-  h+='<strong>Supuestos:</strong> HOLDCO BoP Oct $'+postCap.toFixed(0)+'M · Run rate ~$'+burnWeek.toFixed(1)+'M/sem (cap_out Oct real: $64M / 4 sem) · Piso mínimo operativo $'+floor+'M · ';
+  h+='<strong>Supuestos:</strong> HOLDCO BoP Oct $'+postCap.toFixed(0)+'M · Run rate ~$'+burnWeek.toFixed(1)+'M/sem (cap_out Oct real: $54.7M / 4 sem) · Piso mínimo operativo $'+floor+'M · ';
   h+='Operativo = '+opWeeks+' semanas de burn (6–8 sem) · Reserva = semanas 9–14 · Estratégico = excedente post 14 semanas<br>';
   h+='<strong>Tasas:</strong> CETES subasta Oct-2026 (Banxico) · T-Bills Oct-2026 (US Treasury) · MS Preferred Savings actual · Mesa MXN estimado TIIE-spread';
   h+='</div>';

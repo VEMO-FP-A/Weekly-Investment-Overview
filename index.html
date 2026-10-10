@@ -378,7 +378,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     <div class="chart-card">
       <div class="chart-card-head forest">
         <div class="chart-card-title">Distribución por Plazo</div>
-        <div class="chart-card-meta" id="maturityMeta">Actual vs Target diversificado</div>
+        <div class="chart-card-meta" id="maturityMeta">Distribución actual</div>
       </div>
       <div class="chart-card-body" style="padding:16px 20px;">
         <div id="maturityBars"></div>
@@ -386,7 +386,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     </div>
 
     <!-- Framework de Inversión por Tramos -->
-    <div class="section-head-light" id="inv-framework"><span>Framework de Inversión</span><span style="font-size:10px;color:var(--text3);font-weight:400;">Post-capitalización · Base: $467M disponibles · RR ~$22M/sem</span></div>
+    <div class="section-head-light" id="inv-framework"><span>Framework de Inversión</span><span style="font-size:10px;color:var(--text3);font-weight:400;">HOLDCO Oct · Base: $454M disponibles · RR ~$16M/sem</span></div>
     <div class="chart-card" style="padding:20px;" id="inv-framework-card">
       <!-- Stacked bar + 3 tranche cards rendered by JS -->
     </div>
@@ -415,6 +415,9 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
         <canvas id="holdcoBridgeChart"></canvas>
       </div>
     </div>
+
+    <!-- HOLDCO CAPITALIZACIONES -->
+    <div id="holdcoCapContainer"></div>
 
     <!-- ENTITY NAV CHIPS -->
     <div id="entityChips" style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 14px;">
@@ -463,7 +466,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     <script>
     // Entity detail data
     var ENTITY_DATA={
-      HOLDCO:{name:'HoldCo',note:'Next Steps: Validar temporalidad de pagos; $$ adecuaciones FIMECO; ver si podemos mover seguros a la semana del 28-sep',
+      HOLDCO:{name:'HoldCo',note:'Caja operativa Oct: $454.3M · Cap out Oct: $64M (VCN $38.5M, EMC $19.4M, IP $5.6M, Green $0.5M) · Otros +$26.2M incluye inflows interco op y ajustes',
         rows:[
           {l:'BoP',v:[128.7,36.8,454.3,128.7],t:'bop'},
           {l:'(+) Equity',v:[0.0,460.9,0.0,460.9],t:'in'},
@@ -541,7 +544,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
           {l:'(-) OPEX',v:[-30.8,-32.0,-31.3,-94.2],t:'out'},
           {l:'EoP',v:[2.7,0.5,1.1,1.1],t:'eop'}
         ],monthly:['Ago','Sep','Oct','Total']},
-      EMC:{name:'EMC',note:'NEXT STEPS: Ver si podemos hacer anticipos',
+      EMC:{name:'EMC',note:'Oct: Cap in $19.4M + Interco $5M · OPEX $14.9M + CAPEX $10.5M · EoP negativo $-0.1M — requiere capitalización adicional',
         rows:[
           {l:'BoP',v:[0.5,0.7,0.9,0.5],t:'bop'},
           {l:'(+) Capitalización',v:[7.9,3.9,19.4,31.3],t:'in'},
@@ -570,7 +573,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     // Weekly balance data per entity (for weekly row in detail cards)
     var ENTITY_WEEKLY={
       dates:['03-Ago','10-Ago','17-Ago','24-Ago','31-Ago','07-Sep','14-Sep','21-Sep','28-Sep','05-Oct','12-Oct','19-Oct','26-Oct'],
-      isAct:[true,true,true,true,true,true,true,true,false,false,false,false,false],
+      isAct:[true,true,true,true,true,true,true,true,true,true,false,false,false],
       // Entity-specific category definitions
       cats_holdco:[
         {k:'bop',l:'BoP',t:'bop'},
@@ -1100,7 +1103,10 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
               stacked:true,
               grid:{color:'rgba(0,0,0,.06)'},
               ticks:{font:{size:10},color:'#888',callback:function(v){return v.toFixed(0);}},
-              title:{display:true,text:'MXN$m',font:{size:10},color:'#888'}
+              title:{display:true,text:'MXN$m',font:{size:10},color:'#888'},
+              suggestedMin:(function(){var tops=values.map(function(v,i){return bases[i]+v;});var bots=bases.slice();var mn=Math.min.apply(null,bots.concat(tops).filter(function(v){return v>0;}));var mx=Math.max.apply(null,tops);var range=mx-mn;return Math.max(0,mn-range*0.3);})(),
+              suggestedMax:(function(){var tops=values.map(function(v,i){return bases[i]+v;});return Math.max.apply(null,tops)*1.08;})()
+
             }
           },
           animation:{duration:400}
@@ -1136,12 +1142,90 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     });
     // Init bridge on load
     renderBridgeChart();
+
+    // ═══════════════════════════════════════════════════
+    // HOLDCO CAPITALIZACIONES TABLE
+    // ═══════════════════════════════════════════════════
+    (function(){
+      var capData=[
+        {name:'LTO',ago:69.3,sep:0.0,oct:0.0},
+        {name:'VCN',ago:2.0,sep:25.7,oct:38.5},
+        {name:'EMC',ago:7.9,sep:3.9,oct:19.4},
+        {name:'IP',ago:5.2,sep:4.3,oct:5.6},
+        {name:'PSM',ago:5.0,sep:0.0,oct:0.0},
+        {name:'Au Haus',ago:0.0,sep:12.8,oct:0.0},
+        {name:'Green',ago:0.0,sep:0.0,oct:0.5},
+        {name:'DAE',ago:0.0,sep:0.0,oct:0.0},
+        {name:'OPEX HoldCo',ago:0.6,sep:0.0,oct:0.0}
+      ];
+      var totAgo=0,totSep=0,totOct=0;
+      capData.forEach(function(r){totAgo+=r.ago;totSep+=r.sep;totOct+=r.oct;});
+      var totAll=totAgo+totSep+totOct;
+
+      var container=document.getElementById('holdcoCapContainer');
+      if(!container)return;
+      var h='';
+      h+='<div class="section-head-light" style="margin-top:18px;"><span>Capitalizaciones HoldCo → Subsidiarias</span><span style="font-size:10px;color:var(--text3);font-weight:400;">MXN$m · Ago–Oct 2026 · Total: $'+totAll.toFixed(1)+'M</span></div>';
+      h+='<div class="chart-card" style="padding:16px;">';
+      h+='<table style="width:100%;max-width:700px;font-size:12px;border-collapse:collapse;">';
+      h+='<thead><tr style="color:var(--teal);border-bottom:2px solid var(--border);font-size:10px;text-transform:uppercase;letter-spacing:.5px;">';
+      h+='<th style="text-align:left;padding:8px;">Empresa</th>';
+      h+='<th style="text-align:right;padding:8px;">Ago</th>';
+      h+='<th style="text-align:right;padding:8px;">Sep</th>';
+      h+='<th style="text-align:right;padding:8px;">Oct</th>';
+      h+='<th style="text-align:right;padding:8px;">Total</th>';
+      h+='<th style="text-align:right;padding:8px;">% del Total</th>';
+      h+='</tr></thead><tbody>';
+      capData.forEach(function(r){
+        var total=r.ago+r.sep+r.oct;
+        if(total===0)return; // skip entities with zero
+        var pct=totAll>0?(total/totAll*100):0;
+        h+='<tr style="border-bottom:1px solid rgba(0,0,0,.06);">';
+        h+='<td style="padding:6px 8px;font-weight:600;">'+r.name+'</td>';
+        [r.ago,r.sep,r.oct].forEach(function(v){
+          var clr=v>0?'var(--red)':'var(--text3)';
+          h+='<td style="text-align:right;padding:6px 8px;color:'+clr+';">'+(v>0?v.toFixed(1):'—')+'</td>';
+        });
+        h+='<td style="text-align:right;padding:6px 8px;font-weight:700;color:var(--red);">'+total.toFixed(1)+'</td>';
+        h+='<td style="text-align:right;padding:6px 8px;">';
+        h+='<div style="display:flex;align-items:center;justify-content:flex-end;gap:6px;">';
+        h+='<div style="width:'+Math.min(pct,100)+'px;height:8px;background:rgba(220,53,69,.25);border-radius:4px;"></div>';
+        h+='<span style="font-weight:600;min-width:32px;">'+pct.toFixed(0)+'%</span></div></td>';
+        h+='</tr>';
+      });
+      h+='<tr style="border-top:2px solid var(--border);font-weight:700;">';
+      h+='<td style="padding:6px 8px;">Total</td>';
+      h+='<td style="text-align:right;padding:6px 8px;color:var(--red);">'+totAgo.toFixed(1)+'</td>';
+      h+='<td style="text-align:right;padding:6px 8px;color:var(--red);">'+totSep.toFixed(1)+'</td>';
+      h+='<td style="text-align:right;padding:6px 8px;color:var(--red);">'+totOct.toFixed(1)+'</td>';
+      h+='<td style="text-align:right;padding:6px 8px;color:var(--red);">'+totAll.toFixed(1)+'</td>';
+      h+='<td style="text-align:right;padding:6px 8px;">100%</td>';
+      h+='</tr></tbody></table>';
+
+      // Summary KPIs
+      h+='<div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">';
+      h+='<div style="flex:1;min-width:100px;padding:10px;background:rgba(220,53,69,.06);border-radius:8px;text-align:center;">';
+      h+='<div style="font-size:9px;color:var(--red);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Ago</div>';
+      h+='<div style="font-size:18px;font-weight:700;color:var(--red);margin-top:3px;">$'+totAgo.toFixed(0)+'M</div></div>';
+      h+='<div style="flex:1;min-width:100px;padding:10px;background:rgba(220,53,69,.06);border-radius:8px;text-align:center;">';
+      h+='<div style="font-size:9px;color:var(--red);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Sep</div>';
+      h+='<div style="font-size:18px;font-weight:700;color:var(--red);margin-top:3px;">$'+totSep.toFixed(0)+'M</div></div>';
+      h+='<div style="flex:1;min-width:100px;padding:10px;background:rgba(220,53,69,.06);border-radius:8px;text-align:center;">';
+      h+='<div style="font-size:9px;color:var(--red);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Oct</div>';
+      h+='<div style="font-size:18px;font-weight:700;color:var(--red);margin-top:3px;">$'+totOct.toFixed(0)+'M</div></div>';
+      h+='<div style="flex:1;min-width:100px;padding:10px;background:rgba(0,0,0,.03);border-left:3px solid var(--red);border-radius:8px;text-align:center;">';
+      h+='<div style="font-size:9px;color:var(--red);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Promedio/Sem</div>';
+      h+='<div style="font-size:18px;font-weight:700;color:var(--red);margin-top:3px;">$'+(totAll/13).toFixed(1)+'M</div></div>';
+      h+='</div>';
+      h+='</div>';
+      container.innerHTML=h;
+    })();
     </script>
 
     <script>
     (function(){
       var dates=['03-Ago','10-Ago','17-Ago','24-Ago','31-Ago','07-Sep','14-Sep','21-Sep','28-Sep','05-Oct','12-Oct','19-Oct','26-Oct'];
-      var isAct=[true,true,true,true,true,true,true,true,false,false,false,false,false];
+      var isAct=[true,true,true,true,true,true,true,true,true,true,false,false,false];
       var entities=[
         {n:'HOLDCO',v:[128.7,125.6,68.6,49.4,36.9,36.8,28.3,28.4,232.1,454.3,436.7,425.6,422.9]},
         {n:'LTO',v:[9.9,5.1,6.6,5.1,1.0,3.1,9.2,10.6,8.1,7.6,7.1,83.3,80.4]},
@@ -1250,7 +1334,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       var ctx=document.getElementById('cashTrajectoryChart');
       if(ctx&&typeof Chart!=='undefined'){
         var actualData=bop.map(function(v,i){return isAct[i]?v:null;});
-        var projData=bop.map(function(v,i){return(!isAct[i]||i===7)?v:null;});
+        var projData=bop.map(function(v,i){return(!isAct[i]||i===9)?v:null;});
         new Chart(ctx,{type:'line',data:{
           labels:dates,
           datasets:[
@@ -2041,12 +2125,12 @@ function rebuildMaturity(){
 
   // Update header with total
   var meta=document.getElementById('maturityMeta');
-  if(meta) meta.textContent='Total: '+fmt(T)+' MXN equiv. · Actual vs Target diversificado';
+  if(meta) meta.textContent='Total: '+fmt(T)+' MXN equiv.';
 
   // Legend
   var legend=document.createElement('div');
   legend.style.cssText='display:flex;gap:16px;align-items:center;margin-bottom:14px;font-size:10px;color:var(--text2);';
-  legend.innerHTML='<span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:var(--teal);"></span>Actual</span><span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:2px;border-top:2px dashed var(--amber);"></span>Target</span>';
+  legend.innerHTML='<span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:var(--teal);"></span>Actual</span>';
   container.appendChild(legend);
 
   // Tooltip element (shared, positioned on hover)
@@ -2069,15 +2153,7 @@ function rebuildMaturity(){
     var fill=document.createElement('div');
     fill.style.cssText='height:100%;width:'+actPct+'%;background:'+b.color+';border-radius:3px;transition:width .4s;min-width:'+(actPct>0?'2px':'0')+';';
     track.appendChild(fill);
-    // Target marker line
-    var marker=document.createElement('div');
-    marker.style.cssText='position:absolute;left:'+b.targetPct+'%;top:-2px;bottom:-2px;width:0;border-left:2px dashed var(--amber);';
-    track.appendChild(marker);
-    // Target label
-    var tLbl=document.createElement('div');
-    tLbl.style.cssText='position:absolute;left:'+b.targetPct+'%;top:-14px;transform:translateX(-50%);font-size:8px;color:var(--amber);font-weight:600;white-space:nowrap;';
-    tLbl.textContent=b.targetPct+'%';
-    track.appendChild(tLbl);
+    // (Target markers removed)
 
     // Hover tooltip on bar
     track.addEventListener('mouseenter',function(e){
@@ -2112,8 +2188,8 @@ rebuildMaturity();
 // INVESTMENT FRAMEWORK — 3 Tranches
 // ═══════════════════════════════════════════════════════════════════════════════
 (function(){
-  var postCap=466.7; // MXN$m post-capitalización
-  var burnWeek=22.2; // MXN$m/sem run rate
+  var postCap=454.3; // MXN$m — HOLDCO BoP Oct real
+  var burnWeek=16.0; // MXN$m/sem run rate (cap_out Oct: $64M / 4 sem)
   var floor=40; // caja mínima
   var opWeeks=7;  // 6–8 semanas
   var resWeeks=6; // semanas 9–14
@@ -2188,9 +2264,9 @@ rebuildMaturity();
 
   // Footnote
   h+='<div style="margin-top:14px;padding:10px;background:rgba(0,0,0,.03);border-radius:6px;font-size:10px;color:var(--text3);line-height:1.6;">';
-  h+='<strong>Supuestos:</strong> Caja post-cap $'+postCap.toFixed(0)+'M · Run rate ~$'+burnWeek.toFixed(1)+'M/sem (proyección Ago–Oct) · Piso mínimo operativo $'+floor+'M · ';
+  h+='<strong>Supuestos:</strong> HOLDCO BoP Oct $'+postCap.toFixed(0)+'M · Run rate ~$'+burnWeek.toFixed(1)+'M/sem (cap_out Oct real: $64M / 4 sem) · Piso mínimo operativo $'+floor+'M · ';
   h+='Operativo = '+opWeeks+' semanas de burn (6–8 sem) · Reserva = semanas 9–14 · Estratégico = excedente post 14 semanas<br>';
-  h+='<strong>Tasas:</strong> CETES subasta 22-Sep-2026 (Banxico) · T-Bills 22-Sep-2026 (US Treasury) · MS Preferred Savings actual · Mesa MXN estimado TIIE-spread';
+  h+='<strong>Tasas:</strong> CETES subasta Oct-2026 (Banxico) · T-Bills Oct-2026 (US Treasury) · MS Preferred Savings actual · Mesa MXN estimado TIIE-spread';
   h+='</div>';
 
   fc.innerHTML=h;

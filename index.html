@@ -1992,7 +1992,7 @@ const minAxis={x:{grid:{display:false},border:{display:false},ticks:{font:{size:
   const projLinePlugin={id:'projLine',beforeDraw(chart){
     const xScale=chart.scales.x;
     const yScale=chart.scales.y;
-    const x=xScale.getPixelForValue(PROJ_START); // Sep'26 (último real)
+    const x=xScale.getPixelForValue(PROJ_START); // Oct'26 (último real)
     const c=chart.ctx;
     c.save();
     c.setLineDash([4,4]);
@@ -2016,7 +2016,7 @@ const minAxis={x:{grid:{display:false},border:{display:false},ticks:{font:{size:
   ]},options:{...chartDefs,layout:{padding:{top:10}},
     plugins:{legend:{display:true,position:'bottom',labels:{font:{size:9},boxWidth:12,padding:10,filter:item=>!item.text.includes('proy.')}},
       tooltip:{...tooltipStyle,callbacks:{label:i=>{const v=i.raw;return v!=null?' '+i.dataset.label.replace(' (proy.)','')+ ': '+v.toFixed(2)+'%':'';}}}},
-    scales:{x:{...minAxis.x,ticks:{...minAxis.x.ticks,maxRotation:45,autoSkip:true,maxTicksLimit:15}},
+    scales:{x:{...minAxis.x,ticks:{...minAxis.x.ticks,maxRotation:45,autoSkip:true,maxTicksLimit:20}},
       y:{...minAxis.y,min:0,max:12,ticks:{display:true,font:{size:9},color:'#6B7280',callback:v=>v.toFixed(1)+'%'}}}}});
 })();
 
@@ -2027,7 +2027,7 @@ const minAxis={x:{grid:{display:false},border:{display:false},ticks:{font:{size:
   const projLinePlugin2={id:'projLine2',beforeDraw(chart){
     const xScale=chart.scales.x;
     const yScale=chart.scales.y;
-    const x=xScale.getPixelForValue(PROJ_START); // Sep'26 (último real)
+    const x=xScale.getPixelForValue(PROJ_START); // Oct'26 (último real)
     const c=chart.ctx;
     c.save();
     c.setLineDash([4,4]);
@@ -2048,7 +2048,7 @@ const minAxis={x:{grid:{display:false},border:{display:false},ticks:{font:{size:
   ]},options:{...chartDefs,layout:{padding:{top:10}},
     plugins:{legend:{display:false},
       tooltip:{...tooltipStyle,callbacks:{label:i=>{const v=i.raw;return v!=null?' $'+v.toFixed(2)+' MXN/USD':'';}}}},
-    scales:{x:{...minAxis.x,ticks:{...minAxis.x.ticks,maxRotation:45,autoSkip:true,maxTicksLimit:15}},
+    scales:{x:{...minAxis.x,ticks:{...minAxis.x.ticks,maxRotation:45,autoSkip:true,maxTicksLimit:20}},
       y:{...minAxis.y,ticks:{display:true,font:{size:9},color:'#6B7280',callback:v=>'$'+v.toFixed(1)}}}}});
 })();
 

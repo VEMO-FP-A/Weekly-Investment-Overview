@@ -599,6 +599,9 @@ def main():
     parser.add_argument("--update-only", action="store_true", help="Solo actualizar HTML, no subir a GitHub")
     parser.add_argument("--push-only", action="store_true", help="Solo subir a GitHub, no tocar HTML")
     parser.add_argument("--skip-market", action="store_true", help="No descargar datos de mercado (FRED/Banxico)")
+    parser.add_argument("--skip-cashflow", action="store_true", help="No extraer Cash.Flow.xlsx")
+    parser.add_argument("--cashflow-excel", default=os.path.join(SCRIPT_DIR, "Cash.Flow.xlsx"),
+                        help="Ruta al Cash.Flow.xlsx")
     args = parser.parse_args()
 
     now = datetime.now().strftime("%d %b %Y %H:%M")
@@ -627,7 +630,42 @@ def main():
         print(f"\n── Actualizando: {os.path.basename(args.html)} ──")
         updated_html = update_html(args.html, data)
 
-        # ── Paso 1.5: Datos de mercado (APIs) ─────────────────────────
+        # ── Paso 1.5: Cash Flow (Cash.Flow.xlsx) ─────────────────────
+        if not args.skip_cashflow and os.path.exists(args.cashflow_excel):
+            print(f"\n── Cash Flow: {os.path.basename(args.cashflow_excel)} ──")
+            try:
+                import importlib.util
+                _cf_path = os.path.join(SCRIPT_DIR, "extract_cashflow.py")
+                _spec = importlib.util.spec_from_file_location("extract_cashflow", _cf_path)
+                _cf_mod = importlib.util.module_from_spec(_spec)
+                _spec.loader.exec_module(_cf_mod)
+                extract_cashflow = _cf_mod.extract_cashflow
+                update_cashflow_html = _cf_mod.update_cashflow_html
+                extract_saldos = _cf_mod.extract_saldos
+                update_saldos_html = _cf_mod.update_saldos_html
+                print_cashflow_report = _cf_mod.print_cashflow_report
+                cf_data = extract_cashflow(args.cashflow_excel)
+                updated_html = update_cashflow_html(updated_html, cf_data)
+                print("  ✓ ENTITY_DATA, ENTITY_WEEKLY, HOLDCO_BRIDGE actualizados")
+                print("  ✓ Capitalizaciones y Framework actualizados")
+
+                # SALDOS / CASH_DATES
+                saldos = extract_saldos(args.cashflow_excel)
+                if saldos["cash_dates"]:
+                    updated_html = update_saldos_html(updated_html, saldos)
+                    print(f"  ✓ CASH_DATES actualizado ({len(saldos['cash_dates'])} fechas)")
+                else:
+                    print("  ⚠ No se encontraron hojas SALDOS")
+
+                print_cashflow_report(cf_data)
+            except Exception as e:
+                print(f"  ⚠ Error Cash Flow: {e}")
+                import traceback
+                traceback.print_exc()
+        elif not args.skip_cashflow:
+            print(f"\n  [skip] Cash.Flow.xlsx no encontrado")
+
+        # ── Paso 1.6: Datos de mercado (APIs) ─────────────────────────
         if not args.skip_market:
             print(f"\n── Datos de mercado (FRED + Banxico) ──")
             try:

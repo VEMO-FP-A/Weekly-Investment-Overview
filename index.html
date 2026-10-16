@@ -398,7 +398,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
   <div class="section" id="sec-capital">
     <div class="section-head">
       <span>Use of Funds</span>
-      <span class="section-note">Semanal · Ago–Oct 2026 · MXN$m · Verde=Actual · Gris=Proyección</span>
+      <span class="section-note">Semanal · Ago–Dic 2026 · MXN$m · Verde=Actual · Gris=Proyección</span>
     </div>
 
     <!-- HOLDCO BRIDGE CHART -->
@@ -409,6 +409,8 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
           <button class="bridge-period-btn bridge-period-active" onclick="setBridgePeriod(0,this)">Ago</button>
           <button class="bridge-period-btn" onclick="setBridgePeriod(1,this)">Sep</button>
           <button class="bridge-period-btn" onclick="setBridgePeriod(2,this)">Oct</button>
+          <button class="bridge-period-btn" onclick="setBridgePeriod(3,this)">Nov</button>
+          <button class="bridge-period-btn" onclick="setBridgePeriod(4,this)">Dic</button>
         </div>
       </div>
       <div class="chart-card-body" style="height:340px;padding:12px 16px;">
@@ -466,120 +468,121 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     <script>
     // Entity detail data
     var ENTITY_DATA={
-      HOLDCO:{name:'HoldCo',note:'Caja operativa Oct: $454.3M · Cap out Oct: $47.3M (VCN $32.9M, EMC $5.3M, IP $2.7M, PSM $2.0M, Au Haus $4.5M) · Otros $-12.1M incluye inflows interco op y ajustes',
+      HOLDCO:{name:'HoldCo',note:'Caja operativa Dic: $406.2M · Cap out Dic: $0.3M',
         rows:[
-          {l:'BoP',v:[128.7,36.8,454.3,128.7],t:'bop'},
-          {l:'(+) Equity',v:[0.0,0.0,-0.0,0.0],t:'in'},
-          {l:'(-) Transferencias a Subsidiarias',v:[-90.0,-42.9,-47.3,-180.2],t:'out'},
-          {l:'(±) FX',v:[1.8,0.7,6.1,8.6],t:'other'},
-          {l:'(±) Otros',v:[-3.7,459.6,-12.1,443.8],t:'other'},
-          {l:'EoP',v:[36.8,454.3,400.9,400.9],t:'eop'}
-        ],monthly:['Ago','Sep','Oct','Total']},
+          {l:'BoP',v:[128.7,36.8,454.3,406.2,406.2,128.7],t:'bop'},
+          {l:'(+) Equity',v:[0.0,0.0,-0.0,0.0,0.0,0.0],t:'in'},
+          {l:'(-) Transferencias a Subsidiarias',v:[-90.0,-42.9,-42.0,0.0,-0.3,-175.2],t:'out'},
+          {l:'(±) FX',v:[-1.8,-0.7,-6.1,-0.0,-0.0,-8.6],t:'other'},
+          {l:'(+) Inyeccion Capital',v:[-0.0,461.0,-0.0,-0.0,-0.0,461.0],t:'in'},
+          {l:'EoP',v:[36.8,454.3,406.2,406.2,405.9,405.9],t:'eop'}
+        ],monthly:['Ago','Sep','Oct','Nov','Dic','Total']},
       LTO:{name:'LTO',
         rows:[
-          {l:'BoP',v:[9.9,7.1,21.9,9.9],t:'bop'},
-          {l:'(+) Cobranza',v:[62.0,69.5,48.3,179.8],t:'in'},
-          {l:'(+) Capitalización',v:[69.3,0.0,0.0,69.3],t:'in'},
-          {l:'(+) Inflows Intercos',v:[0.5,0.0,0.0,0.5],t:'in'},
-          {l:'(+) Debt',v:[0.0,0.0,100.0,100.0],t:'in'},
-          {l:'(-) OPEX',v:[-34.4,-21.9,-20.2,-76.5],t:'out'},
-          {l:'(-) CAPEX',v:[-76.4,-1.6,-21.2,-99.2],t:'out'},
-          {l:'(-) Outflow Interco',v:[-23.8,-31.2,-12.0,-67.0],t:'out'},
-          {l:'EoP',v:[7.1,21.9,116.9,116.9],t:'eop'}
-        ],monthly:['Ago','Sep','Oct','Total']},
+          {l:'BoP',v:[9.9,7.1,21.9,352.6,162.2,9.9],t:'bop'},
+          {l:'(+) Cobranza',v:[62.0,69.5,48.3,57.5,18.2,255.5],t:'in'},
+          {l:'(+) Capitalización',v:[69.3,0.0,0.0,0.0,0.0,69.3],t:'in'},
+          {l:'(+) Inflows Intercos',v:[0.5,0.0,0.0,7.0,2.8,10.3],t:'in'},
+          {l:'(+) Debt',v:[0.0,0.0,100.0,0.0,0.0,100.0],t:'in'},
+          {l:'(-) OPEX',v:[-34.4,-21.9,-20.2,-25.3,-10.1,-111.9],t:'out'},
+          {l:'(-) CAPEX',v:[-76.4,-1.6,-21.2,-21.0,0.0,-120.2],t:'out'},
+          {l:'(-) Outflow Interco',v:[-23.8,-31.2,-12.0,-12.5,-5.0,-84.5],t:'out'},
+          {l:'EoP',v:[7.1,21.9,116.9,358.3,168.1,168.1],t:'eop'}
+        ],monthly:['Ago','Sep','Oct','Nov','Dic','Total']},
       DAE:{name:'DAE',
         rows:[
-          {l:'BoP',v:[52.6,50.4,46.8,52.6],t:'bop'},
-          {l:'(+) Cobranza',v:[65.7,55.7,49.0,170.4],t:'in'},
-          {l:'(-) OPEX',v:[-46.4,-31.4,-31.1,-108.9],t:'out'},
-          {l:'(-) Outflow Interco',v:[-21.5,-27.9,-16.1,-65.5],t:'out'},
-          {l:'EoP',v:[50.4,46.8,48.6,48.6],t:'eop'}
-        ],monthly:['Ago','Sep','Oct','Total']},
+          {l:'BoP',v:[52.6,50.4,48.2,208.9,112.0,52.6],t:'bop'},
+          {l:'(+) Cobranza',v:[65.7,57.1,49.0,60.1,24.6,256.5],t:'in'},
+          {l:'(-) OPEX',v:[-46.4,-31.4,-29.0,-33.3,-13.3,-153.4],t:'out'},
+          {l:'(-) Outflow Interco',v:[-21.5,-27.9,-17.1,-7.0,-2.8,-76.3],t:'out'},
+          {l:'EoP',v:[50.4,48.2,51.2,228.7,120.5,120.5],t:'eop'}
+        ],monthly:['Ago','Sep','Oct','Nov','Dic','Total']},
       VCN:{name:'VCN',
         rows:[
-          {l:'BoP',v:[1.1,28.8,8.1,1.1],t:'bop'},
-          {l:'(+) Cobranza',v:[19.5,3.9,15.0,38.4],t:'in'},
-          {l:'(+) Capitalización',v:[0.0,15.9,32.9,48.8],t:'in'},
-          {l:'(+) Inflows Intercos',v:[17.1,24.9,4.3,46.3],t:'in'},
-          {l:'(+) Debt',v:[84.0,0.0,0.0,84.0],t:'in'},
-          {l:'(-) OPEX',v:[-41.9,-21.9,-7.5,-71.3],t:'out'},
-          {l:'(-) CAPEX',v:[-13.4,-25.2,-13.3,-51.9],t:'out'},
-          {l:'(-) Outflow Interco',v:[-37.7,-18.3,-18.2,-74.2],t:'out'},
-          {l:'EoP',v:[28.8,8.1,21.3,21.3],t:'eop'}
-        ],monthly:['Ago','Sep','Oct','Total']},
+          {l:'BoP',v:[1.1,28.8,8.1,36.9,4.2,1.1],t:'bop'},
+          {l:'(+) Cobranza',v:[19.5,3.9,15.0,15.0,7.5,60.9],t:'in'},
+          {l:'(+) Capitalización',v:[0.0,15.9,32.9,0.0,0.3,49.1],t:'in'},
+          {l:'(+) Inflows Intercos',v:[17.1,24.9,4.3,0.0,0.0,46.3],t:'in'},
+          {l:'(+) Debt',v:[84.0,0.0,0.0,0.0,0.0,84.0],t:'in'},
+          {l:'(-) OPEX',v:[-41.9,-21.9,-7.5,-7.2,-2.9,-81.4],t:'out'},
+          {l:'(-) CAPEX',v:[-13.4,-25.2,-13.3,-15.4,-6.2,-73.5],t:'out'},
+          {l:'(-) Outflow Interco',v:[-37.7,-18.3,-18.2,-0.1,-0.1,-74.4],t:'out'},
+          {l:'EoP',v:[28.8,8.1,21.3,29.2,2.9,2.9],t:'eop'}
+        ],monthly:['Ago','Sep','Oct','Nov','Dic','Total']},
       AuHaus:{name:'Au Haus',
         rows:[
-          {l:'BoP',v:[0.4,0.2,16.2,0.4],t:'bop'},
-          {l:'(+) Cobranza',v:[13.1,0.4,2.6,16.1],t:'in'},
-          {l:'(+) Capitalización',v:[0.0,12.8,4.5,17.3],t:'in'},
-          {l:'(+) Inflows Intercos',v:[27.3,19.1,5.5,51.9],t:'in'},
-          {l:'(-) OPEX',v:[-19.9,-5.5,-4.6,-30.0],t:'out'},
-          {l:'(-) CAPEX',v:[-18.2,-9.9,-1.7,-29.8],t:'out'},
-          {l:'(-) Outflow Interco',v:[-2.4,-0.9,0.0,-3.3],t:'out'},
-          {l:'EoP',v:[0.2,16.2,22.4,22.4],t:'eop'}
-        ],monthly:['Ago','Sep','Oct','Total']},
+          {l:'BoP',v:[0.4,0.2,0.9,4.2,3.6,0.4],t:'bop'},
+          {l:'(+) Cobranza',v:[13.1,0.4,2.6,5.2,2.1,23.4],t:'in'},
+          {l:'(+) Capitalización',v:[0.0,12.8,4.5,0.0,0.0,17.3],t:'in'},
+          {l:'(+) Inflows Intercos',v:[27.3,20.0,7.5,0.0,0.0,54.8],t:'in'},
+          {l:'(-) OPEX',v:[-19.9,-11.1,-10.1,-3.8,-1.5,-46.4],t:'out'},
+          {l:'(-) CAPEX',v:[-18.2,-19.6,-3.9,0.0,0.0,-41.7],t:'out'},
+          {l:'(-) Outflow Interco',v:[-2.4,-1.8,0.0,0.0,0.0,-4.2],t:'out'},
+          {l:'EoP',v:[0.2,0.9,1.4,5.6,4.2,4.2],t:'eop'}
+        ],monthly:['Ago','Sep','Oct','Nov','Dic','Total']},
       CF:{name:'CF',
         rows:[
-          {l:'BoP',v:[6.5,5.8,0.7,6.5],t:'bop'},
-          {l:'(+) Cobranza',v:[0.2,0.9,0.7,1.8],t:'in'},
-          {l:'(+) Inflows Intercos',v:[0.5,0.0,0.0,0.5],t:'in'},
-          {l:'(-) OPEX',v:[0.2,-6.0,-0.7,-6.5],t:'out'},
-          {l:'(-) Outflow Interco',v:[-1.6,0.0,0.0,-1.6],t:'out'},
-          {l:'EoP',v:[5.8,0.7,0.7,0.7],t:'eop'}
-        ],monthly:['Ago','Sep','Oct','Total']},
+          {l:'BoP',v:[6.5,5.8,0.9,3.7,2.4,6.5],t:'bop'},
+          {l:'(+) Cobranza',v:[1.3,0.8,0.5,0.8,0.3,3.7],t:'in'},
+          {l:'(+) Inflows Intercos',v:[0.5,0.2,0.0,0.1,0.1,0.9],t:'in'},
+          {l:'(-) OPEX',v:[-0.9,-1.1,-0.6,-0.3,-0.1,-3.0],t:'out'},
+          {l:'(-) CAPEX',v:[0.0,-0.4,0.0,0.0,0.0,-0.4],t:'out'},
+          {l:'(-) Outflow Interco',v:[-1.6,-4.5,0.0,0.0,0.0,-6.1],t:'out'},
+          {l:'EoP',v:[5.8,0.9,0.8,4.3,2.6,2.6],t:'eop'}
+        ],monthly:['Ago','Sep','Oct','Nov','Dic','Total']},
       Green:{name:'Green',
         rows:[
-          {l:'BoP',v:[6.4,2.4,0.1,6.4],t:'bop'},
-          {l:'(+) Cobranza',v:[1.2,0.0,13.0,14.2],t:'in'},
-          {l:'(-) OPEX',v:[0.0,-2.3,-0.6,-2.9],t:'out'},
-          {l:'(-) Outflow Interco',v:[-5.2,0.0,0.0,-5.2],t:'out'},
-          {l:'EoP',v:[2.4,0.1,12.5,12.5],t:'eop'}
-        ],monthly:['Ago','Sep','Oct','Total']},
+          {l:'BoP',v:[6.4,2.4,0.1,4.3,0.8,6.4],t:'bop'},
+          {l:'(+) Cobranza',v:[1.2,0.0,1.7,0.0,0.0,2.9],t:'in'},
+          {l:'(-) OPEX',v:[0.0,-2.3,-0.6,-0.6,-0.2,-3.7],t:'out'},
+          {l:'(-) Outflow Interco',v:[-5.2,0.0,0.0,0.0,0.0,-5.2],t:'out'},
+          {l:'EoP',v:[2.4,0.1,1.2,3.6,0.6,0.6],t:'eop'}
+        ],monthly:['Ago','Sep','Oct','Nov','Dic','Total']},
       PSM:{name:'PSM',
         rows:[
-          {l:'BoP',v:[0.4,2.7,0.5,0.4],t:'bop'},
-          {l:'(+) Capitalización',v:[5.0,11.8,2.7,19.5],t:'in'},
-          {l:'(+) Inflows Intercos',v:[29.0,17.9,19.0,65.9],t:'in'},
-          {l:'(-) OPEX',v:[-30.8,-32.0,-21.7,-84.5],t:'out'},
-          {l:'EoP',v:[2.7,0.5,0.5,0.5],t:'eop'}
-        ],monthly:['Ago','Sep','Oct','Total']},
-      EMC:{name:'EMC',note:'Oct: Capitalización $5.7M + Inflows Intercos $8.0M + OPEX $10.1M + CAPEX $4.2M · EoP negativo $-0.1M — requiere capitalizacion adicional',
+          {l:'BoP',v:[0.4,2.7,0.5,7.1,6.2,0.4],t:'bop'},
+          {l:'(+) Capitalización',v:[5.0,0.0,2.0,0.0,0.0,7.0],t:'in'},
+          {l:'(+) Inflows Intercos',v:[29.0,27.8,26.0,12.5,5.0,100.3],t:'in'},
+          {l:'(-) OPEX',v:[-30.8,-29.8,-27.7,-10.1,-4.1,-102.5],t:'out'},
+          {l:'EoP',v:[2.7,0.5,0.5,9.5,7.1,7.1],t:'eop'}
+        ],monthly:['Ago','Sep','Oct','Nov','Dic','Total']},
+      EMC:{name:'EMC',
         rows:[
-          {l:'BoP',v:[0.5,0.7,0.5,0.5],t:'bop'},
-          {l:'(+) Capitalización',v:[7.9,3.9,5.7,17.5],t:'in'},
-          {l:'(+) Inflows Intercos',v:[10.8,4.0,8.0,22.8],t:'in'},
-          {l:'(-) OPEX',v:[-18.5,-7.4,-10.1,-36.0],t:'out'},
-          {l:'(-) CAPEX',v:[0.0,-0.7,-4.2,-4.9],t:'out'},
-          {l:'EoP',v:[0.7,0.5,-0.1,-0.1],t:'eop'}
-        ],monthly:['Ago','Sep','Oct','Total']},
+          {l:'BoP',v:[0.5,0.7,0.5,0.0,0.0,0.5],t:'bop'},
+          {l:'(+) Capitalización',v:[7.9,0.0,5.3,20.0,5.5,38.7],t:'in'},
+          {l:'(+) Inflows Intercos',v:[10.8,11.4,11.0,0.0,0.0,33.2],t:'in'},
+          {l:'(-) OPEX',v:[-18.5,-11.6,-12.7,-13.7,-5.5,-62.0],t:'out'},
+          {l:'(-) CAPEX',v:[0.0,0.0,-4.2,-6.3,0.0,-10.5],t:'out'},
+          {l:'EoP',v:[0.7,0.5,-0.1,0.0,0.0,0.0],t:'eop'}
+        ],monthly:['Ago','Sep','Oct','Nov','Dic','Total']},
       IP:{name:'IP',
         rows:[
-          {l:'BoP',v:[0.3,0.6,5.1,0.3],t:'bop'},
-          {l:'(+) Capitalización',v:[5.2,4.3,2.7,12.2],t:'in'},
-          {l:'(+) Inflows Intercos',v:[0.6,0.8,0.0,1.4],t:'in'},
-          {l:'(-) OPEX',v:[-5.6,-0.6,-3.2,-9.4],t:'out'},
-          {l:'EoP',v:[0.6,5.1,4.6,4.6],t:'eop'}
-        ],monthly:['Ago','Sep','Oct','Total']},
+          {l:'BoP',v:[0.3,0.6,5.1,0.0,0.0,0.3],t:'bop'},
+          {l:'(+) Capitalización',v:[5.2,4.3,2.7,0.0,0.0,12.2],t:'in'},
+          {l:'(+) Inflows Intercos',v:[0.6,0.8,0.0,0.0,0.0,1.4],t:'in'},
+          {l:'(-) OPEX',v:[-5.6,-0.6,-3.2,0.0,0.0,-9.4],t:'out'},
+          {l:'EoP',v:[0.6,5.1,4.6,0.0,0.0,0.0],t:'eop'}
+        ],monthly:['Ago','Sep','Oct','Nov','Dic','Total']},
       MC:{name:'MC',
         rows:[
-          {l:'BoP',v:[5.7,5.9,5.9,5.7],t:'bop'},
-          {l:'(+) Inflows Intercos',v:[0.3,0.1,0.3,0.7],t:'in'},
-          {l:'(-) OPEX',v:[-0.2,-0.0,-0.1,-0.3],t:'out'},
-          {l:'EoP',v:[5.9,5.9,6.1,6.1],t:'eop'}
-        ],monthly:['Ago','Sep','Oct','Total']}
+          {l:'BoP',v:[5.7,5.9,5.9,29.5,11.6,5.7],t:'bop'},
+          {l:'(+) Inflows Intercos',v:[0.3,0.1,0.3,0.0,0.0,0.7],t:'in'},
+          {l:'(-) OPEX',v:[-0.2,-0.0,-0.1,-0.1,-0.1,-0.5],t:'out'},
+          {l:'EoP',v:[5.9,5.9,6.1,29.4,11.6,11.6],t:'eop'}
+        ],monthly:['Ago','Sep','Oct','Nov','Dic','Total']}
     };
 
     // Weekly balance data per entity (for weekly row in detail cards)
     var ENTITY_WEEKLY={
-      dates:['03-Ago','10-Ago','17-Ago','24-Ago','31-Ago','07-Sep','14-Sep','21-Sep','28-Sep','05-Oct','12-Oct','19-Oct','26-Oct'],
-      isAct:[true,true,true,true,true,true,true,true,true,true,true,false,false],
+      dates:['03-Ago','10-Ago','17-Ago','24-Ago','31-Ago','07-Sep','14-Sep','21-Sep','28-Sep','05-Oct','12-Oct','19-Oct','26-Oct','02-Nov','09-Nov','16-Nov','23-Nov','30-Nov','07-Dic','14-Dic'],
+      isAct:[true,true,true,true,true,true,true,true,true,true,true,false,false,false,false,false,false,false,false,false],
       // Entity-specific category definitions
       cats_holdco:[
         {k:'bop',l:'BoP',t:'bop'},
         {k:'equity',l:'(+) Equity',t:'in'},
+        {k:'others_excel',l:'(+) Inyeccion Capital',t:'in'},
         {k:'cap_out',l:'(−) Transferencias a Subsidiarias',t:'out'},
         {k:'fx',l:'(±) Efecto Cambiario (FX)',t:'other'},
-        {k:'otros',l:'(±) Otros',t:'other'},
         {k:'eop',l:'EoP',t:'eop'}
       ],
       cats_sub:[
@@ -597,23 +600,23 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       ],
       catsFor:function(key){return key==='HOLDCO'?this.cats_holdco:this.cats_sub;},
       data:{
-        HOLDCO:{bop:[128.7,125.6,68.6,49.4,36.9,36.8,28.3,28.4,232.1,454.3,426.4,415.3,413.6],equity:[0,0,0,0,0,0,0,0,0,0,0,0,0],cap_out:[-2.0,-56.4,-18.8,-12.8,0,-8.9,0,-19.7,-14.2,-24.8,-9.8,-11.1,-1.7],fx:[1.0,0.6,0.4,-0.2,0.1,-0.3,-0.2,0.1,1.0,3.2,2.9,0,0],otros:[-2.1,-1.2,-0.8,0.5,-0.1,0.7,0.3,223.2,235.4,-6.4,-4.2,9.3,0],eop:[125.6,68.6,49.4,36.9,36.8,28.3,28.4,232.1,454.3,426.4,415.3,413.6,411.8]},
-        LTO:{bop:[9.9,5.1,6.6,5.1,1.0,3.1,9.2,10.6,8.1,7.6,6.7,86.5,81.6],cobranza:[12.0,22.4,12.9,8.6,6.1,12.2,35.5,12.0,9.9,9.2,6.1,12.1,20.9],cap_in:[56.4,7.9,5.0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0.5,0,0,0,0,0,0,0,0,1.4],debt:[0,0,0,0,0,0,0,0,0,0,100.0,0,0],opex:[-3.8,-6.6,-16.6,-7.4,-4.0,-3.9,-6.0,-11.9,-4.0,-4.9,-0.4,-14.9,-5.1],capex:[-0.2,-66.9,-0.8,-8.5,0,0,-1.1,-0.5,-0.6,-0.2,-21.0,0,-21.0],interco_out:[-12.7,-3.7,-5.0,-2.4,0,-2.2,-27.0,-2.0,-5.7,-5.0,-5.0,-2.0,-2.5],otros:[0,0,0,0,0,0,0,0,0,0,0,0,0],eop:[61.5,-41.9,2.2,-4.0,3.1,9.2,10.6,8.1,7.6,6.7,86.5,81.6,75.4]},
-        DAE:{bop:[52.6,41.8,45.8,44.9,46.9,50.4,25.8,26.6,32.8,40.2,45.2,37.2,29.7],cobranza:[12.1,11.9,16.5,12.5,12.6,5.9,24.3,11.4,14.0,12.3,12.3,12.3,12.3],cap_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],debt:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-3.4,-7.9,-17.0,-9.1,-9.0,-8.6,-17.4,-5.3,-6.7,-7.3,-15.2,-8.7,-6.7],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[-19.6,0,-0.5,-1.3,-0.1,-21.9,-6.0,0,0,0,-5.0,-11.1,-2.4],otros:[0,0,0,0,0,0,0,0,0,0,0,0,0],eop:[41.8,45.8,44.9,46.9,50.4,25.8,26.6,32.8,40.2,45.2,37.2,29.7,32.9]},
-        VCN:{bop:[1.1,23.9,79.1,54.8,31.7,30.8,2.5,1.3,8.2,3.3,3.9,0,9.1],cobranza:[10.4,0.2,0.2,1.6,7.2,0.1,1.9,0,1.8,0,0,7.5,7.5],cap_in:[0,0,0,0,0,9.0,0,6.9,9.9,24.8,8.2,0,0],interco_in:[17.1,0,0,0,0,0,10.5,14.3,0,0,0,4.3,0],debt:[0,84.0,0,0,0,0,0,0,0,0,0,0,0],opex:[-6.6,-9.7,-15.1,-5.4,-5.0,-13.2,-4.5,-4.3,-7.6,-2.1,-2.6,-2.7,-1.4],capex:[0,-5.8,-4.8,-2.1,-0.7,-13.8,-6.5,-4.9,-1.4,-13.3,0,0,-3.1],interco_out:[0,-13.5,-4.6,-17.2,-2.4,-10.5,-2.7,-5.1,-7.7,-8.7,-9.5,0,0],otros:[0,0,0,0,0,0,0,0,0,0,0,0,0],eop:[22.0,79.1,54.8,31.7,30.8,2.5,1.3,8.2,3.3,3.9,0,9.1,12.0]},
-        AuHaus:{bop:[0.4,3.7,0.2,0.3,1.6,0.2,5.1,0.4,0.8,0.5,0.8,0,0],cobranza:[5.9,0.1,1.8,5.1,0.1,0,0.2,0.1,0.1,0.5,0,1.0,1.0],cap_in:[0,0,0,0,0,0,0,12.8,0,0,1.5,2.9,0],interco_in:[0,4.4,5.6,14.9,2.4,12.0,4.6,2.5,6.2,5.5,0,0,0],debt:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-0.5,-4.2,-1.7,-10.7,-2.8,0,-3.0,-2.5,-0.8,0,-2.1,-2.5,-0.8],capex:[-1.8,-3.7,-5.5,-6.1,-1.1,0,-5.5,-4.4,-4.0,0,-0.3,-1.4,0],interco_out:[-0.3,0,-0.2,-1.9,0,-0.9,0,0,0,0,0,0,0],otros:[0,0,0,0,0,0,0,0,0,0,0,0,0],eop:[3.7,0.2,0.3,1.6,0.2,11.4,1.3,8.8,2.3,6.5,0,0,0.3]},
-        CF:{bop:[6.5,6.5,6.8,5.2,5.5,5.9,3.6,0.2,0.6,0.6,0.5,0.4,0.3],cobranza:[0,0.1,0,0,0,0.2,0.2,0.4,0.2,0.2,0.2,0.2,0.2],cap_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0.1,0.2,0.2,0,0,0,0,0,0,0,0,0],debt:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[0,0,-0.2,0,0.4,-2.4,-3.6,0,-0.2,-0.3,-0.2,-0.3,-0.1],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,-1.5,0,0,0,0,0,0,0,0,0,0],otros:[0,0,0,0,0,0,0,0,0,0,0,0,0],eop:[6.5,6.8,5.2,5.5,5.9,3.6,0.2,0.6,0.6,0.5,0.4,0.3,0.5]},
-        Green:{bop:[6.4,6.9,6.9,7.0,7.0,2.4,2.3,1.3,0.2,0.2,1.3,0.8,1.2],cobranza:[0.5,0,0,0,0.7,0,0,0,0,12.4,0,0.6,0],cap_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0,0,0,0,0,0,0,0,0,0],debt:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[0,0,0,0,0,-0.1,-1.0,-1.2,0,0,-0.5,-0.1,-0.1],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,-5.2,0,0,0,0,0,0,0,0],otros:[0,0,0,0,0,0,0,0,0,0,0,0,0],eop:[6.9,6.9,6.9,7.0,2.4,2.3,1.3,0.1,0.2,12.6,0.8,1.2,1.1]},
-        PSM:{bop:[0.4,0.6,0.6,0.8,0.6,2.8,2.0,0.4,0.7,0.5,1.2,0,0],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0],cap_in:[0,0,5.0,0,0,0,11.8,0,0,0.7,0,1.9,0],interco_in:[3.0,9.2,5.0,6.6,5.3,7.0,0.4,8.5,2.0,0,10.0,6.5,2.5],debt:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-2.7,-8.7,-9.6,-6.7,-3.1,-7.8,-13.8,-8.2,-2.2,0,-11.2,-8.4,-2.0],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0,-0.6,-0.1,-0.1,0,0,0,0,0,0,0,0,0],eop:[0.6,0.6,0.8,0.6,2.8,2.0,0.4,0.7,0.5,1.2,0,0,0.5]},
-        EMC:{bop:[0.5,1.8,0.3,0.5,0.4,0.8,0.2,0.7,0.9,0.6,1.0,2.7,0],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0],cap_in:[0,5.4,2.5,0,0,0,3.9,0,0,0.4,0,3.5,1.7],interco_in:[4.2,2.5,0.5,1.0,2.6,2.0,0,2.0,0,0,5.0,2.0,1.0],debt:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-2.9,-4.0,-5.8,-3.6,-2.2,-2.6,-2.6,-1.8,-0.3,0,-3.4,-4.0,-2.7],capex:[0,0,0,0,0,0,-0.7,0,0,0,0,-4.2,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0,0,0,0,0,0,0,0,0,0,0,0,0],eop:[1.8,5.7,-2.5,-2.1,0.8,0.2,0.7,0.9,0.6,1.0,2.7,0,0]},
-        IP:{bop:[0.3,0.7,0.3,0.4,0.6,0.4,0.3,0.5,0.6,0.6,0.5,0.3,0],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0],cap_in:[0,0,0.5,4.7,0,0,0,0,-0.1,0,0,2.7,0],interco_in:[0.4,0,0.1,0.1,0,0.5,0.2,0.1,0,0,0,0,0],debt:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[0,-0.4,-0.5,-4.5,-0.2,-0.6,0,0,0,0,-0.3,-2.9,0],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0,0,0,0,0,0,0,0,0,0,0,0,0],eop:[0.7,0.3,0.4,0.8,0.4,0.3,0.5,0.6,0.6,0.5,0.3,0,0]},
-        MC:{bop:[5.7,5.7,5.6,5.6,5.9,5.9,5.9,5.9,5.7,5.7,5.7,5.7,6.0],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0],cap_in:[0,0,0,0,0,0,0,-0.3,0,0,0,0,0],interco_in:[0,0,0,0.3,0,0.1,0,0,0,0,0,0.3,0],debt:[0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[0,0,0,0,0,0,0,0,0,0,0,0,0],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0,0,0,0,0,0,0,0,0,0,0,0,0],eop:[5.7,5.6,5.6,5.9,5.9,5.9,5.9,5.7,5.7,5.7,5.7,6.0,6.0]}
+        HOLDCO:{bop:[128.7,125.6,68.6,49.4,36.9,36.8,28.3,28.4,232.1,454.3,426.4,415.3,413.6,410.8,408.1,405.4,396.3,393.6,390.6,387.8],equity:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],others_excel:[0,0,0,0,0,0,0,223.5,237.4,0,0,0,0,0,0,0,0,0,0,0],cap_out:[-2.0,-56.4,-18.8,-12.8,0,-8.9,0,-19.7,-14.2,-24.8,-9.8,-11.1,-1.7,-2.7,-2.7,-2.7,-9.0,-2.7,-3.0,-2.7],fx:[-1.0,-0.6,-0.4,0.2,-0.1,0.3,0.2,-0.1,-1.0,-3.2,-2.9,0,0,0,0,0,0,0,0,0],eop:[125.6,68.6,49.4,36.9,36.8,28.3,28.4,232.1,454.3,426.4,415.3,413.6,410.8,408.1,405.4,396.3,393.6,390.6,387.8,385.1]},
+        LTO:{bop:[9.9,5.1,6.6,5.1,1.0,3.1,9.2,10.6,8.1,7.6,6.7,86.5,81.6,75.4,78.4,57.4,63.3,78.1,81.1,81.1],cobranza:[12.0,22.4,12.9,8.6,6.1,12.2,35.5,12.0,9.9,9.2,6.1,12.1,20.9,9.2,6.1,12.1,20.9,9.2,6.1,12.1],cap_in:[56.4,7.9,5.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0.5,0,0,0,0,0,0,0,0,1.4,1.4,1.4,1.4,1.4,1.4,1.4,1.4],debt:[0,0,0,0,0,0,0,0,0,0,100.0,0,0,0,0,0,0,0,0,0],opex:[-3.8,-6.6,-16.6,-7.4,-4.0,-3.9,-6.0,-11.9,-4.0,-4.9,-0.4,-14.9,-5.1,-5.1,-5.1,-5.1,-5.1,-5.1,-5.1,-5.1],capex:[-0.2,-66.9,-0.8,-8.5,0,0,-1.1,-0.5,-0.6,-0.2,-21.0,0,-21.0,0,-21.0,0,0,0,0,0],interco_out:[-12.7,-3.7,-5.0,-2.4,0,-2.2,-27.0,-2.0,-5.7,-5.0,-5.0,-2.0,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5],otros:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],eop:[61.5,-41.9,2.2,-4.0,3.1,9.2,10.6,8.1,7.6,6.7,86.5,81.6,75.4,78.4,57.4,63.3,78.1,81.1,81.1,87.0]},
+        DAE:{bop:[52.6,41.8,45.8,44.9,46.9,50.4,25.8,26.6,32.8,40.2,45.2,37.4,29.8,34.1,37.1,41.4,45.6,50.8,53.8,58.1],cobranza:[12.1,11.9,16.5,12.5,12.6,5.9,24.3,11.4,15.4,11.0,12.4,12.3,13.4,11.0,12.4,12.3,13.4,11.0,12.4,12.3],cap_in:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],debt:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-3.4,-7.9,-17.0,-9.1,-9.0,-8.6,-17.4,-5.3,-6.6,-5.1,-15.2,-8.7,-6.7,-6.7,-6.7,-6.7,-6.7,-6.7,-6.7,-6.7],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[-19.6,0,-0.5,-1.3,-0.1,-21.9,-6.0,0,-1.5,-1.0,-5.0,-11.1,-2.4,-1.4,-1.4,-1.4,-1.4,-1.4,-1.4,-1.4],otros:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],eop:[41.8,45.8,44.9,46.9,50.4,25.8,26.6,32.8,40.2,45.2,37.4,29.8,34.1,37.1,41.4,45.6,50.8,53.8,58.1,62.3]},
+        VCN:{bop:[1.1,23.9,79.1,54.8,31.7,30.8,2.5,1.3,8.2,3.3,3.9,0,9.1,12.0,7.5,2.9,5.9,8.8,4.2,0],cobranza:[10.4,0.2,0.2,1.6,7.2,0.1,1.9,0,1.8,0,0,7.5,7.5,0,0,7.5,7.5,0,0,7.5],cap_in:[0,0,0,0,0,9.0,0,6.9,9.9,24.8,8.2,0,0,0,0,0,0,0,0.3,0],interco_in:[17.1,0,0,0,0,0,10.5,14.3,0,0,0,4.3,0,0,0,0,0,0,0,0],debt:[0,84.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-6.6,-9.7,-15.1,-5.4,-5.0,-13.2,-4.5,-4.3,-7.6,-2.1,-2.6,-2.7,-1.4,-1.4,-1.4,-1.4,-1.4,-1.4,-1.4,-1.4],capex:[0,-5.8,-4.8,-2.1,-0.7,-13.8,-6.5,-4.9,-1.4,-13.3,0,0,-3.1,-3.1,-3.1,-3.1,-3.1,-3.1,-3.1,-3.1],interco_out:[0,-13.5,-4.6,-17.2,-2.4,-10.5,-2.7,-5.1,-7.7,-8.7,-9.5,0,0,0,0,0,0,0,0,0],otros:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],eop:[22.0,79.1,54.8,31.7,30.8,2.5,1.3,8.2,3.3,3.9,0,9.1,12.0,7.5,2.9,5.9,8.8,4.2,0,2.9]},
+        AuHaus:{bop:[0.4,3.7,0.2,0.3,1.6,0.2,5.1,0.4,0.8,0.5,0.8,0,0,0.3,0.6,0.8,1.1,1.4,1.7,2.0],cobranza:[5.9,0.1,1.8,5.1,0.1,0,0.2,0.1,0.1,0.5,0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],cap_in:[0,0,0,0,0,0,0,12.8,0,0,1.5,2.9,0,0,0,0,0,0,0,0],interco_in:[0,4.4,5.6,14.9,2.4,12.9,4.6,2.5,6.2,7.5,0,0,0,0,0,0,0,0,0,0],debt:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-0.5,-4.2,-1.7,-10.7,-2.8,0,-9.0,-2.1,-4.3,-5.5,-2.1,-2.5,-0.8,-0.8,-0.8,-0.8,-0.8,-0.8,-0.8,-0.8],capex:[-1.8,-3.7,-5.5,-6.1,-1.1,-6.3,-0.4,-12.9,0,-2.3,-0.3,-1.4,0,0,0,0,0,0,0,0],interco_out:[-0.3,0,-0.2,-1.9,0,-1.8,0,0,-2.2,0,0,0,0,0,0,0,0,0,0,0],otros:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],eop:[3.7,0.2,0.3,1.6,0.2,5.1,0.4,0.8,0.5,0.8,0,0,0.3,0.6,0.8,1.1,1.4,1.7,2.0,2.2]},
+        CF:{bop:[6.5,6.5,6.8,5.2,5.5,5.9,3.6,0.2,0.6,0.6,0.5,0.4,0.3,0.5,0.6,0.7,0.9,1.0,1.1,1.3],cobranza:[0,0.1,0,0.3,0.8,0.1,0,0.4,0.3,0,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2,0.2],cap_in:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0.1,0.2,0.2,0,0,0.2,0,0.5,0,0,0,0,0,0,0,0,0,0,0],debt:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[0,0,-0.2,-0.3,-0.4,-0.3,-0.8,0,-0.8,-0.1,-0.2,-0.3,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1],capex:[0,0,0,0,0,0,-0.4,0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,-1.5,0,0,-2.0,-2.6,0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],eop:[6.5,6.8,5.2,5.5,5.9,3.6,0.2,0.6,0.6,0.5,0.4,0.3,0.5,0.6,0.7,0.9,1.0,1.1,1.3,1.4]},
+        Green:{bop:[6.4,6.9,6.9,7.0,7.0,2.4,2.3,1.3,0.2,0.2,1.3,0.8,1.2,1.1,1.0,0.9,0.7,0.6,0.5,0.4],cobranza:[0.5,0,0,0,0.7,0,0,0,0,1.1,0,0.6,0,0,0,0,0,0,0,0],cap_in:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],debt:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[0,0,0,0,0,-0.1,-1.0,-1.2,0,0,-0.5,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1,-0.1],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,-5.2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],eop:[6.9,6.9,6.9,7.0,2.4,2.3,1.3,0.1,0.2,1.3,0.8,1.2,1.1,1.0,0.9,0.7,0.6,0.5,0.4,0.2]},
+        PSM:{bop:[0.4,0.6,0.6,0.8,0.6,2.8,2.0,0.4,0.7,0.5,1.2,0,0,0.5,0.9,1.4,1.9,2.4,2.8,3.3],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],cap_in:[0,0,5.0,0,0,0,0,0,0,0,0,1.9,0,0,0,0,0,0,0,0],interco_in:[3.0,9.2,5.0,6.6,5.3,7.0,12.8,2.0,6.1,7.0,10.0,6.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5],debt:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-2.7,-8.7,-9.6,-6.7,-3.1,-7.7,-14.3,-1.6,-6.2,-6.0,-11.2,-8.4,-2.0,-2.0,-2.0,-2.0,-2.0,-2.0,-2.0,-2.0],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0,-0.6,-0.1,-0.1,0,-0.1,0,-0.1,-0.1,-0.2,0,0,0,0,0,0,0,0,0,0],eop:[0.6,0.6,0.8,0.6,2.8,2.0,0.4,0.7,0.5,1.2,0,0,0.5,0.9,1.4,1.9,2.4,2.8,3.3,3.8]},
+        EMC:{bop:[0.5,1.8,0.3,0.5,0.4,0.8,0.2,0.7,0.9,0.6,1.0,2.7,0,0,0,0,0,0,0,0],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],cap_in:[0,0,5.4,2.5,0,0,0,0,0,0,0,3.5,1.7,2.7,2.7,2.7,9.0,2.7,2.7,2.7],interco_in:[4.2,2.5,0.5,1.0,2.6,2.0,4.6,2.0,2.7,3.0,5.0,2.0,1.0,0,0,0,0,0,0,0],debt:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-2.9,-4.0,-5.8,-3.6,-2.2,-2.6,-4.1,-1.8,-3.1,-2.6,-3.4,-4.0,-2.7,-2.7,-2.7,-2.7,-2.7,-2.7,-2.7,-2.7],capex:[0,0,0,0,0,0,0,0,0,0,0,-4.2,0,0,0,0,-6.3,0,0,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],eop:[1.8,0.3,0.5,0.4,0.8,0.2,0.7,0.9,0.6,1.0,2.7,0,0,0,0,0,0,0,0,0]},
+        IP:{bop:[0.3,0.7,0.3,0.4,0.6,0.4,0.3,0.5,0.6,0.6,0.5,0.3,0,0,0,0,0,0,0,0],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],cap_in:[0,0,0.5,4.7,0,0,0,0,-0.1,0,0,2.7,0,0,0,0,0,0,0,0],interco_in:[0.4,0,0.1,0.1,0,0.5,0.2,0.1,0,0,0,0,0,0,0,0,0,0,0,0],debt:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[0,-0.4,-0.5,-4.5,-0.2,-0.6,0,0,0,0,-0.3,-2.9,0,0,0,0,0,0,0,0],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],eop:[0.7,0.3,0.4,0.8,0.4,0.3,0.5,0.6,0.6,0.5,0.3,0,0,0,0,0,0,0,0,0]},
+        MC:{bop:[5.7,5.7,5.6,5.6,5.9,5.9,5.9,5.9,5.7,5.7,5.7,5.7,6.0,6.0,5.9,5.9,5.9,5.9,5.8,5.8],cobranza:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],cap_in:[0,0,0,0,0,0,0,-0.3,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0.3,0,0.1,0,0,0,0,0,0.3,0,0,0,0,0,0,0,0],debt:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],eop:[5.7,5.6,5.6,5.9,5.9,5.9,5.9,5.7,5.7,5.7,5.7,6.0,6.0,5.9,5.9,5.9,5.9,5.8,5.8,5.8]}
       }
     };
 
     function buildEntityCard(key,ent){
       var h='<div id="ent-section-'+key+'" style="margin-top:20px;">';
-      h+='<div class="section-head-light"><span>'+ent.name+' — Detalle de Flujo</span><span style="font-size:10px;color:var(--text3);font-weight:400;">MXN$m · Ago–Oct 2026</span></div>';
+      h+='<div class="section-head-light"><span>'+ent.name+' — Detalle de Flujo</span><span style="font-size:10px;color:var(--text3);font-weight:400;">MXN$m · Ago–Dic 2026</span></div>';
       // Monthly detail table
       h+='<div class="chart-card" style="padding:16px;">';
       h+='<div style="font-size:10px;font-weight:600;color:var(--teal);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">Vista Mensual</div>';
@@ -633,7 +636,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
         r.v.forEach(function(v,i){
           var clr=lc;
           if(r.t==='eop'&&v!==null&&v<0)clr='var(--red)';
-          var fw=isBold||i===3?'700':'400';
+          var fw=isBold||i===r.v.length-1?'700':'400';
           h+='<td style="text-align:right;padding:'+(isSub?'2px 8px':'8px')+';font-weight:'+fw+';color:'+clr+';font-size:'+fs+';">'+(v===null?'—':v.toFixed(1))+'</td>';
         });
         h+='</tr>';
@@ -641,11 +644,13 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       h+='</tbody></table>';
       // Summary cards
       var totIn=0,totOut=0,bopVal=null,eopVal=null;
+      var lastMonthIdx=ent.monthly.length-2; // last month before Total
+      var totalIdx=ent.monthly.length-1; // Total column
       ent.rows.forEach(function(r){
-        if(r.t==='in'){totIn+=(r.v[3]||0);}
-        if(r.t==='out'){totOut+=(r.v[3]||0);}
+        if(r.t==='in'){totIn+=(r.v[totalIdx]||0);}
+        if(r.t==='out'){totOut+=(r.v[totalIdx]||0);}
         if(r.t==='bop')bopVal=r.v[0];
-        if(r.t==='eop')eopVal=r.v[2]!==null?r.v[2]:r.v[3];
+        if(r.t==='eop')eopVal=r.v[lastMonthIdx]!==null?r.v[lastMonthIdx]:r.v[totalIdx];
       });
       var net=totIn+totOut;
       var nc=net>=0?'var(--teal)':'var(--red)';
@@ -654,16 +659,16 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       h+='<div style="font-size:9px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">BoP (Ago)</div>';
       h+='<div style="font-size:18px;font-weight:700;color:var(--text);margin-top:3px;">$'+(bopVal!==null?bopVal.toFixed(1):'—')+'M</div></div>';
       h+='<div style="flex:1;min-width:100px;padding:10px;background:rgba(34,197,94,.08);border-radius:8px;text-align:center;">';
-      h+='<div style="font-size:9px;color:var(--green);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Inflows Ago–Oct</div>';
+      h+='<div style="font-size:9px;color:var(--green);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Inflows Ago–Dic</div>';
       h+='<div style="font-size:18px;font-weight:700;color:var(--green);margin-top:3px;">$'+totIn.toFixed(1)+'M</div></div>';
       h+='<div style="flex:1;min-width:100px;padding:10px;background:rgba(239,68,68,.08);border-radius:8px;text-align:center;">';
-      h+='<div style="font-size:9px;color:var(--red);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Outflows Ago–Oct</div>';
+      h+='<div style="font-size:9px;color:var(--red);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Outflows Ago–Dic</div>';
       h+='<div style="font-size:18px;font-weight:700;color:var(--red);margin-top:3px;">$'+totOut.toFixed(1)+'M</div></div>';
       h+='<div style="flex:1;min-width:100px;padding:10px;background:rgba(14,133,133,.08);border-radius:8px;text-align:center;">';
       h+='<div style="font-size:9px;color:'+nc+';font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Neto Periodo</div>';
       h+='<div style="font-size:18px;font-weight:700;color:'+nc+';margin-top:3px;">'+(net>=0?'+':'')+net.toFixed(1)+'M</div></div>';
       h+='<div style="flex:1;min-width:100px;padding:10px;background:rgba(0,0,0,.03);border-left:3px solid var(--teal);border-radius:8px;text-align:center;">';
-      h+='<div style="font-size:9px;color:var(--teal);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">EoP (Oct)</div>';
+      h+='<div style="font-size:9px;color:var(--teal);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">EoP (Dic)</div>';
       h+='<div style="font-size:18px;font-weight:700;color:var(--teal);margin-top:3px;">$'+(eopVal!==null?eopVal.toFixed(1):'—')+'M</div></div>';
       h+='</div>';
       if(ent.note){
@@ -887,26 +892,24 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     // HOLDCO BRIDGE / WATERFALL CHART
     // ═══════════════════════════════════════════════════
     var HOLDCO_BRIDGE={
-      periods:['Ago','Sep','Oct'],
-      // From ENTITY_DATA HOLDCO rows
-      bop:[128.7, 36.8, 454.3],
-      equity:[0.0, 0.0, -0.0],
-      fx:[1.8, 0.7, 6.1],
-      otros:[-3.7, 459.6, -12.1],
-      eop:[36.8, 454.3, 400.9],
-      // Cap_out broken down by entity (from Cash sheet rows 55-64)
+      periods:['Ago','Sep','Oct','Nov','Dic'],
+      bop:[128.7, 36.8, 454.3, 406.2, 406.2],
+      equity:[0.0, 0.0, -0.0, 0.0, 0.0],
+      fx:[-1.8, -0.7, -6.1, -0.0, -0.0],
+      others_excel:[-0.0, 461.0, -0.0, -0.0, -0.0],
+      eop:[36.8, 454.3, 406.2, 406.2, 405.9],
       entities:{
-        LTO:    [-69.3, -0.0, -0.0],
-        VCN:    [-2.0, -25.7, -32.9],
-        EMC:    [-7.9, -0.0, -5.3],
-        IP:     [-5.2, -4.3, -2.7],
-        PSM:    [-5.0, -0.0, -2.0],
-        OPEX:   [-0.6, -0.0, -0.0],
-        DAE:    [-0.0, -0.0, -0.0],
-        AuHaus: [-0.0, -12.8, -4.5],
-        CF:     [-0.0, -0.0, -0.0],
-        Green:  [-0.0, -0.0, -0.0],
-        MC:     [-0.0, -0.0, -0.0]
+        LTO:    [-69.3, -0.0, -0.0, -0.0, -0.0],
+        VCN:    [-2.0, -38.5, -37.4, -0.0, -0.3],
+        EMC:    [-7.9, -0.0, 0.0, 0.0, 0.0],
+        IP:     [-5.2, -4.3, -2.7, -0.0, -0.0],
+        PSM:    [-5.0, -0.0, -2.0, -0.0, -0.0],
+        OPEX:   [-0.6, -0.0, -0.0, -0.0, -0.0],
+        DAE:    [-0.0, -0.0, -0.0, -0.0, -0.0],
+        AuHaus: [-0.0, 0.0, 0.0, -0.0, -0.0],
+        CF:     [-0.0, -0.0, -0.0, -0.0, -0.0],
+        Green:  [-0.0, -0.0, -0.0, -0.0, -0.0],
+        MC:     [-0.0, -0.0, -0.0, -0.0, -0.0]
       }
     };
 
@@ -937,8 +940,10 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       var entCapTotal=0;
       var entKeys=Object.keys(HOLDCO_BRIDGE.entities);
       entKeys.forEach(function(k){entCapTotal+=HOLDCO_BRIDGE.entities[k][p];});
+      // others_excel = equity injection from Excel row 66
+      var othersExcel=HOLDCO_BRIDGE.others_excel?HOLDCO_BRIDGE.others_excel[p]:0;
       // Compute Otros as residual so bridge walks exactly BoP→EoP
-      var otrosAdj=HOLDCO_BRIDGE.eop[p]-HOLDCO_BRIDGE.bop[p]-HOLDCO_BRIDGE.equity[p]-entCapTotal-HOLDCO_BRIDGE.fx[p];
+      var otrosAdj=HOLDCO_BRIDGE.eop[p]-HOLDCO_BRIDGE.bop[p]-HOLDCO_BRIDGE.equity[p]-entCapTotal-othersExcel;
 
       // BoP
       labels.push('BoP '+period);
@@ -960,6 +965,25 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
         dataLabels.push('+'+eq.toFixed(1));
       }
 
+      // Inyeccion Capital / Others Excel (if non-zero)
+      if(Math.abs(othersExcel)>=0.05){
+        labels.push('Inyeccion Capital');
+        if(othersExcel>0){
+          bases.push(running);
+          values.push(othersExcel);
+          colors.push('rgba(46,139,87,0.85)');
+          borderColors.push('rgba(46,139,87,1)');
+          dataLabels.push('+'+othersExcel.toFixed(1));
+        }else{
+          bases.push(running+othersExcel);
+          values.push(Math.abs(othersExcel));
+          colors.push('rgba(220,53,69,0.70)');
+          borderColors.push('rgba(220,53,69,1)');
+          dataLabels.push(othersExcel.toFixed(1));
+        }
+        running+=othersExcel;
+      }
+
       // Entity outflows (negative = transfers to subsidiaries)
       entKeys.forEach(function(k){
         var v=HOLDCO_BRIDGE.entities[k][p];
@@ -975,30 +999,12 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
         }
       });
 
-      // FX (if non-zero)
-      if(HOLDCO_BRIDGE.fx[p]!==0){
-        var fxv=HOLDCO_BRIDGE.fx[p];
-        labels.push('FX');
-        if(fxv>0){
-          bases.push(running);
-          values.push(fxv);
-          colors.push('rgba(46,139,87,0.70)');
-          borderColors.push('rgba(46,139,87,1)');
-          dataLabels.push('+'+fxv.toFixed(1));
-        }else{
-          bases.push(running+fxv);
-          values.push(Math.abs(fxv));
-          colors.push('rgba(220,53,69,0.70)');
-          borderColors.push('rgba(220,53,69,1)');
-          dataLabels.push(fxv.toFixed(1));
-        }
-        running+=fxv;
-      }
+      // FX removed from bridge per user request — absorbed into residual
 
-      // Otros (adjusted residual to ensure BoP→EoP balance)
+      // FX + Otros (residual to ensure BoP→EoP balance)
       var ov=otrosAdj;
       if(Math.abs(ov)>=0.05){
-        labels.push('Otros');
+        labels.push('FX + Otros');
         if(ov>0){
           bases.push(running);
           values.push(ov);
@@ -1057,14 +1063,14 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
                 var lbl=item.label;
                 var val=dataLabels[item.dataIndex];
                 var html='';
-                if(lbl==='Otros'){
+                if(lbl==='FX + Otros'){
                   var p=bridgePeriodIdx;
-                  var weekRanges=[[0,5],[5,9],[9,13]];
+                  var weekRanges=[[0,5],[5,9],[9,13],[13,17],[17,20]];
                   var range=weekRanges[p];
-                  var otros=ENTITY_WEEKLY.data.HOLDCO.otros;
+                  var otros=ENTITY_WEEKLY.data.HOLDCO.others_excel||[];
                   var dts=ENTITY_WEEKLY.dates;
-                  html+='<div style="font-weight:700;font-size:12px;margin-bottom:6px;border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:5px;">Otros: '+val+' MXN$m</div>';
-                  html+='<div style="font-size:10px;color:rgba(255,255,255,.6);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;">Desglose Semanal</div>';
+                  html+='<div style="font-weight:700;font-size:12px;margin-bottom:6px;border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:5px;">FX + Otros: '+val+' MXN$m</div>';
+                  html+='<div style="font-size:10px;color:rgba(255,255,255,.6);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;">Incluye efecto cambiario</div>';
                   for(var i=range[0];i<range[1];i++){
                     var v=otros[i];
                     var vc=v>0?'#4ade80':v<-0.05?'#f87171':'rgba(255,255,255,.5)';
@@ -1147,22 +1153,21 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     // ═══════════════════════════════════════════════════
     (function(){
       var capData=[
-        {name:'LTO',ago:69.3,sep:0.0,oct:0.0},
-        {name:'VCN',ago:2.0,sep:25.7,oct:32.9},
-        {name:'EMC',ago:7.9,sep:0.0,oct:5.3},
-        {name:'IP',ago:5.2,sep:4.3,oct:2.7},
-        {name:'PSM',ago:5.0,sep:0.0,oct:2.0},
-        {name:'Au Haus',ago:0.0,sep:12.8,oct:4.5},
-        {name:'OPEX HoldCo',ago:0.6,sep:0.0,oct:0.0},
+        {name:'LTO',ago:69.3,sep:0.0,oct:0.0,nov:0.0,dic:0.0},
+        {name:'VCN',ago:2.0,sep:38.5,oct:37.4,nov:0.0,dic:0.3},
+        {name:'EMC',ago:7.9,sep:0.0,oct:0.0,nov:0.0,dic:0.0},
+        {name:'IP',ago:5.2,sep:4.3,oct:2.7,nov:0.0,dic:0.0},
+        {name:'PSM',ago:5.0,sep:0.0,oct:2.0,nov:0.0,dic:0.0},
+        {name:'OPEX HoldCo',ago:0.6,sep:0.0,oct:0.0,nov:0.0,dic:0.0},
       ];
-      var totAgo=0,totSep=0,totOct=0;
-      capData.forEach(function(r){totAgo+=r.ago;totSep+=r.sep;totOct+=r.oct;});
-      var totAll=totAgo+totSep+totOct;
+      var totAgo=0,totSep=0,totOct=0,totNov=0,totDic=0;
+      capData.forEach(function(r){totAgo+=r.ago;totSep+=r.sep;totOct+=r.oct;totNov+=r.nov;totDic+=r.dic;});
+      var totAll=totAgo+totSep+totOct+totNov+totDic;
 
       var container=document.getElementById('holdcoCapContainer');
       if(!container)return;
       var h='';
-      h+='<div class="section-head-light" style="margin-top:18px;"><span>Capitalizaciones HoldCo → Subsidiarias</span><span style="font-size:10px;color:var(--text3);font-weight:400;">MXN$m · Ago–Oct 2026 · Total: $'+totAll.toFixed(1)+'M</span></div>';
+      h+='<div class="section-head-light" style="margin-top:18px;"><span>Capitalizaciones HoldCo → Subsidiarias</span><span style="font-size:10px;color:var(--text3);font-weight:400;">MXN$m · Ago–Dic 2026 · Total: $'+totAll.toFixed(1)+'M</span></div>';
       h+='<div class="chart-card" style="padding:16px;">';
       h+='<table style="width:100%;max-width:700px;font-size:12px;border-collapse:collapse;">';
       h+='<thead><tr style="color:var(--teal);border-bottom:2px solid var(--border);font-size:10px;text-transform:uppercase;letter-spacing:.5px;">';
@@ -1170,16 +1175,18 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       h+='<th style="text-align:right;padding:8px;">Ago</th>';
       h+='<th style="text-align:right;padding:8px;">Sep</th>';
       h+='<th style="text-align:right;padding:8px;">Oct</th>';
+      h+='<th style="text-align:right;padding:8px;">Nov</th>';
+      h+='<th style="text-align:right;padding:8px;">Dic</th>';
       h+='<th style="text-align:right;padding:8px;">Total</th>';
       h+='<th style="text-align:right;padding:8px;">% del Total</th>';
       h+='</tr></thead><tbody>';
       capData.forEach(function(r){
-        var total=r.ago+r.sep+r.oct;
+        var total=r.ago+r.sep+r.oct+r.nov+r.dic;
         if(total===0)return; // skip entities with zero
         var pct=totAll>0?(total/totAll*100):0;
         h+='<tr style="border-bottom:1px solid rgba(0,0,0,.06);">';
         h+='<td style="padding:6px 8px;font-weight:600;">'+r.name+'</td>';
-        [r.ago,r.sep,r.oct].forEach(function(v){
+        [r.ago,r.sep,r.oct,r.nov,r.dic].forEach(function(v){
           var clr=v>0?'var(--red)':'var(--text3)';
           h+='<td style="text-align:right;padding:6px 8px;color:'+clr+';">'+(v>0?v.toFixed(1):'—')+'</td>';
         });
@@ -1195,24 +1202,23 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       h+='<td style="text-align:right;padding:6px 8px;color:var(--red);">'+totAgo.toFixed(1)+'</td>';
       h+='<td style="text-align:right;padding:6px 8px;color:var(--red);">'+totSep.toFixed(1)+'</td>';
       h+='<td style="text-align:right;padding:6px 8px;color:var(--red);">'+totOct.toFixed(1)+'</td>';
+      h+='<td style="text-align:right;padding:6px 8px;color:var(--red);">'+totNov.toFixed(1)+'</td>';
+      h+='<td style="text-align:right;padding:6px 8px;color:var(--red);">'+totDic.toFixed(1)+'</td>';
       h+='<td style="text-align:right;padding:6px 8px;color:var(--red);">'+totAll.toFixed(1)+'</td>';
       h+='<td style="text-align:right;padding:6px 8px;">100%</td>';
       h+='</tr></tbody></table>';
 
       // Summary KPIs
       h+='<div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">';
-      h+='<div style="flex:1;min-width:100px;padding:10px;background:rgba(220,53,69,.06);border-radius:8px;text-align:center;">';
-      h+='<div style="font-size:9px;color:var(--red);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Ago</div>';
-      h+='<div style="font-size:18px;font-weight:700;color:var(--red);margin-top:3px;">$'+totAgo.toFixed(0)+'M</div></div>';
-      h+='<div style="flex:1;min-width:100px;padding:10px;background:rgba(220,53,69,.06);border-radius:8px;text-align:center;">';
-      h+='<div style="font-size:9px;color:var(--red);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Sep</div>';
-      h+='<div style="font-size:18px;font-weight:700;color:var(--red);margin-top:3px;">$'+totSep.toFixed(0)+'M</div></div>';
-      h+='<div style="flex:1;min-width:100px;padding:10px;background:rgba(220,53,69,.06);border-radius:8px;text-align:center;">';
-      h+='<div style="font-size:9px;color:var(--red);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Oct</div>';
-      h+='<div style="font-size:18px;font-weight:700;color:var(--red);margin-top:3px;">$'+totOct.toFixed(0)+'M</div></div>';
-      h+='<div style="flex:1;min-width:100px;padding:10px;background:rgba(0,0,0,.03);border-left:3px solid var(--red);border-radius:8px;text-align:center;">';
+      var mKpis=[['Ago',totAgo],['Sep',totSep],['Oct',totOct],['Nov',totNov],['Dic',totDic]];
+      mKpis.forEach(function(mk){
+        h+='<div style="flex:1;min-width:80px;padding:10px;background:rgba(220,53,69,.06);border-radius:8px;text-align:center;">';
+        h+='<div style="font-size:9px;color:var(--red);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">'+mk[0]+'</div>';
+        h+='<div style="font-size:16px;font-weight:700;color:var(--red);margin-top:3px;">$'+mk[1].toFixed(0)+'M</div></div>';
+      });
+      h+='<div style="flex:1;min-width:80px;padding:10px;background:rgba(0,0,0,.03);border-left:3px solid var(--red);border-radius:8px;text-align:center;">';
       h+='<div style="font-size:9px;color:var(--red);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Promedio/Sem</div>';
-      h+='<div style="font-size:18px;font-weight:700;color:var(--red);margin-top:3px;">$'+(totAll/13).toFixed(1)+'M</div></div>';
+      h+='<div style="font-size:16px;font-weight:700;color:var(--red);margin-top:3px;">$'+(totAll/20).toFixed(1)+'M</div></div>';
       h+='</div>';
       h+='</div>';
       container.innerHTML=h;

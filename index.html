@@ -6,6 +6,7 @@
 <title>Weekly Investment Overview · VEMO</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
 <style>
 :root{--bg:#F5F6F8;--surface:#FFFFFF;--surface2:#EFF1F4;--border:#DCE0E6;--teal:#11ABAB;--forest:#1A5C5C;--gray:#6B7280;--light:#FFFFFF;--white:#FFFFFF;--text:#1A1D23;--text2:#4B5563;--text3:#6B7280;--red:#DC2626;--green:#059669;--amber:#D97706;--blue:#2563EB;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -181,8 +182,8 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     <div class="kpi-grid" style="grid-template-columns:repeat(5,minmax(0,1fr));margin-top:-8px;">
       <div class="kpi-card" style="border:1px solid var(--teal);">
         <div class="kpi-label">Runway <span style="font-weight:400;text-transform:none;letter-spacing:0;">(post-capitalización)</span></div>
-        <div class="kpi-value" style="font-size:24px;color:var(--teal);">~16 <span style="font-size:14px;color:var(--text3);">semanas</span></div>
-        <div class="kpi-sub">Actual 12-Oct: $426.4M HOLDCO · Post equity +$426.4M<br>RR ~$24.1M/sem · Piso mínimo: $40M<br><span style="color:var(--teal);font-weight:600;">Agotamiento: ~Sem 1 Feb 2027</span></div>
+        <div class="kpi-value" style="font-size:24px;color:var(--teal);">~15 <span style="font-size:14px;color:var(--text3);">semanas</span></div>
+        <div class="kpi-sub">Actual 19-Oct: $404.4M HOLDCO · Post equity +$404.4M<br>RR ~$24.2M/sem · Piso mínimo: $40M<br><span style="color:var(--teal);font-weight:600;">Agotamiento: ~Sem 1 Feb 2027</span></div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">TIIE Overnight MXN <span style="font-weight:400;text-transform:none;letter-spacing:0;">(1 día)</span></div>
@@ -386,7 +387,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     </div>
 
     <!-- Framework de Inversión por Tramos -->
-    <div class="section-head-light" id="inv-framework"><span>Framework de Inversión</span><span style="font-size:10px;color:var(--text3);font-weight:400;">HOLDCO Oct · Base: $426M disponibles · RR ~$15.0M/sem</span></div>
+    <div class="section-head-light" id="inv-framework"><span>Framework de Inversión</span><span style="font-size:10px;color:var(--text3);font-weight:400;">HOLDCO Oct · Base: $404M disponibles · RR ~$15.0M/sem</span></div>
     <div class="chart-card" style="padding:20px;" id="inv-framework-card">
       <!-- Stacked bar + 3 tranche cards rendered by JS -->
     </div>
@@ -400,6 +401,130 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       <span>Use of Funds</span>
       <span class="section-note">Semanal · Ago–Dic 2026 · MXN$m · Verde=Actual · Gris=Proyección</span>
     </div>
+
+    <!-- SALDO DE CAJA POR LÍNEA DE NEGOCIO -->
+    <div class="section-head-light"><span>Saldo de Caja por Línea de Negocio</span>
+      <span style="font-size:10px;color:var(--text3);font-weight:400;">MXN$m · BoP semanal · Ago 2026–Ene 2027 · Excluye inversión restringida MC (BX+)</span>
+    </div>
+    <div class="chart-card" style="margin-bottom:16px;">
+      <div class="chart-card-body" style="height:380px;padding:12px 16px;position:relative;">
+        <canvas id="bizLineChart"></canvas>
+      </div>
+    </div>
+    <script>
+    (function(){
+    var BIZ_LINE_DATA = {
+  labels: ['03-Ago', '10-Ago', '17-Ago', '24-Ago', '31-Ago', '07-Sep', '14-Sep', '21-Sep', '28-Sep', '05-Oct', '12-Oct', '19-Oct', '26-Oct', '02-Nov', '09-Nov', '16-Nov', '23-Nov', '30-Nov', '07-Dic', '14-Dic', '21-Dic', '28-Dic', '04-Ene', '11-Ene', '18-Ene'],
+  tipos: ['Real', 'Real', 'Real', 'Real', 'Real', 'Real', 'Real', 'Real', 'Real', 'Real', 'Real', 'Real', 'Proyección', 'Proyección', 'Proyección', 'Proyección', 'Proyección', 'Proyección', 'Proyección', 'Proyección', 'Proyección', 'Proyección', 'Proyección', 'Proyección', 'Proyección'],
+  cutoffIdx: 11,
+  groups: ['HoldCo', 'LTO', 'DAE', 'VCN', 'EVF', 'Otras corp.'],
+  series: {
+    'HoldCo': [128.7, 125.6, 68.6, 49.4, 36.9, 36.8, 28.3, 28.4, 232.1, 454.3, 426.4, 404.4, 391.7, 362.4, 348.6, 329.6, 317.5, 306.2, 277.3, 272.0, 269.0, 269.0, 263.7, 254.7, 251.8],
+    'LTO': [9.9, 5.1, 6.6, 5.1, 1.0, 3.1, 9.2, 10.6, 8.1, 7.6, 6.7, 84.6, 77.6, 59.6, 59.0, 34.5, 20.8, 34.4, 37.4, 28.4, 23.1, 25.7, 28.9, 28.8, 26.8],
+    'DAE': [52.6, 41.8, 45.8, 44.9, 46.9, 50.4, 25.8, 26.6, 32.8, 40.2, 45.2, 41.2, 31.7, 38.6, 41.2, 23.8, 30.3, 31.2, 29.7, 22.4, 22.1, 27.3, 30.2, 28.1, 13.8],
+    'VCN': [1.1, 23.9, 79.1, 54.8, 31.7, 30.8, 2.5, 1.3, 8.2, 3.3, 3.9, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 4.9, 3.5, 0.0, 4.8],
+    'EVF': [14.0, 17.9, 14.6, 13.2, 14.7, 9.2, 11.6, 2.4, 2.0, 1.7, 3.0, 1.7, 2.0, 2.0, 2.0, 1.1, 1.1, 1.5, 1.5, 0.7, 0.7, 1.1, 1.3, 1.6, 0.5],
+    'Otras corp.': [7.0, 8.8, 6.8, 7.2, 7.5, 9.8, 8.4, 7.5, 8.0, 7.4, 8.5, 6.4, 6.0, 6.4, 5.9, 5.9, 10.9, 8.4, 10.7, 5.8, 11.3, 13.8, 11.7, 16.2, 5.6],
+  }
+};
+    var BLC=BIZ_LINE_DATA;
+    var colors={
+      'HoldCo':'#0d9488','LTO':'#f59e0b','DAE':'#3b82f6',
+      'VCN':'#8b5cf6','EVF':'#ec4899','Otras corp.':'#64748b'
+    };
+    var datasets=BLC.groups.map(function(g){
+      var c=colors[g]||'#999';
+      var isProj=BLC.tipos.map(function(t){return t==='Proyección';});
+      return {
+        label:g,
+        data:BLC.series[g],
+        backgroundColor:BLC.tipos.map(function(t){
+          var hex=c;
+          if(t==='Proyección'){
+            var r=parseInt(hex.slice(1,3),16),
+                g2=parseInt(hex.slice(3,5),16),
+                b=parseInt(hex.slice(5,7),16);
+            return 'rgba('+r+','+g2+','+b+',0.45)';
+          }
+          return hex;
+        }),
+        borderColor:c,
+        borderWidth:0.5,
+        stack:'stack0'
+      };
+    });
+    var ctx=document.getElementById('bizLineChart').getContext('2d');
+    var bizChart=new Chart(ctx,{
+      type:'bar',
+      data:{labels:BLC.labels,datasets:datasets},
+      options:{
+        responsive:true,
+        maintainAspectRatio:false,
+        plugins:{
+          legend:{
+            position:'top',
+            labels:{usePointStyle:true,pointStyle:'rect',padding:14,font:{size:10}}
+          },
+          tooltip:{
+            mode:'index',
+            callbacks:{
+              title:function(items){
+                var i=items[0].dataIndex;
+                return BLC.labels[i]+' ('+BLC.tipos[i]+')';
+              },
+              label:function(ctx2){
+                return ctx2.dataset.label+': $'+ctx2.raw.toFixed(1)+'m';
+              },
+              afterBody:function(items){
+                var total=0;
+                items.forEach(function(it){total+=it.raw;});
+                return '\nTotal: $'+total.toFixed(1)+'m';
+              }
+            }
+          },
+          annotation:{
+            annotations:{
+              projLine:{
+                type:'line',
+                xMin:BLC.cutoffIdx+0.5,
+                xMax:BLC.cutoffIdx+0.5,
+                borderColor:'rgba(100,116,139,0.6)',
+                borderWidth:1.5,
+                borderDash:[5,4],
+                label:{
+                  display:true,
+                  content:'Proyección →',
+                  position:'start',
+                  font:{size:9,weight:'bold'},
+                  color:'#64748b',
+                  backgroundColor:'rgba(255,255,255,0.85)',
+                  padding:{x:4,y:2}
+                }
+              }
+            }
+          }
+        },
+        scales:{
+          x:{
+            stacked:true,
+            ticks:{font:{size:9},maxRotation:45},
+            grid:{display:false}
+          },
+          y:{
+            stacked:true,
+            ticks:{
+              callback:function(v){return '$'+v+'m';},
+              font:{size:10}
+            },
+            grid:{color:'#f1f5f9'}
+          }
+        }
+      }
+    });
+    })();
+    </script>
+
+
 
     <!-- HOLDCO BRIDGE CHART -->
     <div class="chart-card" style="margin-bottom:16px;">
@@ -575,7 +700,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     // Weekly balance data per entity (for weekly row in detail cards)
     var ENTITY_WEEKLY={
       dates:['03-Ago','10-Ago','17-Ago','24-Ago','31-Ago','07-Sep','14-Sep','21-Sep','28-Sep','05-Oct','12-Oct','19-Oct','26-Oct','02-Nov','09-Nov','16-Nov','23-Nov','30-Nov','07-Dic','14-Dic','21-Dic','28-Dic'],
-      isAct:[true,true,true,true,true,true,true,true,true,true,true,false,false,false,false,false,false,false,false,false,false,false],
+      isAct:[true,true,true,true,true,true,true,true,true,true,true,true,false,false,false,false,false,false,false,false,false,false],
       // Entity-specific category definitions
       cats_holdco:[
         {k:'bop',l:'BoP',t:'bop'},
@@ -2153,7 +2278,7 @@ rebuildMaturity();
 // INVESTMENT FRAMEWORK — 3 Tranches
 // ═══════════════════════════════════════════════════════════════════════════════
 (function(){
-  var postCap=426.4; // MXN$m — HOLDCO BoP 12-Oct real
+  var postCap=404.4; // MXN$m — HOLDCO BoP 19-Oct real
   var burnWeek=15.0; // MXN$m/sem run rate promedio
   var floor=40; // caja mínima
   var opWeeks=7;  // 6–8 semanas

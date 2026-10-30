@@ -42,6 +42,10 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 .ent-chip:hover{border-color:var(--teal);color:var(--teal);background:rgba(17,171,171,.06);}
 .ent-chip-active{border-color:var(--teal);color:#fff;background:var(--teal);}
 .ent-chip-active:hover{color:#fff;background:var(--teal);}
+.ent-chip2{padding:6px 14px;border:1px solid rgba(255,255,255,.35);border-radius:20px;font-size:11px;font-family:inherit;font-weight:600;color:rgba(255,255,255,.8);background:transparent;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.ent-chip2:hover{border-color:rgba(255,255,255,.7);color:#fff;background:rgba(255,255,255,.12);}
+.ent-chip2-active{border-color:#fff;color:#0D4F4F;background:#fff!important;}
+.ent-chip2-active:hover{color:#0D4F4F;background:#fff!important;}
 .section-note{font-size:10px;color:rgba(255,255,255,.7);font-weight:400;}
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:16px;}
 .kpi-card{background:var(--surface);padding:18px 16px;border-right:1px solid var(--border);transition:background .15s;}
@@ -419,7 +423,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
   groups: ['HoldCo', 'LTO', 'DAE', 'VCN', 'EVF', 'Otras corp.'],
   series: {
     'HoldCo': [128.7, 125.6, 68.6, 49.4, 36.9, 36.8, 28.3, 28.4, 232.1, 454.3, 426.4, 396.0, 399.2, 385.6, 376.1, 350.0, 330.5, 330.5, 293.8, 280.5, 274.8, 274.8, 272.8, 264.0, 260.3],
-    'LTO': [9.9, 5.1, 6.6, 5.1, 1.0, 3.1, 9.2, 10.6, 8.1, 7.6, 6.7, 71.4, 75.8, 75.8, 71.0, 62.0, 68.4, 61.1, 59.4, 53.5, 65.9, 47.5, 46.7, 52.7, 68.4],
+    'LTO': [9.9, 5.1, 6.6, 5.1, 1.0, 3.1, 9.2, 10.6, 8.1, 7.6, 6.7, 71.4, 75.8, 43.9, 39.1, 30.1, 36.5, 29.2, 27.5, 21.6, 34.0, 15.7, 14.8, 20.8, 36.5],
     'DAE': [52.6, 41.8, 45.8, 44.9, 46.9, 50.4, 25.8, 26.6, 32.8, 40.2, 45.2, 40.0, 37.2, 46.3, 48.9, 32.5, 36.0, 38.9, 40.4, 26.5, 20.9, 28.1, 31.0, 28.9, 11.6],
     'VCN': [1.1, 23.9, 79.1, 54.8, 31.7, 30.8, 2.5, 1.3, 8.2, 3.3, 3.9, 1.4, 6.5, 0.0, 0.0, 0.0, 0.0, 0.0, 3.2, 0.0, 0.0, 0.0, 13.1, 0.0, 0.0],
     'EVF': [14.0, 17.9, 14.6, 13.2, 14.7, 9.2, 11.6, 2.4, 2.0, 1.7, 3.0, 1.3, 1.0, 1.0, 1.0, 0.9, 0.9, 1.4, 1.4, 0.7, 0.7, 1.2, 1.4, 1.2, 0.5],
@@ -605,30 +609,30 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     </div><!-- /cashView-general -->
 
     <!-- ENTITY DETAIL — DROPDOWN DRIVEN -->
-    <div style="margin-top:28px;margin-bottom:14px;padding:14px 20px;background:linear-gradient(135deg,#0D4F4F 0%,#11ABAB 100%);border-radius:12px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
-      <div style="display:flex;align-items:center;gap:10px;">
+    <div style="margin-top:28px;margin-bottom:14px;padding:14px 20px;background:linear-gradient(135deg,#0D4F4F 0%,#11ABAB 100%);border-radius:12px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="1" y="1" width="8" height="8" rx="2" fill="#fff" opacity=".9"/><rect x="11" y="1" width="8" height="8" rx="2" fill="#fff" opacity=".6"/><rect x="1" y="11" width="8" height="8" rx="2" fill="#fff" opacity=".6"/><rect x="11" y="11" width="8" height="8" rx="2" fill="#fff" opacity=".35"/></svg>
         <span style="font-size:14px;font-weight:700;color:#fff;letter-spacing:.3px;">Vista por Empresa</span>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:10px;color:rgba(255,255,255,.85);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Desde</span>
+          <select id="zoomDesde" style="font-size:11px;border:none;border-radius:8px;padding:6px 10px;background:rgba(255,255,255,.92);color:#1A5C5C;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.1);"></select>
+          <span style="font-size:10px;color:rgba(255,255,255,.85);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Hasta</span>
+          <select id="zoomHasta" style="font-size:11px;border:none;border-radius:8px;padding:6px 10px;background:rgba(255,255,255,.92);color:#1A5C5C;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.1);"></select>
+          <button id="zoomReset" style="font-size:11px;color:#fff;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.5);border-radius:6px;padding:5px 12px;cursor:pointer;font-weight:600;">Reset</button>
+        </div>
       </div>
-      <select id="entitySelector" style="font-size:13px;color:var(--teal);font-weight:600;border:none;border-radius:8px;padding:8px 14px;background:#fff;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.12);">
-        <option value="HOLDCO">HoldCo</option>
-        <option value="LTO">LTO</option>
-        <option value="DAE">DAE</option>
-        <option value="VCN">VCN</option>
-        <option value="AuHaus">Au Haus</option>
-        <option value="CF">CF</option>
-        <option value="Green">Green</option>
-        <option value="PSM">PSM</option>
-        <option value="EMC">EMC</option>
-        <option value="IP">IP</option>
-        <option value="MC">MC</option>
-      </select>
-      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        <span style="font-size:10px;color:rgba(255,255,255,.85);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Desde</span>
-        <select id="zoomDesde" style="font-size:11px;border:none;border-radius:8px;padding:6px 10px;background:rgba(255,255,255,.92);color:#1A5C5C;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.1);"></select>
-        <span style="font-size:10px;color:rgba(255,255,255,.85);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Hasta</span>
-        <select id="zoomHasta" style="font-size:11px;border:none;border-radius:8px;padding:6px 10px;background:rgba(255,255,255,.92);color:#1A5C5C;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.1);"></select>
-        <button id="zoomReset" style="font-size:11px;color:#fff;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.5);border-radius:6px;padding:5px 12px;cursor:pointer;font-weight:600;">Reset</button>
+      <div id="entityChipsBar" style="display:flex;flex-wrap:wrap;gap:6px;">
+        <button class="ent-chip2 ent-chip2-active" onclick="selectEntity2('HOLDCO',this)">HoldCo</button>
+        <button class="ent-chip2" onclick="selectEntity2('LTO',this)">LTO</button>
+        <button class="ent-chip2" onclick="selectEntity2('DAE',this)">DAE</button>
+        <button class="ent-chip2" onclick="selectEntity2('VCN',this)">VCN</button>
+        <button class="ent-chip2" onclick="selectEntity2('AuHaus',this)">Au Haus</button>
+        <button class="ent-chip2" onclick="selectEntity2('CF',this)">CF</button>
+        <button class="ent-chip2" onclick="selectEntity2('Green',this)">Green</button>
+        <button class="ent-chip2" onclick="selectEntity2('PSM',this)">PSM</button>
+        <button class="ent-chip2" onclick="selectEntity2('EMC',this)">EMC</button>
+        <button class="ent-chip2" onclick="selectEntity2('IP',this)">IP</button>
+        <button class="ent-chip2" onclick="selectEntity2('MC',this)">MC</button>
       </div>
     </div>
     <div id="entitySectionHead"></div>
@@ -653,15 +657,15 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
         ],monthly:['Ago','Sep','Oct','Nov','Dic','Total']},
       LTO:{name:'LTO',
         rows:[
-          {l:'BoP',v:[9.9,3.1,7.6,75.8,59.4,9.9],t:'bop'},
+          {l:'BoP',v:[9.9,3.1,7.6,43.9,27.5,9.9],t:'bop'},
           {l:'(+) Cobranza',v:[62.0,69.5,52.5,53.4,48.3,285.7],t:'in'},
           {l:'(+) Capitalización',v:[69.3,0.0,0.0,0.0,0.0,69.3],t:'in'},
           {l:'(+) Inflows Intercos',v:[0.5,0.0,0.0,1.4,1.4,3.3],t:'in'},
           {l:'(+) Debt',v:[0.0,0.0,100.0,0.0,0.0,100.0],t:'in'},
           {l:'(-) OPEX',v:[-38.4,-25.9,-28.2,-44.9,-37.7,-175.1],t:'out'},
-          {l:'(-) CAPEX',v:[-76.4,-2.2,-34.6,0.0,0.0,-113.2],t:'out'},
+          {l:'(-) CAPEX',v:[-76.4,-2.2,-66.5,0.0,0.0,-145.1],t:'out'},
           {l:'(-) Outflow Interco',v:[-23.8,-36.9,-21.4,-26.3,-24.7,-133.1],t:'out'},
-          {l:'EoP',v:[3.1,7.6,75.8,59.4,46.7,46.7],t:'eop'}
+          {l:'EoP',v:[3.1,7.6,43.9,27.5,14.8,14.8],t:'eop'}
         ],monthly:['Ago','Sep','Oct','Nov','Dic','Total']},
       DAE:{name:'DAE',
         rows:[
@@ -775,7 +779,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       catsFor:function(key){return key==='HOLDCO'?this.cats_holdco:this.cats_sub;},
       data:{
         HOLDCO:{bop:[128.7,125.6,68.6,49.4,36.9,36.8,28.3,28.4,232.1,454.3,426.4,396.0,399.2,385.6,376.1,350.0,330.5,330.5,293.8,280.5,274.8,274.8],equity:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],others_excel:[0,0,0,0,0,0,0,223.5,237.4,0,0,0,0,0,0,0,0,0,0,0,0,0],cap_out:[-2.0,-56.4,-18.8,-12.8,0,-8.9,0,-19.7,-14.2,-24.8,-34.3,0,-8.0,-13.6,-9.6,-26.0,-19.5,0,-36.7,-13.4,-5.6,0],fx:[-1.0,-0.6,-0.4,0.2,-0.1,0.3,0.2,-0.1,-1.0,-3.2,3.9,3.3,0,0,0,0,0,0,0,0,0,0],eop:[125.6,68.6,49.4,36.9,36.8,28.3,28.4,232.1,454.3,426.4,396.0,399.2,385.6,376.1,350.0,330.5,330.5,293.8,280.5,274.8,274.8,274.8]},
-        LTO:{bop:[9.9,5.1,6.6,5.1,1.0,3.1,9.2,10.6,8.1,7.6,6.7,71.4,75.8,75.8,71.0,62.0,68.4,61.1,59.4,53.5,65.9,47.5],cobranza:[12.0,22.4,12.9,8.6,6.1,12.2,35.5,12.0,9.9,9.2,13.5,29.8,0,5.0,13.5,29.8,0,5.0,13.5,29.8,0,5.0],cap_in:[56.4,7.9,5.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0.5,0,0,0,0,0,0,0,0,0,0,0,0,1.4,0,0,0,1.4,0],debt:[0,0,0,0,0,0,0,0,0,0,100.0,0,0,0,0,0,0,0,0,0,0,0],opex:[-3.8,-6.6,-16.6,-7.4,-4.0,-3.9,-6.0,-11.9,-4.0,-4.9,-14.9,-8.4,0,-5.7,-12.9,-13.1,-6.9,-6.3,-12.7,-13.1,-6.9,-5.1],capex:[-0.2,-66.9,-0.8,-8.5,0,0,-1.1,-0.5,-0.6,-0.2,-23.6,-10.9,0,0,0,0,0,0,0,0,0,0],interco_out:[-12.7,-3.7,-5.0,-2.4,0,-2.2,-27.0,-2.0,-5.7,-5.0,-10.3,-6.1,0,-4.1,-9.6,-10.4,-1.8,-0.4,-6.7,-4.4,-12.8,-0.9],otros:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],eop:[61.5,-41.9,2.2,-4.0,3.1,9.2,10.6,8.1,7.6,6.7,71.4,75.8,75.8,71.0,62.0,68.4,61.1,59.4,53.5,65.9,47.5,46.7]},
+        LTO:{bop:[9.9,5.1,6.6,5.1,1.0,3.1,9.2,10.6,8.1,7.6,6.7,71.4,75.8,43.9,39.1,30.1,36.5,29.2,27.5,21.6,34.0,15.7],cobranza:[12.0,22.4,12.9,8.6,6.1,12.2,35.5,12.0,9.9,9.2,13.5,29.8,0,5.0,13.5,29.8,0,5.0,13.5,29.8,0,5.0],cap_in:[56.4,7.9,5.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0.5,0,0,0,0,0,0,0,0,0,0,0,0,1.4,0,0,0,1.4,0],debt:[0,0,0,0,0,0,0,0,0,0,100.0,0,0,0,0,0,0,0,0,0,0,0],opex:[-3.8,-6.6,-16.6,-7.4,-4.0,-3.9,-6.0,-11.9,-4.0,-4.9,-14.9,-8.4,0,-5.7,-12.9,-13.1,-6.9,-6.3,-12.7,-13.1,-6.9,-5.1],capex:[-0.2,-66.9,-0.8,-8.5,0,0,-1.1,-0.5,-0.6,-0.2,-23.6,-10.9,-31.9,0,0,0,0,0,0,0,0,0],interco_out:[-12.7,-3.7,-5.0,-2.4,0,-2.2,-27.0,-2.0,-5.7,-5.0,-10.3,-6.1,0,-4.1,-9.6,-10.4,-1.8,-0.4,-6.7,-4.4,-12.8,-0.9],otros:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],eop:[61.5,-41.9,2.2,-4.0,3.1,9.2,10.6,8.1,7.6,6.7,71.4,75.8,43.9,39.1,30.1,36.5,29.2,27.5,21.6,34.0,15.7,14.8]},
         DAE:{bop:[52.6,41.8,45.8,44.9,46.9,50.4,25.8,26.6,32.8,40.2,45.2,40.0,37.2,46.3,48.9,32.5,36.0,38.9,40.4,26.5,20.9,28.1],cobranza:[12.1,11.9,16.5,12.5,12.6,5.9,24.3,11.4,15.4,11.0,13.4,10.2,18.2,11.0,13.4,10.2,18.2,11.0,13.4,10.2,18.2,11.0],cap_in:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],debt:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-3.4,-7.9,-17.0,-9.1,-9.0,-8.6,-17.4,-5.3,-6.6,-5.1,-7.6,-12.1,-6.7,-6.8,-19.6,-5.4,-7.8,-5.6,-16.9,-9.8,-7.8,-6.7],capex:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],interco_out:[-19.6,0,-0.5,-1.3,-0.1,-21.9,-6.0,0,-1.5,-1.0,-11.0,-4.7,-2.4,-1.6,-10.2,-1.3,-7.5,-3.9,-10.4,-6.0,-3.1,-1.5],otros:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],eop:[41.8,45.8,44.9,46.9,50.4,25.8,26.6,32.8,40.2,45.2,40.0,33.4,46.3,48.9,32.5,36.0,38.9,40.4,26.5,20.9,28.1,31.0]},
         VCN:{bop:[1.1,23.9,79.1,54.8,31.7,30.8,2.5,1.3,8.2,3.3,3.9,1.4,6.5,0,0,0,0,0,3.2,0,0,0],cobranza:[10.4,0.2,0.2,1.6,7.2,0.1,1.9,0,1.8,0,0.1,0.4,0,14.5,0.1,0.4,0,14.5,0.1,0.4,0,14.5],cap_in:[0,0,0,0,0,9.0,0,6.9,9.9,24.8,34.3,0,8.0,13.6,9.5,23.2,16.5,0,32.0,9.5,2.6,0],interco_in:[17.1,0,0,0,0,0,10.5,14.3,0,0,0.3,21.2,16.9,0,0,6.0,4.3,0,0,4.3,6.0,0],debt:[0,84.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-4.6,-9.7,-15.1,-5.4,-5.0,-13.2,-4.5,-4.3,-7.6,-2.1,-30.2,-8.1,-1.4,-15.2,-4.1,-1.8,-2.3,-7.9,-11.3,-1.8,-2.3,-1.4],capex:[0,-5.8,-4.8,-2.1,-0.7,-13.8,-6.5,-4.9,-1.4,-13.3,0,0,-3.1,-8.0,0,-5.5,-3.1,-3.1,0,0,0,0],interco_out:[0,-13.5,-4.6,-17.2,-2.4,-10.5,-2.7,-5.1,-7.7,-8.7,-7.0,-8.3,-26.9,-4.9,-5.5,-22.3,-15.4,-0.4,-24.0,-12.3,-6.3,0],otros:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],eop:[23.9,79.1,54.8,31.7,30.8,2.5,1.3,8.2,3.3,3.9,1.4,6.5,0,0,0,0,0,3.2,0,0,0,13.1]},
         AuHaus:{bop:[0.4,3.7,0.2,0.3,1.6,0.2,5.1,0.4,0.8,0.5,0.8,0.3,0.2,0,0,0,0,0,0,0,0,0],cobranza:[5.9,0.1,1.8,5.1,0.1,0,0.2,0.1,0.1,0.5,0,1.0,0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],cap_in:[0,0,0,0,0,0,0,12.8,0,0,0,0,0,0,0,0,0,0,0,0,0,0],interco_in:[0,4.4,5.6,14.9,2.4,12.9,4.6,2.5,6.2,7.5,6.0,3.8,4.6,4.9,5.5,18.3,10.3,0.4,22.0,7.3,1.2,0],debt:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],opex:[-0.5,-4.2,-1.7,-10.7,-2.8,0,-9.0,-2.1,-4.3,-5.5,-4.5,-3.6,-0.8,-1.4,-4.5,-1.0,-2.3,-1.4,-4.4,-1.0,-2.3,-0.8],capex:[-1.8,-3.7,-5.5,-6.1,-1.1,-6.3,-0.4,-12.9,0,-2.3,-2.1,-1.3,-4.1,-4.6,-2.1,-18.3,-9.1,0,-18.7,-7.3,0,0],interco_out:[-0.3,0,-0.2,-1.9,0,-1.8,0,0,-2.2,0,0,0,0,0,0,0,0,0,0,0,0,0],otros:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],eop:[3.7,0.2,0.3,1.6,0.2,5.1,0.4,0.8,0.5,0.8,0.3,0.2,0,0,0,0,0,0,0,0,0,0.3]},
@@ -996,15 +1000,37 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
         };
       }
 
-      // Compute EoP axis range per entity (always ≥ 0, with padding)
+      // Compute flow axis range (for zero-alignment)
+      var flowMin=0,flowMax=0;
+      datasets.forEach(function(ds){
+        if(ds.yAxisID==='yEop')return;
+        ds.data.forEach(function(v){if(v<flowMin)flowMin=v;if(v>flowMax)flowMax=v;});
+      });
+      var flowPad=Math.max((flowMax-flowMin)*0.1,5);
+      flowMin=flowMin-flowPad; flowMax=flowMax+flowPad;
+
+      // Compute EoP range
       var eopArr=eopSliced||[];
       var eopMin=Infinity,eopMax=-Infinity;
       eopArr.forEach(function(v){if(v<eopMin)eopMin=v;if(v>eopMax)eopMax=v;});
       if(eopMin===Infinity){eopMin=0;eopMax=10;}
-      var eopRange=eopMax-eopMin;
-      var eopPad=Math.max(eopRange*0.15,2);
-      var eopAxisMin=Math.max(0,Math.floor(eopMin-eopPad));
-      var eopAxisMax=Math.ceil(eopMax+eopPad);
+      var eopPadV=Math.max((eopMax-eopMin)*0.15,2);
+      var rawEopMin=Math.max(0,eopMin-eopPadV);
+      var rawEopMax=eopMax+eopPadV;
+
+      // Align zeros: zero should be at the same % position on both axes
+      // flowMin is negative, flowMax is positive → zeroRatio = |flowMin|/(flowMax-flowMin)
+      var eopAxisMin,eopAxisMax;
+      if(flowMin<0){
+        var zeroRatio=Math.abs(flowMin)/(flowMax-flowMin);
+        // EoP zero at zeroRatio from bottom → eopAxisMin = -zeroRatio/(1-zeroRatio)*rawEopMax
+        // But EoP doesn't go negative, so set eopAxisMin negative to push zero up
+        eopAxisMax=Math.ceil(rawEopMax);
+        eopAxisMin=Math.floor(-zeroRatio/(1-zeroRatio)*eopAxisMax);
+      }else{
+        eopAxisMin=Math.floor(rawEopMin);
+        eopAxisMax=Math.ceil(rawEopMax);
+      }
 
       entityFlowCharts['active']=new Chart(ctx,{
         type:'bar',
@@ -1030,7 +1056,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
           },
           scales:{
             x:{stacked:true,grid:{display:false},ticks:{font:{size:8},maxRotation:45}},
-            y:{stacked:true,grid:{color:'rgba(0,0,0,.06)'},ticks:{font:{size:9},callback:function(v){return v+'M';}},title:{display:true,text:'Flujo (MXN$m)',font:{size:9},color:'#888'}},
+            y:{stacked:true,min:Math.floor(flowMin),max:Math.ceil(flowMax),grid:{color:'rgba(0,0,0,.06)'},ticks:{font:{size:9},callback:function(v){return v+'M';}},title:{display:true,text:'Flujo (MXN$m)',font:{size:9},color:'#888'}},
             yEop:{position:'right',grid:{display:false},ticks:{font:{size:9},color:'#0D4F4F',callback:function(v){return '$'+v+'M';}},title:{display:true,text:'Saldo EoP',font:{size:9},color:'#0D4F4F'},min:eopAxisMin,max:eopAxisMax}
           }
         }
@@ -1043,27 +1069,30 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       return'rgba('+r+','+g+','+b+','+alpha+')';
     }
 
-    // Initialize entity dropdown view
+    // Current active entity key for the chip bar
+    var _activeEntityKey='HOLDCO';
+    function selectEntity2(key,btn){
+      document.querySelectorAll('.ent-chip2').forEach(function(c){c.classList.remove('ent-chip2-active');});
+      btn.classList.add('ent-chip2-active');
+      _activeEntityKey=key;
+      updateEntityView(key);
+    }
+
+    // Initialize entity chip view
     (function(){
       updateEntityView('HOLDCO');
-      document.getElementById('entitySelector').addEventListener('change',function(){
-        updateEntityView(this.value);
-      });
       document.getElementById('zoomDesde').addEventListener('change',function(){
-        var key=document.getElementById('entitySelector').value;
-        renderEntityFlowChart(key);
+        renderEntityFlowChart(_activeEntityKey);
       });
       document.getElementById('zoomHasta').addEventListener('change',function(){
-        var key=document.getElementById('entitySelector').value;
-        renderEntityFlowChart(key);
+        renderEntityFlowChart(_activeEntityKey);
       });
       document.getElementById('zoomReset').addEventListener('click',function(){
         var ds=document.getElementById('zoomDesde');
         var hs=document.getElementById('zoomHasta');
         ds.selectedIndex=0;
         hs.selectedIndex=hs.options.length-1;
-        var key=document.getElementById('entitySelector').value;
-        renderEntityFlowChart(key);
+        renderEntityFlowChart(_activeEntityKey);
       });
     })();
 
@@ -1073,9 +1102,11 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       if(key==='general'){
         document.getElementById('cashView-general').scrollIntoView({behavior:'smooth',block:'start'});
       }else{
-        var sel=document.getElementById('entitySelector');
-        sel.value=key;
+        _activeEntityKey=key;
         updateEntityView(key);
+        // Sync the chip2 bar
+        document.querySelectorAll('.ent-chip2').forEach(function(c){c.classList.remove('ent-chip2-active');});
+        document.querySelectorAll('.ent-chip2').forEach(function(c){if(c.textContent.replace(/\s/g,'')===(key==='AuHaus'?'AuHaus':key))c.classList.add('ent-chip2-active');});
         document.getElementById('entitySectionHead').scrollIntoView({behavior:'smooth',block:'start'});
       }
     }

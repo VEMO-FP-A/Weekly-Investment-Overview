@@ -827,161 +827,11 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
         h+='<div style="position:relative;height:320px;"><canvas id="flowChart-'+key+'"></canvas></div>';
         h+='</div>';
       }
-      // Key Drivers section
-      var drv=KEY_DRIVERS[key];
-      if(drv){
-        h+='<div class="chart-card" style="padding:14px;margin-top:8px;">';
-        h+='<div style="font-size:10px;font-weight:600;color:var(--amber);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">Key Drivers &amp; Composición de Flujos</div>';
-        h+='<div style="display:flex;flex-wrap:wrap;gap:10px;">';
-        drv.forEach(function(sec){
-          var bc=sec.c==='in'?'rgba(34,197,94,.08)':sec.c==='out'?'rgba(239,68,68,.06)':sec.c==='cap'?'rgba(14,133,133,.08)':'rgba(245,158,11,.06)';
-          var tc=sec.c==='in'?'var(--green)':sec.c==='out'?'var(--red)':sec.c==='cap'?'var(--teal)':'var(--amber)';
-          h+='<div style="flex:1;min-width:200px;max-width:340px;background:'+bc+';border-radius:8px;padding:10px 12px;border-left:3px solid '+tc+';">';
-          h+='<div style="font-size:10px;font-weight:700;color:'+tc+';text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;">'+sec.t+'</div>';
-          h+='<ul style="margin:0;padding-left:14px;font-size:10px;color:var(--text2);line-height:1.7;">';
-          sec.items.forEach(function(it){h+='<li>'+it+'</li>';});
-          h+='</ul></div>';
-        });
-        h+='</div></div>';
-      }
       h+='</div>';
       return h;
     }
 
-    // Key drivers per entity — extracted from Inputs Cash detail
-    var KEY_DRIVERS={
-      HOLDCO:[
-        {t:'Transferencias a Subsidiarias',c:'out',items:[
-          'LTO: $17–18M en Oct (semanas 2 y 4) para pago de vehículos',
-          'VCN: $19–24M Sep–Oct para OPOS y hubs',
-          'EMC: $10.1M Oct (cap reducida) + Interco $8M',
-          'IP: $2–3M periódicos para operación DEEL + Argentina'
-        ]},
-        {t:'Equity',c:'in',items:[
-          'Inyección de $427.5M programada en semana 28-Sep',
-          'Post-equity, balance permite cubrir ~13 semanas de caps'
-        ]},
-        {t:'Efecto Cambiario (FX)',c:'cap',items:[
-          'Actual: +$1.0M (Ago wk1) a -$0.3M (Sep wk1)',
-          'Proyección: sin efecto FX asumido en semanas futuras'
-        ]}
-      ],
-      LTO:[
-        {t:'OPEX Principales',c:'out',items:[
-          'Nómina quincenal: <strong>$1.85M</strong> (semanas pares)',
-          'Impuestos M1/M2: <strong>$4.5M</strong> mensual + SUA $0.36M',
-          'Renta Florencia: $0.67M/mes',
-          'Seguros: $8M/mes, WC semanal: $5.1M'
-        ]},
-        {t:'CAPEX',c:'out',items:[
-          '<strong>Pago vehículos: $21M</strong> en Oct wk2 (12-Oct)',
-          '<strong>Pago vehículos: $21M</strong> en Oct wk4 (26-Oct)',
-          'Anticipo $0.5M en Sep (21-Sep)'
-        ]},
-        {t:'Capitalización Requerida',c:'cap',items:[
-          'Oct requiere ~$37M por pagos de vehículos + OPEX',
-          'Sin cap, saldo llega a $0 desde Sep wk4',
-          'Interco In: Vehicle Leasing $1.4M (Sep, Oct)'
-        ]}
-      ],
-      VCN:[
-        {t:'OPEX Principales',c:'out',items:[
-          'Nómina quincenal: $0.9M',
-          'Renta hubs: <strong>$3.8M + $1.1M + $1.6M</strong>/mes (3 contratos)',
-          'Energía: <strong>$7.3M</strong>/mes',
-          'Impuestos: $1M + SUA $0.18M, WC semanal: $1.4M'
-        ]},
-        {t:'CAPEX (Hubs)',c:'out',items:[
-          'OPOS: <strong>$8M</strong> (07-Sep) + <strong>$8.6M</strong> (21-Sep) + $3.1M (Oct)',
-          'Contratistas: $5.8M (07-Sep) + $0.7M (31-Ago)',
-          'Total CAPEX periodo: $26.2M concentrado en Sep'
-        ]},
-        {t:'Intercos',c:'cap',items:[
-          'IN: Op Hubs DAE $4.3M (bimensual)',
-          'OUT: Espacios Proyectos Infra $3.5–$15.5M/sem a Au Haus',
-          'OUT: PSM Corp SG&A $4–$12M/sem'
-        ]}
-      ],
-      DAE:[
-        {t:'OPEX Principales',c:'out',items:[
-          'Nómina quincenal: $1.15M + <strong>semanal: $4.5M</strong>',
-          'Impuestos M1/M2: $5.5M + extras $3M mensual',
-          'Renta Río Guadiana: $0.13M/mes',
-          'Seguros: $0.9M/mes, WC semanal: $2.2M'
-        ]},
-        {t:'Intercos Operativos (salidas)',c:'out',items:[
-          'VCN Op Hubs: $4.3M bimensual',
-          'Electro Mantenimiento: $5M mensual',
-          'PSM Corp SG&A: $6.5M mensual',
-          'LTO Vehicle Leasing: $1.4M, Morelcamp: $0.3M'
-        ]}
-      ],
-      AuHaus:[
-        {t:'OPEX Principales',c:'out',items:[
-          'Nómina quincenal: $1.5M',
-          'Impuestos: $1M + SUA $0.35M mensual',
-          'Renta Protón: $0.66M/mes',
-          'Seguros: $0.26M/mes, WC semanal: $0.76M'
-        ]},
-        {t:'CAPEX',c:'out',items:[
-          'Cargadores: <strong>$6.1M</strong> (07-Sep)',
-          'Baterías: <strong>$4.2M × 2</strong> (21-Sep, 28-Sep)',
-          'Gastos aduanales: $0.5M, Transformadores: $0.3M',
-          'Proyectos: $3.6M (14-Sep) + $1.4M (19-Oct)'
-        ]},
-        {t:'Intercos In (Espacios)',c:'in',items:[
-          'Recibe de VCN: Proyectos Infraestructura',
-          '$10.5M (07-Sep, 05-Oct), $6.3M, $4.5M, etc.',
-          'Financia CAPEX de cargadores y baterías'
-        ]}
-      ],
-      PSM:[
-        {t:'OPEX Principales',c:'out',items:[
-          'Nómina quincenal: <strong>$5.5M</strong> (la mayor del grupo)',
-          'Impuestos M1/M2: <strong>$8.2M</strong> + extras $1M',
-          'Renta Torre Esmeralda + Omega: $2.12M/mes',
-          'Seguros: $0.9M/mes, WC semanal: $2.0M'
-        ]},
-        {t:'Intercos In (servicios corp.)',c:'in',items:[
-          'Cobro SG&A corporativo a subsidiarias',
-          'Flujos variables: $4–$19.5M/semana',
-          'Principales pagadores: LTO, VCN, DAE'
-        ]}
-      ],
-      EMC:[
-        {t:'OPEX Principales',c:'out',items:[
-          'Nómina quincenal: $1.15M',
-          'Impuestos: $0.4M + SUA $0.25M',
-          'Rentas (5 ubicaciones): ~$0.9M/mes total',
-          'WC semanal: <strong>$2.7M</strong>'
-        ]},
-        {t:'CAPEX (Talleres)',c:'out',items:[
-          'Adecuaciones talleres: $0.7M (14-Sep)',
-          '<strong>$4.2M</strong> (19-Oct)',
-          'Total CAPEX Oct $4.2M (reducido vs plan original)'
-        ]},
-        {t:'Capitalización + Intercos',c:'cap',items:[
-          'Cap HoldCo: $10.1M Oct (reducida de $19.4M)',
-          'Interco IN: Electro Mant $5M + LTO $2M + DAE $1M = $8M',
-          'Cobertura: Cap + Interco cubre OPEX + CAPEX Oct'
-        ]}
-      ],
-      IP:[
-        {t:'OPEX Principales',c:'out',items:[
-          'DEEL: <strong>$1.1M</strong> quincenal',
-          'Staff: $0.23M quincenal',
-          'Argentina: <strong>$1.61M</strong> quincenal',
-          'Impuestos: $0.2M + SUA $0.055M'
-        ]},
-        {t:'Capitalización',c:'cap',items:[
-          'Requiere cap periódica de HoldCo: $2.4–$2.9M',
-          'Sin cobranza propia ni CAPEX',
-          'Operación depende 100% de transferencias HoldCo'
-        ]}
-      ]
-    };
-
-    // ── Entity flow charts: stacked In/Out bars with category breakdown + EoP line ──
+    // ── Entity flow charts: stacked In/Out bars with category breakdown ──
     // Inflow categories → teal/green gradient (same color per category across all entities)
     // Outflow categories → gray gradient
     var FLOW_IN_COLORS={
@@ -1098,11 +948,15 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
         };
       }
 
-      // EoP axis range
+      // Compute EoP axis range per entity (always ≥ 0, with padding)
       var eopArr=wd.eop||[];
       var eopMin=Infinity,eopMax=-Infinity;
       eopArr.forEach(function(v){if(v<eopMin)eopMin=v;if(v>eopMax)eopMax=v;});
-      var eopPad=(eopMax-eopMin)*0.2||10;
+      if(eopMin===Infinity){eopMin=0;eopMax=10;}
+      var eopRange=eopMax-eopMin;
+      var eopPad=Math.max(eopRange*0.15,2);
+      var eopAxisMin=Math.max(0,Math.floor(eopMin-eopPad));
+      var eopAxisMax=Math.ceil(eopMax+eopPad);
 
       entityFlowCharts[key]=new Chart(ctx,{
         type:'bar',
@@ -1121,16 +975,6 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
                   if(v===0||Math.abs(v)<0.05)return null;
                   if(ctx2.dataset.label==='Saldo EoP')return ' Saldo: $'+v.toFixed(1)+'M';
                   return ' '+ctx2.dataset.label+': '+(v>0?'+':'')+v.toFixed(1)+'M';
-                },
-                afterBody:function(items){
-                  if(!items.length)return'';
-                  var idx=items[0].dataIndex;
-                  var bopV=wd.bop?wd.bop[idx]:null;
-                  var eopV=wd.eop?wd.eop[idx]:null;
-                  var lines=['───────────'];
-                  if(bopV!==null)lines.push('BoP: $'+bopV.toFixed(1)+'M');
-                  if(eopV!==null)lines.push('EoP: $'+eopV.toFixed(1)+'M');
-                  return lines.join('\n');
                 }
               }
             },
@@ -1138,8 +982,8 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
           },
           scales:{
             x:{stacked:true,grid:{display:false},ticks:{font:{size:8},maxRotation:45}},
-            y:{stacked:true,grid:{color:'rgba(0,0,0,.06)'},ticks:{font:{size:9},callback:function(v){return v.toFixed(0);}},title:{display:true,text:'Flujo (MXN$m)',font:{size:9},color:'#888'}},
-            yEop:{position:'right',grid:{display:false},ticks:{font:{size:9},callback:function(v){return '$'+v.toFixed(0)+'M';}},title:{display:true,text:'Saldo EoP',font:{size:9},color:'#0D4F4F'},min:Math.max(0,eopMin-eopPad),max:eopMax+eopPad}
+            y:{stacked:true,grid:{color:'rgba(0,0,0,.06)'},ticks:{font:{size:9},callback:function(v){return v+'M';}},title:{display:true,text:'Flujo (MXN$m)',font:{size:9},color:'#888'}},
+            yEop:{position:'right',grid:{display:false},ticks:{font:{size:9},color:'#0D4F4F',callback:function(v){return '$'+v+'M';}},title:{display:true,text:'Saldo EoP',font:{size:9},color:'#0D4F4F'},min:eopAxisMin,max:eopAxisMax}
           }
         }
       });

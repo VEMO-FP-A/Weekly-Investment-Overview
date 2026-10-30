@@ -565,20 +565,38 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     <!-- GENERAL VIEW -->
     <div id="cashView-general">
 
-    <!-- CASH BALANCES BY ENTITY -->
-    <div class="section-head-light"><span>Saldo de Caja por Entidad</span>
-      <span style="font-size:10px;color:var(--text3);font-weight:400;">MXN$m · Saldo al inicio de cada semana</span>
-    </div>
-    <div class="chart-card" style="overflow-x:auto;padding:12px;">
-      <table id="cashBalTable" style="width:100%;min-width:1000px;font-size:11px;border-collapse:collapse;text-align:right;"></table>
+    <!-- CASH BALANCES BY ENTITY (Accordion) -->
+    <div class="accordion-section" style="margin-bottom:6px;">
+      <div class="accordion-header" onclick="toggleAccordion(this)" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:10px 16px;background:var(--card);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow);transition:border-radius .2s;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="accordion-arrow" style="display:inline-block;transition:transform .2s;font-size:10px;color:var(--teal);">&#9654;</span>
+          <span style="font-size:12px;font-weight:600;color:var(--teal);text-transform:uppercase;letter-spacing:.5px;">Saldo de Caja por Entidad</span>
+          <span style="font-size:10px;color:var(--text3);font-weight:400;">MXN$m · Saldo al inicio de cada semana</span>
+        </div>
+        <span id="cashBalSummary" style="font-size:11px;color:var(--text2);font-weight:500;"></span>
+      </div>
+      <div class="accordion-body" style="display:none;overflow:hidden;">
+        <div class="chart-card" style="overflow-x:auto;padding:12px;border-top:none;border-radius:0 0 10px 10px;margin-top:-1px;">
+          <table id="cashBalTable" style="width:100%;min-width:1000px;font-size:11px;border-collapse:collapse;text-align:right;"></table>
+        </div>
+      </div>
     </div>
 
-    <!-- DELTA BY ENTITY -->
-    <div class="section-head-light" style="margin-top:8px;"><span>Variación Semanal (Delta)</span>
-      <span style="font-size:10px;color:var(--text3);font-weight:400;">MXN$m · Cambio vs semana anterior</span>
-    </div>
-    <div class="chart-card" style="overflow-x:auto;padding:12px;">
-      <table id="cashDeltaTable" style="width:100%;min-width:1000px;font-size:11px;border-collapse:collapse;text-align:right;"></table>
+    <!-- DELTA BY ENTITY (Accordion) -->
+    <div class="accordion-section" style="margin-bottom:6px;">
+      <div class="accordion-header" onclick="toggleAccordion(this)" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:10px 16px;background:var(--card);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow);transition:border-radius .2s;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="accordion-arrow" style="display:inline-block;transition:transform .2s;font-size:10px;color:var(--teal);">&#9654;</span>
+          <span style="font-size:12px;font-weight:600;color:var(--teal);text-transform:uppercase;letter-spacing:.5px;">Variación Semanal (Delta)</span>
+          <span style="font-size:10px;color:var(--text3);font-weight:400;">MXN$m · Cambio vs semana anterior</span>
+        </div>
+        <span id="cashDeltaSummary" style="font-size:11px;color:var(--text2);font-weight:500;"></span>
+      </div>
+      <div class="accordion-body" style="display:none;overflow:hidden;">
+        <div class="chart-card" style="overflow-x:auto;padding:12px;border-top:none;border-radius:0 0 10px 10px;margin-top:-1px;">
+          <table id="cashDeltaTable" style="width:100%;min-width:1000px;font-size:11px;border-collapse:collapse;text-align:right;"></table>
+        </div>
+      </div>
     </div>
 
     <!-- CASH TRAJECTORY CHART -->
@@ -963,14 +981,7 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       ]
     };
 
-    // ── Color map for entity flow charts (teal gradient) ──
-    var FLOW_COLORS={
-      // HOLDCO categories
-      equity:'#1A5C5C',others_excel:'#11ABAB',cap_out:'#9CA3AF',fx:'#D1D5DB',
-      // Subsidiary categories
-      cobranza:'#0D4F4F',cap_in:'#1A5C5C',interco_in:'#11ABAB',
-      debt:'#5EEAD4',opex:'#9CA3AF',capex:'#6B7280',interco_out:'#D1D5DB',otros:'#E5E7EB'
-    };
+    // ── Entity flow charts: simple In/Out bars + EoP line ──
     var entityFlowCharts={};
 
     function renderEntityFlowChart(key){
@@ -983,68 +994,70 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       var cats=ENTITY_WEEKLY.catsFor(key);
       var dates=ENTITY_WEEKLY.dates;
       var isAct=ENTITY_WEEKLY.isAct;
+      var n=dates.length;
 
-      // Separate flow categories (bars) from bop/eop (lines)
-      var flowCats=cats.filter(function(c){return c.t!=='bop'&&c.t!=='eop';});
+      // Aggregate inflows and outflows per week
+      var inKeys,outKeys;
+      if(key==='HOLDCO'){
+        inKeys=['equity','others_excel'];
+        outKeys=['cap_out'];
+      }else{
+        inKeys=['cobranza','cap_in','interco_in','equity','debt'];
+        outKeys=['opex','capex','interco_out'];
+      }
+
+      var inflows=new Array(n);
+      var outflows=new Array(n);
+      for(var i=0;i<n;i++){
+        var inSum=0,outSum=0;
+        inKeys.forEach(function(k){if(wd[k])inSum+=Math.max(0,wd[k][i]||0);});
+        outKeys.forEach(function(k){if(wd[k])outSum+=Math.abs(wd[k][i]||0);});
+        inflows[i]=inSum;
+        outflows[i]=-outSum; // negative so it goes below zero
+      }
+
       var datasets=[];
 
-      // Build bar datasets for each flow category
-      flowCats.forEach(function(cat){
-        var arr=wd[cat.k];
-        if(!arr)return;
-        var hasVal=arr.some(function(v){return v!==0;});
-        if(!hasVal)return;
-        var baseColor=FLOW_COLORS[cat.k]||'#6B7280';
-        var bgData=arr.map(function(v,i){
-          var alpha=isAct[i]?0.85:0.45;
-          return v>=0?hexToRgba(baseColor,alpha):hexToRgba(baseColor,alpha);
-        });
-        // Stack: positive values in 'positive' stack, negative in 'negative'
-        // Actually use single stack and let Chart.js handle +/-
-        datasets.push({
-          label:cat.l.replace(/^\([+−±]\)\s*/,''),
-          data:arr,
-          backgroundColor:bgData,
-          borderColor:baseColor,
-          borderWidth:1,
-          stack:'flows',
-          barPercentage:0.75,
-          categoryPercentage:0.85,
-          order:2
-        });
+      // Inflows bar (green)
+      datasets.push({
+        label:'Entradas',
+        data:inflows,
+        backgroundColor:isAct.map(function(a){return a?'rgba(5,150,105,0.80)':'rgba(5,150,105,0.35)';}),
+        borderColor:'#059669',
+        borderWidth:1,
+        stack:'flows',
+        barPercentage:0.7,
+        categoryPercentage:0.8,
+        order:2
       });
 
-      // BoP line
-      if(wd.bop){
+      // Outflows bar (gray-red)
+      datasets.push({
+        label:'Salidas',
+        data:outflows,
+        backgroundColor:isAct.map(function(a){return a?'rgba(107,114,128,0.80)':'rgba(107,114,128,0.35)';}),
+        borderColor:'#6B7280',
+        borderWidth:1,
+        stack:'flows',
+        barPercentage:0.7,
+        categoryPercentage:0.8,
+        order:2
+      });
+
+      // EoP line
+      if(wd.eop){
         datasets.push({
-          label:'BoP',
-          data:wd.bop,
+          label:'Saldo EoP',
+          data:wd.eop,
           type:'line',
           borderColor:'#0D4F4F',
-          backgroundColor:'rgba(13,79,79,.1)',
+          backgroundColor:'rgba(13,79,79,.08)',
           fill:false,
           tension:0.3,
           pointRadius:3,
           pointBackgroundColor:isAct.map(function(a){return a?'#0D4F4F':'#9CA3AF';}),
           borderWidth:2,
-          borderDash:[],
-          order:1
-        });
-      }
-      // EoP line
-      if(wd.eop){
-        datasets.push({
-          label:'EoP',
-          data:wd.eop,
-          type:'line',
-          borderColor:'#1A5C5C',
-          backgroundColor:'rgba(26,92,92,.1)',
-          fill:false,
-          tension:0.3,
-          pointRadius:3,
-          pointBackgroundColor:isAct.map(function(a){return a?'#1A5C5C':'#9CA3AF';}),
-          borderWidth:2,
-          borderDash:[4,3],
+          yAxisID:'yEop',
           order:0
         });
       }
@@ -1052,7 +1065,6 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       // Find projection start for annotation
       var projIdx=-1;
       for(var i=0;i<isAct.length;i++){if(!isAct[i]){projIdx=i;break;}}
-
       var annotations={};
       if(projIdx>0){
         annotations.projLine={
@@ -1065,31 +1077,40 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
         };
       }
 
+      // Calculate EoP range for secondary axis
+      var eopArr=wd.eop||[];
+      var eopMin=Infinity,eopMax=-Infinity;
+      eopArr.forEach(function(v){if(v<eopMin)eopMin=v;if(v>eopMax)eopMax=v;});
+      var eopPad=(eopMax-eopMin)*0.2||10;
+
       entityFlowCharts[key]=new Chart(ctx,{
         type:'bar',
         data:{labels:dates,datasets:datasets},
         options:{
           responsive:true,maintainAspectRatio:false,
           plugins:{
-            legend:{position:'bottom',labels:{font:{size:9},boxWidth:10,usePointStyle:false,padding:8,filter:function(item){return item.text!=='BoP'&&item.text!=='EoP'||item.datasetIndex>=datasets.length-2;}}},
+            legend:{position:'bottom',labels:{font:{size:9},boxWidth:10,usePointStyle:false,padding:8}},
             tooltip:{
               backgroundColor:'rgba(30,30,30,.95)',titleFont:{size:11},bodyFont:{size:10},
               cornerRadius:6,padding:10,
               callbacks:{
                 label:function(ctx2){
                   var v=ctx2.parsed.y;
+                  if(ctx2.dataset.yAxisID==='yEop')v=ctx2.raw;
                   if(v===0)return null;
-                  return ' '+ctx2.dataset.label+': '+(v>0?'+':'')+v.toFixed(1)+'M';
+                  var prefix=ctx2.dataset.label==='Saldo EoP'?'Saldo: $':'';
+                  return ' '+ctx2.dataset.label+': '+(prefix?'':v>0?'+':'')+prefix+Math.abs(v).toFixed(1)+'M';
                 },
                 afterBody:function(items){
                   if(!items.length)return'';
                   var idx=items[0].dataIndex;
                   var bopV=wd.bop?wd.bop[idx]:null;
                   var eopV=wd.eop?wd.eop[idx]:null;
-                  var lines=[];
+                  var lines=['───────────'];
                   if(bopV!==null)lines.push('BoP: $'+bopV.toFixed(1)+'M');
                   if(eopV!==null)lines.push('EoP: $'+eopV.toFixed(1)+'M');
-                  return lines.length?'───────────\n'+lines.join('\n'):'';
+                  lines.push('Neto: '+(inflows[idx]+outflows[idx]>0?'+':'')+(inflows[idx]+outflows[idx]).toFixed(1)+'M');
+                  return lines.join('\n');
                 }
               }
             },
@@ -1097,7 +1118,8 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
           },
           scales:{
             x:{stacked:true,grid:{display:false},ticks:{font:{size:8},maxRotation:45}},
-            y:{stacked:true,grid:{color:'rgba(0,0,0,.06)'},ticks:{font:{size:9},callback:function(v){return v.toFixed(0);}},title:{display:true,text:'MXN$m',font:{size:9},color:'#888'}}
+            y:{stacked:true,grid:{color:'rgba(0,0,0,.06)'},ticks:{font:{size:9},callback:function(v){return v.toFixed(0);}},title:{display:true,text:'Flujo (MXN$m)',font:{size:9},color:'#888'}},
+            yEop:{position:'right',grid:{display:false},ticks:{font:{size:9},callback:function(v){return '$'+v.toFixed(0)+'M';}},title:{display:true,text:'Saldo EoP',font:{size:9},color:'#0D4F4F'},min:Math.max(0,eopMin-eopPad),max:eopMax+eopPad}
           }
         }
       });
@@ -1499,6 +1521,13 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       }
       h+='</tr></tbody>';
       tb1.innerHTML=h;
+      // Populate accordion summary: last actual total
+      var lastActIdx=-1;
+      for(var i=isAct.length-1;i>=0;i--){if(isAct[i]){lastActIdx=i;break;}}
+      if(lastActIdx>=0){
+        var sumEl=document.getElementById('cashBalSummary');
+        if(sumEl)sumEl.textContent='Total '+dates[lastActIdx]+': $'+bop[lastActIdx].toFixed(1)+'M';
+      }
 
       // Build Delta table
       var tb2=document.getElementById('cashDeltaTable');
@@ -1537,6 +1566,12 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
       }
       h+='</tr></tbody>';
       tb2.innerHTML=h;
+      // Populate delta accordion summary: last actual week delta
+      if(lastActIdx>=0){
+        var dSum=document.getElementById('cashDeltaSummary');
+        var lastD=totalDelta[lastActIdx];
+        if(dSum&&lastD!==null&&lastD!==undefined)dSum.textContent='Δ '+dates[lastActIdx]+': '+(lastD>0?'+':'')+lastD.toFixed(1)+'M';
+      }
 
       // Cash Trajectory Chart
       var ctx=document.getElementById('cashTrajectoryChart');
@@ -1751,6 +1786,21 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
 
 <script>
 // (Old toggleEntities removed — replaced by dynamic toggleInvRow in updateInvView)
+
+// ACCORDION toggle
+function toggleAccordion(el){
+  var body=el.nextElementSibling;
+  var arrow=el.querySelector('.accordion-arrow');
+  if(body.style.display==='none'||!body.style.display){
+    body.style.display='block';
+    arrow.style.transform='rotate(90deg)';
+    el.style.borderRadius='10px 10px 0 0';
+  }else{
+    body.style.display='none';
+    arrow.style.transform='rotate(0deg)';
+    el.style.borderRadius='10px';
+  }
+}
 
 // NAV
 const SECTIONS={overview:'sec-overview',investments:'sec-investments',analytics:'sec-analytics',capital:'sec-capital',authorized:'sec-authorized'};

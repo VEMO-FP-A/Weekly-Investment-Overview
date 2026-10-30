@@ -605,8 +605,12 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
     </div><!-- /cashView-general -->
 
     <!-- ENTITY DETAIL — DROPDOWN DRIVEN -->
-    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:20px;margin-bottom:12px;">
-      <select id="entitySelector" style="font-size:13px;color:var(--teal);font-weight:600;border:1px solid var(--border);border-radius:8px;padding:8px 14px;background:var(--card);cursor:pointer;">
+    <div style="margin-top:28px;margin-bottom:14px;padding:14px 20px;background:linear-gradient(135deg,#0D4F4F 0%,#11ABAB 100%);border-radius:12px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="1" y="1" width="8" height="8" rx="2" fill="#fff" opacity=".9"/><rect x="11" y="1" width="8" height="8" rx="2" fill="#fff" opacity=".6"/><rect x="1" y="11" width="8" height="8" rx="2" fill="#fff" opacity=".6"/><rect x="11" y="11" width="8" height="8" rx="2" fill="#fff" opacity=".35"/></svg>
+        <span style="font-size:14px;font-weight:700;color:#fff;letter-spacing:.3px;">Vista por Empresa</span>
+      </div>
+      <select id="entitySelector" style="font-size:13px;color:var(--teal);font-weight:600;border:none;border-radius:8px;padding:8px 14px;background:#fff;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.12);">
         <option value="HOLDCO">HoldCo</option>
         <option value="LTO">LTO</option>
         <option value="DAE">DAE</option>
@@ -620,11 +624,11 @@ tr.tr-total td:first-child{background:rgba(17,171,171,.08) !important;}
         <option value="MC">MC</option>
       </select>
       <div style="margin-left:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        <span style="font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Desde</span>
-        <select id="zoomDesde" style="font-size:11px;border:1px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--card);"></select>
-        <span style="font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Hasta</span>
-        <select id="zoomHasta" style="font-size:11px;border:1px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--card);"></select>
-        <button id="zoomReset" style="font-size:11px;color:var(--teal);background:transparent;border:1px solid var(--teal);border-radius:6px;padding:5px 12px;cursor:pointer;">Reset</button>
+        <span style="font-size:10px;color:rgba(255,255,255,.85);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Desde</span>
+        <select id="zoomDesde" style="font-size:11px;border:none;border-radius:8px;padding:6px 10px;background:rgba(255,255,255,.92);color:#1A5C5C;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.1);"></select>
+        <span style="font-size:10px;color:rgba(255,255,255,.85);font-weight:600;text-transform:uppercase;letter-spacing:.5px;">Hasta</span>
+        <select id="zoomHasta" style="font-size:11px;border:none;border-radius:8px;padding:6px 10px;background:rgba(255,255,255,.92);color:#1A5C5C;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.1);"></select>
+        <button id="zoomReset" style="font-size:11px;color:#fff;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.5);border-radius:6px;padding:5px 12px;cursor:pointer;font-weight:600;">Reset</button>
       </div>
     </div>
     <div id="entitySectionHead"></div>
